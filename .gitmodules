@@ -1,0 +1,3 @@
+[submodule "extern/asciichart"]
+	path = extern/asciichart
+	url = https://github.com/Civitasv/asciichart.git
