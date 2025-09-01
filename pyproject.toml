@@ -25,12 +25,15 @@ classifiers = [
 [project.optional-dependencies]
 test = ["pytest"]
 
-
 [tool.scikit-build]
 wheel.expand-macos-universal-tags = true
 minimum-version = "build-system.requires"
 cmake.build-type = "Release"
+build-dir = "build"
 
+[tool.scikit-build.cmake.define]
+BUILD_LAMMPS_PLUGIN = "ON"
+LAMMPS_SRC_DIR = "~/temp/lammps/src"
 
 [tool.pytest.ini_options]
 minversion = "8.0"

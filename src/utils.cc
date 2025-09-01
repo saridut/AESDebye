@@ -1,5 +1,4 @@
 #include <utils.hpp>
-#include <map>
 
 
 unsigned int generateRandomSeed()
@@ -9,7 +8,7 @@ unsigned int generateRandomSeed()
 }
 
 
-auto setupTypeMap(std::string typeMapping)
+std::map<std::string, std::string> setupTypeMap(std::string typeMapping)
 {   if (typeMapping.empty())
     {
         return std::map<std::string, std::string>();

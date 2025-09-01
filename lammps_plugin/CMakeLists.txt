@@ -1,25 +1,18 @@
-cmake_minimum_required(VERSION 3.20)
-project(ComputeHelloPlugin LANGUAGES CXX)
-
-# cmake standard boilerplate
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 find_package(LAMMPS REQUIRED CONFIG)
+message("lammps include dir is: ${LAMMPS_INCLUDE_DIRS}")
 
-add_library(compute_hello_plugin SHARED compute_hello.cpp)
-target_link_libraries(compute_hello_plugin PRIVATE LAMMPS::lammps)
+# if not given as an argument, then set it empty
+if (NOT DEFINED LAMMPS_SRC_DIR)
+    set(LAMMPS_SRC_DIR "")
+    message(FATAL_ERROR "LAMMPS_SRC_DIR is not defined. Please set it to the LAMMPS source directory. This is required to get the headers!")
+endif()
 
-target_include_directories(compute_hello_plugin PRIVATE
-    ~/temp/lammps/src/
-    ~/.local/include/lammps/external/json  # <--- add this
-)
+add_library(lammps_debye_plugin SHARED compute_debye.cpp)
+target_link_libraries(lammps_debye_plugin PRIVATE LAMMPS::lammps)
+target_link_libraries(lammps_debye_plugin PRIVATE debyeLib)
+target_include_directories(lammps_debye_plugin PRIVATE ${LAMMPS_SRC_DIR})
 
-# target_include_directories(compute_hello_plugin PRIVATE ${LAMMPS_INCLUDE_DIRS})
-
-set_target_properties(compute_hello_plugin PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
-    POSITION_INDEPENDENT_CODE ON
-)
+# installation dir, need to use full path to load. or just use the build dir to load!
+install(TARGETS lammps_debye_plugin DESTINATION aesdebye)
+set_target_properties(lammps_debye_plugin PROPERTIES INSTALL_RPATH ${RPATH})
 

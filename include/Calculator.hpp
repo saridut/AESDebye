@@ -20,10 +20,6 @@
 #include <Positions.hpp>
 #include <Profile.hpp>
 #include <utils.hpp>
-#include <json.hpp>
-
-
-using json = nlohmann::json;
 
 /**
  * @class DebyeCalculator
@@ -78,6 +74,7 @@ public:
 
         if (binsResolution > 1.0 || binsResolution <= 0)
         {
+            std::cout << "bins resolution: "<< binsResolution << std::endl;
             throw std::invalid_argument("Bins resolution should be between 0 and 1.0");
         }
 

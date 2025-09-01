@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <random>
 #include <string>
+#include <map>
 
 /**
  * @brief Generates a random seed for the random number generator.
@@ -46,3 +47,6 @@ Positions generateTestData(double lattice, int nRepeats, double noise, int seed,
 
 Positions makePeriodic(const Positions &positions, int nx, int ny, int nz,
                        double offset_x, double offset_y, double offset_z);
+
+
+std::map<std::string, std::string> setupTypeMap(std::string typeMapping);

@@ -1,0 +1,15 @@
+units       lj
+atom_style  atomic
+
+region      box block 0 2 0 2 0 2
+create_box  1 box
+
+# Create 100 atoms randomly in the box
+create_atoms 1 random 5000 12345 box
+
+mass        1 1.0
+
+plugin      load ../build/lammps_plugin/liblammps_debye_plugin.so
+
+# Arguments: nThreads nCells start end nSteps lambda twoTheta nonVerbose outputDir/prefix typeMapping
+debye_profile 8 20 0 20 2000 0.4 0 1 ./output/profile_ 0:Pt

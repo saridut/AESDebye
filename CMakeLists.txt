@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 # compilation tested with gcc12, intelmpi, cuda12.6 on fritz and alex
 
-# if name and version are not set, set them
+# if name and version are not set, set them, this happens when using cmake directly, without pip
 if(NOT DEFINED PROJECT_NAME)
     set(PROJECT_NAME "aesdebye")
 endif()
@@ -38,10 +38,9 @@ message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
 # Options
 option(AUTOCONFIG "Enable automatic configuration" ON)
-# option(ENABLE_MPI "Enable MPI support" OFF)
-# option(ENABLE_GPU "Enable GPU support" ON)
+option(BUILD_LAMMPS_PLUGIN "Build LAMMPS plugin" OFF)
 
-# OpenMP
+# OpenMP - always required for basic single node parallelism
 find_package(OpenMP REQUIRED)
 
 # Automatic Configuration
@@ -202,4 +201,8 @@ set_target_properties(debye PROPERTIES INSTALL_RPATH ${RPATH})
 
 if(ENABLE_GPU)
     set_target_properties(debyeLibGPU PROPERTIES INSTALL_RPATH ${RPATH})
+endif()
+
+if (BUILD_LAMMPS_PLUGIN)
+    add_subdirectory(lammps_plugin)
 endif()

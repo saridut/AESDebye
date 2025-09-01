@@ -1,17 +1,27 @@
 LAMMPS (22 Jul 2025 - Development - patch_22Jul2025-128-geab6e5d842)
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread.
   using 1 OpenMP thread(s) per MPI task
-units lj
-atom_style atomic
-region box block 0 2 0 2 0 2
-create_box 1 box
+units       lj
+atom_style  atomic
+
+region      box block 0 2 0 2 0 2
+create_box  1 box
 Created orthogonal box = (0 0 0) to (2 2 2)
   1 by 1 by 1 MPI processor grid
-create_atoms 1 single 1.0 1.0 1.0
-Created 1 atoms
+
+# Create 100 atoms randomly in the box
+create_atoms 1 random 5000 12345 box
+Created 5000 atoms
   using lattice units in orthogonal box = (0 0 0) to (2 2 2)
-  create_atoms CPU = 0.000 seconds
-mass 1 1.0
-set type 1 element X
-ERROR: Unrecognized set or fix set command keyword element (src/set.cpp:410)
-Last input line: set type 1 element X
+  create_atoms CPU = 0.002 seconds
+
+mass        1 1.0
+
+plugin      load ../build/lammps_plugin/liblammps_debye_plugin.so
+Loading plugin: Compute Debye scattering profiles using AESDebye library by Navid Panchi
+  compiled for LAMMPS version .1.0, loaded into LAMMPS version 22 Jul 2025
+
+# Arguments: nThreads nCells start end nSteps lambda twoTheta nonVerbose outputDir/prefix typeMapping
+debye_profile 8 20 0 20 2000 0.4 0 1 ./output/profile_ 0:Pt
+Debye profiles written with prefix ./output/profile_
+Total wall time: 0:00:03
