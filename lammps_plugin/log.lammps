@@ -1,0 +1,17 @@
+LAMMPS (22 Jul 2025 - Development - patch_22Jul2025-128-geab6e5d842)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread.
+  using 1 OpenMP thread(s) per MPI task
+units lj
+atom_style atomic
+region box block 0 2 0 2 0 2
+create_box 1 box
+Created orthogonal box = (0 0 0) to (2 2 2)
+  1 by 1 by 1 MPI processor grid
+create_atoms 1 single 1.0 1.0 1.0
+Created 1 atoms
+  using lattice units in orthogonal box = (0 0 0) to (2 2 2)
+  create_atoms CPU = 0.000 seconds
+mass 1 1.0
+set type 1 element X
+ERROR: Unrecognized set or fix set command keyword element (src/set.cpp:410)
+Last input line: set type 1 element X

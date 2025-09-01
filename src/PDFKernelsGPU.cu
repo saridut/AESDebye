@@ -208,11 +208,6 @@ void calculatePDFGPU(Positions const &positionsI, Positions const &positionsJ, s
                      ParallelHelper &parallelHelper, CalculationConfig &config)
 {
     Positions gpuPositionsI(positionsI);
-    if (config.hybrid)
-    {
-        // setup divison of work
-        throw std::runtime_error("Hybrid parallelism not implemented for PDF calculation");
-    }
 
     // get number of devices
     int deviceCount; cudaGetDeviceCount(&deviceCount);

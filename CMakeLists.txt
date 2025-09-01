@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+# compilation tested with gcc12, intelmpi, cuda12.6 on fritz and alex
+
 # if name and version are not set, set them
 if(NOT DEFINED PROJECT_NAME)
     set(PROJECT_NAME "aesdebye")
@@ -35,10 +37,9 @@ endif()
 message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
 # Options
-# option(AUTOCONFIG "Enable automatic configuration" ON)
-option(ENABLE_MPI "Enable MPI support" ON)
-
-# option(ENABLE_GPU "Enable GPU support" OFF)
+option(AUTOCONFIG "Enable automatic configuration" ON)
+# option(ENABLE_MPI "Enable MPI support" OFF)
+# option(ENABLE_GPU "Enable GPU support" ON)
 
 # OpenMP
 find_package(OpenMP REQUIRED)
@@ -69,7 +70,7 @@ if(AUTOCONFIG)
         CUDA_DETECT_INSTALLED_GPUS(INSTALLED_GPU_CCS)
         string(REPLACE " " ";" INSTALLED_GPU_CCS "${INSTALLED_GPU_CCS}")
         string(REPLACE "." "" CUDA_ARCH_LIST "${INSTALLED_GPU_CCS}")
-        set(CMAKE_CUDA_ARCHITECTURES ${CUDA_ARCH_LIST})
+        # set(CMAKE_CUDA_ARCHITECTURES "native")
         message(STATUS "CUDA architecture: ${CUDA_ARCH_LIST}")
     else()
         message(STATUS "CUDA/GPU not detected")
