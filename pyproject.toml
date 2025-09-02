@@ -7,9 +7,12 @@ build-backend = "scikit_build_core.build"
 name = "aesdebye"
 version = "0.0.1"
 description="Debye implementation"
-#readme = "README.md"
 authors = [
     { name = "Navid Panchi", email = "navid.panchi@fau.de"},
+]
+dependencies = [
+    "ase>=3.24",
+    "matplotlib>=3.9",
 ]
 requires-python = ">=3.10"
 classifiers = [
@@ -22,6 +25,11 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 
+[project.scripts]
+aesdebye = "aesdebye.cli:main"
+
+
+
 [project.optional-dependencies]
 test = ["pytest"]
 
@@ -32,7 +40,7 @@ cmake.build-type = "Release"
 build-dir = "build"
 
 [tool.scikit-build.cmake.define]
-BUILD_LAMMPS_PLUGIN = "ON"
+BUILD_LAMMPS_PLUGIN = "OFF"
 LAMMPS_SRC_DIR = "~/temp/lammps/src"
 
 [tool.pytest.ini_options]
