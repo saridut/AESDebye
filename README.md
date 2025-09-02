@@ -62,7 +62,7 @@ profile.toCSV("profile_Pt.csv")
 # plot
 import matplotlib.pyplot as plt
 
-plt.semilogy(profile.q, profile.Iq)
+plt.semilogy(profile.q, profile.intensity)
 plt.xlabel("q (1/A)")
 plt.ylabel("I(q)")
 plt.show()
