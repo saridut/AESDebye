@@ -200,7 +200,7 @@ PYBIND11_MODULE(_core, m) {
       .def(
           py::init<std::vector<std::string>, std::vector<std::array<double, 3>>,
                    std::vector<std::string>, double, double>(),
-          py::arg("chemicalSymbols"), py::arg("positions"),
+          py::arg("chemicalSymbols"), py::arg("coordinates"),
           py::arg("selectionIds") = std::vector<std::string>(),
           py::arg("boxMin") = 1e100, py::arg("boxMax") = -1e100, R"pbdoc(
         Construct a new Positions object from atomic data.
@@ -209,7 +209,7 @@ PYBIND11_MODULE(_core, m) {
         ----------
         chemicalSymbols : List[str]
             Chemical element symbols for each atom (e.g., ['C', 'O', 'H'])
-        positions : List[Tuple[float, float, float]]
+        coordinates : List[Tuple[float, float, float]]
             Cartesian coordinates for each atom in Angstroms
         selectionIds : List[str], optional
             Unique identifiers for each atom. If empty, indices will be used.

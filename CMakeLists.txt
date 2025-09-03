@@ -161,8 +161,8 @@ endif()
 message(STATUS "Building Python library")
 
 # # CLI Setup
-add_executable(debye src/cli.cpp)
-target_link_libraries(debye PRIVATE debyeLib)
+add_executable(debye_cpp src/cli.cpp)
+target_link_libraries(debye_cpp PRIVATE debyeLib)
 
 # Install
 macro(install_symlink filepath sympath)
@@ -172,11 +172,11 @@ endmacro(install_symlink)
 
 install(TARGETS _core DESTINATION aesdebye)
 install(TARGETS debyeLib DESTINATION aesdebye)
-install(TARGETS debye DESTINATION aesdebye)
+install(TARGETS debye_cpp DESTINATION aesdebye)
 install(DIRECTORY include/ DESTINATION aesdebye/include)
 
 # symlink binary into the bin directory, so it can be called from the command line
-install_symlink(${FINAL_INSTALL_DIR}/debye ${BINARY_DIR}/debye)
+install_symlink(${FINAL_INSTALL_DIR}/debye_cpp ${BINARY_DIR}/debye_cpp)
 
 if(ENABLE_GPU)
     install(TARGETS debyeLibGPU DESTINATION aesdebye)
@@ -197,7 +197,7 @@ endif()
 # rpath using $ORIGIN
 set_target_properties(_core PROPERTIES INSTALL_RPATH ${RPATH})
 set_target_properties(debyeLib PROPERTIES INSTALL_RPATH ${RPATH})
-set_target_properties(debye PROPERTIES INSTALL_RPATH ${RPATH})
+set_target_properties(debye_cpp PROPERTIES INSTALL_RPATH ${RPATH})
 
 if(ENABLE_GPU)
     set_target_properties(debyeLibGPU PROPERTIES INSTALL_RPATH ${RPATH})

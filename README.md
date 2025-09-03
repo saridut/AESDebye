@@ -29,7 +29,7 @@ import aesdebye as debye
 
 # Define atomic positions and types
 elements = ['Pt', 'Pt', 'Pt', 'Pt']
-positions = [
+coordinates = [
     [0.0, 0.0, 0.0],
     [1.0, 1.0, 1.0],
     [2.0, 2.0, 2.0],
@@ -38,7 +38,7 @@ positions = [
 
 # Create positions object
 positions = debye.Positions(chemicalSymbols=elements,
-                             positions=coordinates)
+                             coordinates=coordinates)
 
 # Initialize Debye calculator - for more options see documentation
 # print documentation using print(help(debye.DebyeCalculator))
@@ -82,11 +82,8 @@ For help use:
 ```bash
 aesdebye -h
 
-usage: aesdebye [-h] [-f INPUTFILENAME] [-tm TYPEMAPPING] [-nr NREPEATS]
-                [-s STDDEV] [-sp] [-b BINSRESOLUTION] [-sb] [-nc NCELLS]
-                [-nt NTHREADS] [-mpi] [-gpu] [-nlh] [-pc] [-fg] [-gcl]
-                [--benchmark] [-st START] [-e END] [-stps STEPS] [-l LAMBDA] [-tt]
-                [-o OUTPUTDIR] [-p] [-nv]
+usage: aesdebye [-h] [-f INPUTFILENAME] [-tm TYPEMAPPING] [-nr NREPEATS] [-s STDDEV] [-sp] [-b BINSRESOLUTION] [-sb] [-nc NCELLS] [-nt NTHREADS] [-mpi] [-gpu] [-nlh] [-pc] [-fg] [-gcl] [-st START]
+                [-e END] [-stps STEPS] [-wl WAVELENGTH] [-tt] [-o OUTPUTDIR] [-p] [-nv]
 
 Debye implementation CLI
 
@@ -95,9 +92,7 @@ options:
 
 Input configuration:
   -f INPUTFILENAME, --inputFilename INPUTFILENAME
-                        Input filename (XYZ format)
-  -tm TYPEMAPPING, --typeMapping TYPEMAPPING
-                        Type mapping for the elements for XYZ files
+                        Input filename, any format supported by the ase.io.read function
 
 Input configuration:
   -nr NREPEATS, --nRepeats NREPEATS
@@ -123,7 +118,6 @@ Computation parameters:
   -fg, --fillGPU        Fill the GPU with threads
   -gcl, --useGPUCellList
                         Use GPU cell list
-  --benchmark           Run the benchmark
 
 Range and physics settings:
   -st START, --start START
@@ -131,7 +125,7 @@ Range and physics settings:
   -e END, --end END     End of the q/theta range
   -stps STEPS, --steps STEPS
                         Number of steps in the q/theta range
-  -l LAMBDA, --lambda_ LAMBDA
+  -wl WAVELENGTH, --wavelength WAVELENGTH
                         Wavelength of the X-ray
   -tt, --twoThetaSpace  Use two theta instead of q
 

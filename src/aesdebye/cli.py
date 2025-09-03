@@ -5,7 +5,7 @@ import ase
 import ase.io
 import matplotlib.pyplot as plt
 
-import aesdebye as debye
+import aesdebye
 
 
 def parse_args():
@@ -17,9 +17,7 @@ def parse_args():
     # --- INPUT CONFIGURATION ---
     input_group = parser.add_argument_group("Input configuration")
     input_group.add_argument("-f", "--inputFilename", type=str, default="",
-                             help="Input filename (XYZ format)")
-    input_group.add_argument("-tm", "--typeMapping", type=str, default="0:None",
-                             help="Type mapping for the elements for XYZ files")
+                             help="Input filename, any format supported by the ase.io.read function")
 
     # --- BENCHMARK CONFIGURATION ---
     input_group = parser.add_argument_group("Input configuration")
@@ -52,8 +50,8 @@ def parse_args():
                                help="Fill the GPU with threads")
     compute_group.add_argument("-gcl", "--useGPUCellList", action="store_true", default=False,
                                help="Use GPU cell list")
-    compute_group.add_argument("--benchmark", action="store_true", default=False,
-                               help="Run the benchmark")
+    # compute_group.add_argument("--benchmark", action="store_true", default=False,
+    #                            help="Run the benchmark")
 
     # --- RANGE & PHYSICS SETTINGS ---
     physics_group = parser.add_argument_group("Range and physics settings")
@@ -63,7 +61,7 @@ def parse_args():
                                 help="End of the q/theta range")
     physics_group.add_argument("-stps", "--steps", type=int, default=2000,
                                 help="Number of steps in the q/theta range")
-    physics_group.add_argument("-l", "--lambda_", type=float, default=0.4,
+    physics_group.add_argument("-wl", "--wavelength", type=float, default=0.4,
                                 help="Wavelength of the X-ray")
     physics_group.add_argument("-tt", "--twoThetaSpace", action="store_true", default=False,
                                 help="Use two theta instead of q")
@@ -90,19 +88,19 @@ def main():
         sys.exit(1)
 
     # Initialize DebyeCalculator (placeholder)
-    calc = debye.DebyeCalculator(args.nThreads, args.nCells, args.binsResolution,
+    calc = aesdebye.DebyeCalculator(args.nThreads, args.nCells, args.binsResolution,
                             args.useMPI, args.useGPU, not args.dontUseLocalHistogram,
                             args.smallBins, args.pseudoCoal, args.fillGPU, not args.nonVerbose)
     # calc.config.useGPUCellList = args.useGPUCellList
 
     # Load positions
     if args.nRepeats > 0:
-        positions = debye.generateData(3.89070, args.nRepeats, args.stdDev, 10)
+        positions = aesdebye.generateData(3.89070, args.nRepeats, args.stdDev, 10)
     else:
         atoms = ase.io.read(args.inputFilename)
-        positions = debye.Positions(
+        positions = aesdebye.Positions(
             chemicalSymbols = atoms.get_chemical_symbols(),
-            positions = atoms.get_positions()
+            coordinates = atoms.get_positions()
         )
 
     if args.shufflePositions and calc.parallelHelper.world_rank == 0:
@@ -112,7 +110,7 @@ def main():
 
     results = calc.calculateProfile(positions, args.start, args.end,
                                      args.steps, args.twoThetaSpace,
-                                     args.lambda_, "")
+                                     args.wavelength, "")
 
     if not args.nonVerbose and calc.parallelHelper.world_rank == 0:
         last_pdf, last_profile = list(results.values())[-1]
@@ -130,7 +128,7 @@ def main():
         plt.show()
 
 
-    if args.outputDir and debye.parallelHelper.world_rank == 0:
+    if args.outputDir and calc.parallelHelper.world_rank == 0:
         prefix = (args.inputFilename.rsplit(".", 1)[0]
                   if args.inputFilename
                   else f"{args.nRepeats}_repeats_{args.stdDev}_stdDev_")
