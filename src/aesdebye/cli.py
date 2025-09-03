@@ -20,7 +20,7 @@ def parse_args():
                              help="Input filename, any format supported by the ase.io.read function")
 
     # --- BENCHMARK CONFIGURATION ---
-    input_group = parser.add_argument_group("Input configuration")
+    input_group = parser.add_argument_group("Benchmark configuration")
     input_group.add_argument("-nr", "--nRepeats", type=int, default=-1,
                              help="Number of repeats in the lattice")
     input_group.add_argument("-s", "--stdDev", type=float, default=0.0,

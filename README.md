@@ -94,7 +94,7 @@ Input configuration:
   -f INPUTFILENAME, --inputFilename INPUTFILENAME
                         Input filename, any format supported by the ase.io.read function
 
-Input configuration:
+Benchmark configuration:
   -nr NREPEATS, --nRepeats NREPEATS
                         Number of repeats in the lattice
   -s STDDEV, --stdDev STDDEV
