@@ -102,11 +102,6 @@ def main():
             coordinates = atoms.get_positions()
         )
 
-    if args.shufflePositions and calc.parallelHelper.world_rank == 0:
-        print(f"Size: {len(positions)}")
-        positions = positions.subsample(1.0, 0)
-        print(f"Size: {len(positions)}")
-
     results = calc.calculateProfile(positions, args.start, args.end,
                                      args.steps, args.twoThetaSpace,
                                      args.wavelength, "")
