@@ -85,7 +85,7 @@ public:
         config.smallBins = smallBins;
         config.pseudoCoal = pseudoCoal;
         config.fillGPU = fillGPU;
-        config.useGPUCellList = false; // TODO: implement GPU cell list
+        config.useGPUCellList = false;
 
         parallelHelper.printSection("DebyeCalculator initialized");
         parallelHelper << ">> bins resolution: " << binsResolution << "\n";

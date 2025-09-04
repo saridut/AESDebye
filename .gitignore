@@ -4,3 +4,6 @@ docs/_build
 build
 lammps_plugin/log.lammps
 lammps_plugin/output
+.kiro
+docs
+*.xyz

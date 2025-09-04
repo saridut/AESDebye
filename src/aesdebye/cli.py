@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 import aesdebye
 
+import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -19,53 +20,6 @@ def parse_args():
     input_group.add_argument("-f", "--inputFilename", type=str, default="",
                              help="Input filename, any format supported by the ase.io.read function")
 
-    # --- BENCHMARK CONFIGURATION ---
-    input_group = parser.add_argument_group("Benchmark configuration")
-    input_group.add_argument("-nr", "--nRepeats", type=int, default=-1,
-                             help="Number of repeats in the lattice")
-    input_group.add_argument("-s", "--stdDev", type=float, default=0.0,
-                             help="Std dev of noise in the lattice")
-    input_group.add_argument("-sp", "--shufflePositions", action="store_true", default=False,
-                             help="Shuffle the positions")
-
-    # --- COMPUTATION PARAMETERS ---
-    compute_group = parser.add_argument_group("Computation parameters")
-    compute_group.add_argument("-b", "--binsResolution", type=float, default=1.0,
-                               help="Resolution of the bins")
-    compute_group.add_argument("-sb", "--smallBins", action="store_true", default=False,
-                               help="Use small bins for the PDF")
-    compute_group.add_argument("-nc", "--nCells", type=int, default=15,
-                               help="Number of cells in the lattice")
-    compute_group.add_argument("-nt", "--nThreads", type=int, default=-1,
-                               help="Number of threads to use")
-    compute_group.add_argument("-mpi", "--useMPI", action="store_true", default=False,
-                               help="Use MPI for parallelization")
-    compute_group.add_argument("-gpu", "--useGPU", action="store_true", default=False,
-                               help="Use GPU for parallelization")
-    compute_group.add_argument("-nlh", "--dontUseLocalHistogram", action="store_true", default=False,
-                               help="Dont use local histogram for noisy calcs")
-    compute_group.add_argument("-pc", "--pseudoCoal", action="store_true", default=False,
-                               help="Use pseudo coal")
-    compute_group.add_argument("-fg", "--fillGPU", action="store_true", default=False,
-                               help="Fill the GPU with threads")
-    compute_group.add_argument("-gcl", "--useGPUCellList", action="store_true", default=False,
-                               help="Use GPU cell list")
-    # compute_group.add_argument("--benchmark", action="store_true", default=False,
-    #                            help="Run the benchmark")
-
-    # --- RANGE & PHYSICS SETTINGS ---
-    physics_group = parser.add_argument_group("Range and physics settings")
-    physics_group.add_argument("-st", "--start", type=float, default=0.0,
-                                help="Start of the q/theta range")
-    physics_group.add_argument("-e", "--end", type=float, default=20.0,
-                                help="End of the q/theta range")
-    physics_group.add_argument("-stps", "--steps", type=int, default=2000,
-                                help="Number of steps in the q/theta range")
-    physics_group.add_argument("-wl", "--wavelength", type=float, default=0.4,
-                                help="Wavelength of the X-ray")
-    physics_group.add_argument("-tt", "--twoThetaSpace", action="store_true", default=False,
-                                help="Use two theta instead of q")
-
     # --- OUTPUT OPTIONS ---
     output_group = parser.add_argument_group("Output options")
     output_group.add_argument("-o", "--outputDir", type=str, default="",
@@ -75,7 +29,53 @@ def parse_args():
     output_group.add_argument("-nv", "--nonVerbose", action="store_true", default=False,
                               help="Disable verbose output")
 
+    # --- CPU OPTIONS ---
+    cpu_group = parser.add_argument_group("CPU options")
+    cpu_group.add_argument("-nt", "--nThreads", type=int, default=-1,
+                           help="Number of threads to use")
+    cpu_group.add_argument("-nc", "--nCells", type=int, default=15,
+                           help="Number of cells in the lattice")
+    cpu_group.add_argument("-nlh", "--dontUseLocalHistogram", action="store_true", default=False,
+                           help="Dont use local histogram for noisy calcs")
+
+    # --- GPU OPTIONS ---
+    gpu_group = parser.add_argument_group("GPU options")
+    gpu_group.add_argument("-gpu", "--useGPU", action="store_true", default=False,
+                           help="Use GPU for parallelization")
+    gpu_group.add_argument("-pc", "--pseudoCoal", action="store_true", default=False,
+                           help="Use pseudo coal")
+    gpu_group.add_argument("-fg", "--fillGPU", action="store_true", default=False,
+                           help="Fill the GPU with threads")
+
+    # --- MULTI-CPU/GPU OPTIONS ---
+    common_group = parser.add_argument_group("Common options: CPU/GPU")
+    common_group.add_argument("-mpi", "--useMPI", action="store_true", default=False,
+                           help="Use MPI for parallelization")
+    common_group.add_argument("-br", "--binsResolution", type=int, default=1.0,
+                           help="Number of bins in the histogram")
+
+    # --- RANGE & PHYSICS SETTINGS ---
+    physics_group = parser.add_argument_group("Range and physics settings")
+    physics_group.add_argument("-st", "--start", type=float, default=0.0,
+                               help="Start of the q/theta range")
+    physics_group.add_argument("-e", "--end", type=float, default=20.0,
+                               help="End of the q/theta range")
+    physics_group.add_argument("-stps", "--steps", type=int, default=2000,
+                               help="Number of steps in the q/theta range")
+    physics_group.add_argument("-wl", "--wavelength", type=float, default=0.4,
+                               help="Wavelength. This will be used to convert between q and two theta. q = 4pi/wavelength * sin(theta)")
+    physics_group.add_argument("-tt", "--twoThetaSpace", action="store_true", default=False,
+                               help="Use two theta instead of q")
+
+    # --- BENCHMARK CONFIGURATION ---
+    benchmark_group = parser.add_argument_group("Benchmark configuration")
+    benchmark_group.add_argument("-nr", "--nRepeats", type=int, default=-1,
+                                 help="Number of repeats in the lattice")
+    benchmark_group.add_argument("-s", "--stdDev", type=float, default=0.0,
+                                 help="Std dev of noise in the lattice")
+
     return parser.parse_args(), parser
+
 
 
 def main():
@@ -87,11 +87,10 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    # Initialize DebyeCalculator (placeholder)
+    # Initialize DebyeCalculator
     calc = aesdebye.DebyeCalculator(args.nThreads, args.nCells, args.binsResolution,
                             args.useMPI, args.useGPU, not args.dontUseLocalHistogram,
-                            args.smallBins, args.pseudoCoal, args.fillGPU, not args.nonVerbose)
-    # calc.config.useGPUCellList = args.useGPUCellList
+                            False, args.pseudoCoal, args.fillGPU, not args.nonVerbose)
 
     # Load positions
     if args.nRepeats > 0:
