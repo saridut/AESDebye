@@ -58,8 +58,7 @@ PYBIND11_MODULE(_core, m) {
   py::options options;
   options.disable_function_signatures();
 
-  py::class_<Profile>(
-      m, "Profile", py::module_local(), R"pbdoc(
+  py::class_<Profile>(m, "Profile", py::module_local(), R"pbdoc(
         Profile - Scattering intensity profile data structure
         
         The Profile class represents a calculated scattering intensity profile containing
@@ -121,16 +120,21 @@ PYBIND11_MODULE(_core, m) {
       .def("__repr__", &Profile::toString)
 
       // props
-      .def_readonly("q", &Profile::q, 
-                    "Momentum transfer values in Å⁻¹. These are the q-values at which the intensity was calculated.")
-      .def_readonly("twoTheta", &Profile::twoTheta, 
-                    "Scattering angles in degrees (2θ). Converted from q-values using the specified wavelength.")
+      .def_readonly("q", &Profile::q,
+                    "Momentum transfer values in Å⁻¹. These are the q-values "
+                    "at which the intensity was calculated.")
+      .def_readonly("twoTheta", &Profile::twoTheta,
+                    "Scattering angles in degrees (2θ). Converted from "
+                    "q-values using the specified wavelength.")
       .def_readonly("intensity", &Profile::intensity,
-                    "Calculated scattering intensity values corresponding to each q-value.")
-      .def_readonly("calculationTime", &Profile::calculationTime,
-                    "Computation time in seconds required to calculate this profile.")
+                    "Calculated scattering intensity values corresponding to "
+                    "each q-value.")
+      .def_readonly(
+          "calculationTime", &Profile::calculationTime,
+          "Computation time in seconds required to calculate this profile.")
       .def_readonly("testPassed", &Profile::testPassed,
-                    "Boolean flag indicating whether internal validation tests passed during calculation.");
+                    "Boolean flag indicating whether internal validation tests "
+                    "passed during calculation.");
 
   // Classes
   py::class_<ParallelHelper>(m, "ParallelHelper", py::module_local())
@@ -224,12 +228,15 @@ PYBIND11_MODULE(_core, m) {
         >>> coords = [(0.0, 0.0, 0.0), (1.5, 0.0, 0.0), (0.75, 1.3, 0.0)]
         >>> positions = aesdebye.Positions(symbols, coords)
         )pbdoc")
-      .def_readwrite("element", &Positions::element, 
-                     "Default element type for atoms when not specified individually")
-      .def_readwrite("selectionIds", &Positions::selectionIds,
-                     "List of unique atom identifiers for selection and filtering")
-      .def_readwrite("chemicalSymbols", &Positions::chemicalSymbols,
-                     "List of chemical element symbols corresponding to each atom")
+      .def_readwrite(
+          "element", &Positions::element,
+          "Default element type for atoms when not specified individually")
+      .def_readwrite(
+          "selectionIds", &Positions::selectionIds,
+          "List of unique atom identifiers for selection and filtering")
+      .def_readwrite(
+          "chemicalSymbols", &Positions::chemicalSymbols,
+          "List of chemical element symbols corresponding to each atom")
       // static method for fromIndexList
       .def_static("fromIndexList", &Positions::fromIndexList,
                   py::arg("positions"), py::arg("indexList"))
@@ -555,12 +562,18 @@ PYBIND11_MODULE(_core, m) {
             for bin centers, corrected centers, and counts.
         )pbdoc")
       // properties
-      .def_property_readonly("uncorrectedCenters", &PDF::getUncorrectedCenters,
-                             "List of uncorrected bin centers in Angstroms. These are the nominal bin positions without finite-size corrections.")
-      .def_property_readonly("centers", &PDF::getCenters, 
-                             "List of corrected bin centers in Angstroms. These account for finite bin size effects and should be used for accurate analysis.")
-      .def_property_readonly("counts", &PDF::getCounts, 
-                             "List of histogram counts for each bin. These represent the number of atom pairs found at each distance.");
+      .def_property_readonly(
+          "uncorrectedCenters", &PDF::getUncorrectedCenters,
+          "List of uncorrected bin centers in Angstroms. These are the nominal "
+          "bin positions without finite-size corrections.")
+      .def_property_readonly(
+          "centers", &PDF::getCenters,
+          "List of corrected bin centers in Angstroms. These account for "
+          "finite bin size effects and should be used for accurate analysis.")
+      .def_property_readonly(
+          "counts", &PDF::getCounts,
+          "List of histogram counts for each bin. These represent the number "
+          "of atom pairs found at each distance.");
 
   py::class_<DebyeCalculator>(m, "DebyeCalculator", py::module_local(), R"pbdoc(
         DebyeCalculator - Main computational engine for Debye scattering calculations
@@ -761,48 +774,7 @@ PYBIND11_MODULE(_core, m) {
         >>> q_values = [i * 0.1 for i in range(1, 101)]  # 0.1 to 10.0 Å⁻¹
         >>> intensity = calc.calculateIntensity(pdf.centers, pdf.counts, q_values, "Pt")
         )pbdoc")
-                //     List of corrected bin centers.
-                // counts : List[float]
-                //     List of bin counts.
-                // qVector : List[float]
-                //     Vector of q values.
-                // elementI : str, optional
-                //     First element.
-                // elementJ : str, optional
-                //     Second element.
 
-                // Returns
-                // -------
-                // Tuple[List[float], List[float], bool]
-                //     Tuple containing a list of q values, intensity values, and a boolean flag.
-
-                // Parameters
-                // ----------
-                // start : float
-                //     The starting q/theta value.
-                // end : float
-                //         The ending q/theta value.
-                // nSteps : int
-                //         The number of q/theta steps.
-                // pdf : PDF, optional
-                //         The PDF object. Either provide this, or provide the centers and counts. The default is None.
-                // centers : List[float], optional
-                //         List of bin centers. These bin centers are generally the corrected bin centers. Only provide this if pdf is not provided.
-                // counts : List[int], optional
-                //         List of bin counts. Only provide this if pdf is not provided.
-
-                // Warning
-                // -------
-                // Either provide the PDF object or the centers and counts. Providing both will result in an error. Recommended way is to use to PDF.
-                // This calculateIntensity function has two overloads, one for each case.
-
-
-                // Returns
-                // -------
-                // Tuple[List[float], List[float], bool]
-                //     Tuple containing a list of q values, intensity values, and a flag indicating if the intensity is > 0.
-
-                // )pbdoc")
 
       .def("calculateIntensity",
            py::overload_cast<PDF &, double, double, int, bool, double>(
@@ -813,57 +785,60 @@ PYBIND11_MODULE(_core, m) {
       .def("calculateProfile",
            py::overload_cast<Positions &, double, double, int, bool, double,
                              std::string>(&DebyeCalculator::calculateProfile),
-           py::arg("Positions"), py::arg("start") = 0, py::arg("end") = 10,
+           py::arg("positions"), py::arg("start") = 0, py::arg("end") = 10,
            py::arg("steps") = 1000, py::arg("twoTheta") = false,
-           py::arg("wavelength") = .4, py::arg("filter") = "", R"pbdoc(
-                calculateProfile(positions: Positions, start: float = 0, end: float = 10, nSteps: int = 1000) -> Tuple[List[float], List[float], List[int], List[float]
+           py::arg("wavelength") = 0.4, py::arg("filter") = "", R"pbdoc(
+        calculateProfile(
+            positions: Positions,
+            start: float = 0,
+            end: float = 10,
+            steps: int = 1000,
+            twoTheta: bool = False,
+            wavelength: float = 0.4,
+            filter: str = ""
+        ) -> Tuple[PDF, Profile]
 
-                Calculate the intensity profile for a given set of positions.
+        Calculate the scattering intensity profile for a given set of positions.
 
-                Parameters
-                ----------
-                positions : Positions
-                    The positions object.
-                start : float, optional
-                    The starting q value. The default is 0.
-                end : float, optional
-                    The ending q value. The default is 10.
-                nSteps : int, optional
-                    The number of q steps. The default is 1000.
+        Parameters
+        ----------
+        positions : Positions
+            The positions object containing atomic coordinates.
+        start : float, optional
+            The starting q (or angle) value. Default is 0.
+        end : float, optional
+            The ending q (or angle) value. Default is 10.
+        steps : int, optional
+            Number of q steps. Default is 1000.
+        twoTheta : bool, optional
+            If True, interpret the range as 2θ values instead of q. Default is False.
+        wavelength : float, optional
+            Wavelength of the incident beam in Å. Default is 0.4.
+        filter : str, optional
+            Optional filter for scattering contributions (e.g., element selection). Default is "".
 
-                Returns
-                -------
-                Tuple[List[float], List[float], PDF]
-                    Tuple containing a list of q values, intensity values, and the PDF object.
-                )pbdoc")
+        Returns
+        -------
+        Tuple[PDF, Profile]
+            Tuple containing:
+            - PDF object with pair distribution data,
+            - Profile object with the scattering intensity profile.
+
+        Example
+        -------
+        >>> calc = aesdebye.DebyeCalculator()
+        >>> positions = aesdebye.readXYZ("structure.xyz")
+        >>> results = calc.calculateProfile(positions, start=0, end=10, steps=1000, wavelength=0.4)
+        >>> pdf, profile = results["Pt-Pt"]  # Accessing the PDF and Profile for Pt-Pt correlations
+        >>> pdf_full, profile_full = results["Full"]  # Accessing the total PDF and Profile
+     )pbdoc")
+
       .def_static("calculateASFProfile", &DebyeCalculator::calculateASFProfile,
                   py::arg("qVector"), py::arg("element"))
       .def_readonly("parallelHelper", &DebyeCalculator::parallelHelper,
                     "ParallelHelper object created by the DebyeCalculator")
       .def_readonly("cellList", &DebyeCalculator::cellList,
-                    "CellList object created by the DebyeCalculator")
-      .doc() = R"pbdoc(
-                DebyeCalculator(nThreads: int = -1, nCells: int = 15, useMPI: bool = False, useGPU: bool = False, useLocalHist: bool = True, verbose: bool = True) -> None
-
-                The main calculator object. All the computations with the library are done using this object.
-
-                Parameters
-                ----------
-                nThreads : int, optional
-                        The number of threads to use. The default is -1, which means all available threads.
-                nCells : int, optional
-                        The number of cells (in each dim) to use to partition the space. The default is 15.
-                binsResolution : float, optional
-                        The resolution of the bins. The default is 1.0. Has to be in range (0, 1.0].
-                useMPI : bool, optional
-                        Flag to indicate if MPI should be used, When this is True, the Python script must be called with an MPI runner. The default is False.
-                useGPU : bool, optional
-                        Flag to indicate if GPU should be used. This will result in a runtime error if the GPU version is not compiled. The default is False.
-                useLocalHist : bool, optional
-                        Flag to indicate if local histograms should be used. Keep this True except in cases where the computations need to be done on a crystalline sample. The default is True.
-                verbose : bool, optional
-                        Flag to indicate if verbose output should be enabled. The default is True.
-                )pbdoc";
+                    "CellList object created by the DebyeCalculator");
 
   m.def("generateData", &generateTestData, py::arg("lattice"),
         py::arg("nRepeats"), py::arg("noise") = 0.0, py::arg("seed") = 1,
