@@ -88,6 +88,11 @@ public:
         config.useGPUCellList = false;
 
         parallelHelper.printSection("DebyeCalculator initialized");
+
+        parallelHelper << ">> Please cite: \n";
+        parallelHelper << ">> AES-Debye, Navid Panchi et.al DOI: .... \n";
+
+        parallelHelper << " ------------------------------------------------\n";
         parallelHelper << ">> bins resolution: " << binsResolution << "\n";
         parallelHelper << config;
 
