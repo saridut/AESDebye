@@ -305,18 +305,15 @@ DebyeCalculator::calculateProfile(Positions &positions, double start, double end
 
     parallelHelper.wait();
 
-    if (positionPairs.size() > 1)
+    auto fullPDF = results[positionPairs[0]].first;
+    auto fullProfile = results[positionPairs[0]].second;
+    for (size_t i = 1; i < positionPairs.size(); i++)
     {
-        auto fullPDF = results[positionPairs[0]].first;
-        auto fullProfile = results[positionPairs[0]].second;
-        for (size_t i = 1; i < positionPairs.size(); i++)
-        {
-            fullProfile = fullProfile + results[positionPairs[i]].second;
-            fullPDF = fullPDF + results[positionPairs[i]].first;
-        }
-        results.emplace("Full", std::make_pair(std::move(fullPDF), std::move(fullProfile)));
+        fullProfile = fullProfile + results[positionPairs[i]].second;
+        fullPDF = fullPDF + results[positionPairs[i]].first;
     }
-    
+    results.emplace("total", std::make_pair(std::move(fullPDF), std::move(fullProfile)));
+
     return results;
 }
 

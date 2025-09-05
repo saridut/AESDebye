@@ -7,8 +7,6 @@
 
 namespace py = pybind11;
 
-#define STRINGIFY(x) #x
-
 PYBIND11_MODULE(_core, m) {
 
   py::module version = m.def_submodule("version", "Version information");
@@ -23,18 +21,18 @@ PYBIND11_MODULE(_core, m) {
 #else
   version.attr("mpi_enabled") = false;
 #endif
-  version.attr("version") = STRINGIFY(VERSION_INFO);
-  version.attr("compiler") = STRINGIFY(CXX_COMPILER);
+  version.attr("version") = VERSION_INFO;
+  version.attr("compiler") = CXX_COMPILER;
 
   // options to make the docstring more informative
   m.doc() = R"pbdoc(
         aesdebye - High-Performance Debye Scattering Calculations
-        
-        aesdebye is a high-performance library for calculating accurate pair distribution 
-        functions (PDFs) from atomic structures using the Debye scattering equation. This 
-        implementation is based on the AES-Debye algorithm for efficient and scalable 
+
+        aesdebye is a high-performance library for calculating accurate pair distribution
+        functions (PDFs) from atomic structures using the Debye scattering equation. This
+        implementation is based on the AES-Debye algorithm for efficient and scalable
         computation of scattering profiles.
-        
+
         Key Features:
         - Fast PDF calculations using optimized algorithms
         - GPU acceleration support (CUDA)
@@ -42,11 +40,11 @@ PYBIND11_MODULE(_core, m) {
         - Support for XYZ and LAMMPS trajectory files
         - Efficient memory management and data structures
         - Python bindings for easy integration
-        
-        The library provides classes for atomic positions (Positions), pair distribution 
-        functions (PDF), scattering profiles (Profile), and the main calculator 
+
+        The library provides classes for atomic positions (Positions), pair distribution
+        functions (PDF), scattering profiles (Profile), and the main calculator
         (DebyeCalculator) along with parallel computing utilities (ParallelHelper).
-        
+
         Example:
             >>> import aesdebye
             >>> calc = aesdebye.DebyeCalculator()
@@ -60,16 +58,16 @@ PYBIND11_MODULE(_core, m) {
 
   py::class_<Profile>(m, "Profile", py::module_local(), R"pbdoc(
         Profile - Scattering intensity profile data structure
-        
+
         The Profile class represents a calculated scattering intensity profile containing
-        q-values, two-theta angles, and corresponding intensity values. This class is 
+        q-values, two-theta angles, and corresponding intensity values. This class is
         typically returned by intensity calculation methods and provides utilities for
         data export and visualization.
-        
+
         Note:
             Profile objects cannot be directly instantiated in Python. They are created
             as results of calculations performed by DebyeCalculator methods.
-            
+
         Attributes:
             q (List[float]): Momentum transfer values (Å⁻¹)
             twoTheta (List[float]): Scattering angles in degrees
@@ -81,8 +79,8 @@ PYBIND11_MODULE(_core, m) {
         toCSV(filename: str) -> None
 
         Export the scattering profile to a CSV file.
-        
-        The CSV file will contain columns for q-values, two-theta angles, and 
+
+        The CSV file will contain columns for q-values, two-theta angles, and
         intensity values, making it suitable for further analysis or plotting
         with external tools.
 
@@ -91,7 +89,7 @@ PYBIND11_MODULE(_core, m) {
         filename : str
             Path to the output CSV file. The file will be created or overwritten
             if it already exists.
-            
+
         Example
         -------
         >>> profile = calc.calculateIntensity(pdf, 0, 10, 1000)
@@ -101,7 +99,7 @@ PYBIND11_MODULE(_core, m) {
       // operators
       .def(py::self + py::self, R"pbdoc(
         Add two Profile objects element-wise.
-        
+
         Returns
         -------
         Profile
@@ -109,7 +107,7 @@ PYBIND11_MODULE(_core, m) {
         )pbdoc")
       .def(py::self - py::self, R"pbdoc(
         Subtract two Profile objects element-wise.
-        
+
         Returns
         -------
         Profile
@@ -181,21 +179,21 @@ PYBIND11_MODULE(_core, m) {
 
   py::class_<Positions>(m, "Positions", py::module_local(), R"pbdoc(
         Positions - Atomic structure data container
-        
-        The Positions class represents atomic positions and associated metadata for a 
+
+        The Positions class represents atomic positions and associated metadata for a
         molecular or crystalline system. It stores atomic coordinates, chemical symbols,
         selection IDs, and simulation box information. This class is the primary input
         for PDF and intensity calculations.
-        
+
         The class provides methods for data manipulation including filtering by element
         type or selection ID, subsampling, and file I/O operations. It also handles
         periodic boundary conditions and spatial partitioning for efficient calculations.
-        
+
         Attributes:
             element (str): Default element type for all atoms
             selectionIds (List[str]): Unique identifiers for each atom
             chemicalSymbols (List[str]): Chemical element symbols for each atom
-            
+
         Example:
             >>> positions = aesdebye.readXYZ("structure.xyz")
             >>> print(f"Number of atoms: {positions.size()}")
@@ -221,7 +219,7 @@ PYBIND11_MODULE(_core, m) {
             Minimum coordinate value for automatic box size detection
         boxMax : float, optional
             Maximum coordinate value for automatic box size detection
-            
+
         Example
         -------
         >>> symbols = ['C', 'C', 'O']
@@ -409,26 +407,26 @@ PYBIND11_MODULE(_core, m) {
 
   py::class_<PDF>(m, "PDF", py::module_local(), R"pbdoc(
         PDF - Pair Distribution Function data structure
-        
+
         The PDF class represents a calculated pair distribution function containing
         histogram data with bin centers, counts, and corrected centers. This class
         stores the results of PDF calculations and provides methods for data export,
         visualization, and further analysis.
-        
+
         The PDF contains both corrected and uncorrected bin centers, where corrected
         centers account for the finite bin size effects in the histogram. The class
         supports arithmetic operations for combining multiple PDFs and provides
         efficient storage using internal histogram structures.
-        
+
         Attributes:
             centers (List[float]): Corrected bin centers accounting for finite bin effects
             uncorrectedCenters (List[float]): Original bin centers without corrections
             counts (List[float]): Histogram counts for each bin
-            
+
         Note:
             PDF objects are typically created as results of DebyeCalculator.calculatePDF()
             methods rather than being instantiated directly.
-            
+
         Example:
             >>> calc = aesdebye.DebyeCalculator()
             >>> pdf = calc.calculatePDF(positions)
@@ -448,23 +446,23 @@ PYBIND11_MODULE(_core, m) {
             Flag indicating whether this PDF represents correlations within the same
             set of positions (self-correlation) or between different position sets
             (cross-correlation). Default is True.
-            
+
         Note:
             Direct instantiation is rarely needed. PDFs are typically created by
             DebyeCalculator methods.
         )pbdoc")
       .def(py::self += py::self, R"pbdoc(
         Add another PDF to this PDF in-place.
-        
+
         The two PDFs must have compatible box sizes and bin structures.
         This operation combines the histogram counts and updates the
         internal data structures accordingly.
-        
+
         Parameters
         ----------
         other : PDF
             Another PDF object to add to this one
-            
+
         Returns
         -------
         PDF
@@ -475,7 +473,7 @@ PYBIND11_MODULE(_core, m) {
         save(filename: str) -> None
 
         Save the PDF to a binary file for efficient storage and loading.
-        
+
         The binary format preserves all internal data structures and metadata,
         allowing for exact reconstruction of the PDF object. This is the
         recommended format for intermediate storage during calculations.
@@ -485,12 +483,12 @@ PYBIND11_MODULE(_core, m) {
         filename : str
             Path to the output binary file. The file will be created or
             overwritten if it already exists.
-            
+
         See Also
         --------
         load : Load a PDF from a binary file
         toCSV : Export to human-readable CSV format
-        
+
         Example
         -------
         >>> pdf.save("my_pdf.bin")
@@ -499,7 +497,7 @@ PYBIND11_MODULE(_core, m) {
         load(filename: str) -> float
 
         Load the PDF from a binary file created with save().
-        
+
         This method reconstructs the complete PDF object from the binary
         file, including all internal histogram data and metadata.
 
@@ -512,7 +510,7 @@ PYBIND11_MODULE(_core, m) {
         -------
         float
             The box size of the loaded PDF
-            
+
         Example
         -------
         >>> pdf = aesdebye.PDF()
@@ -523,7 +521,7 @@ PYBIND11_MODULE(_core, m) {
         toCSV(filename: str, complete: bool = False) -> None
 
         Export the PDF to a CSV file for analysis and visualization.
-        
+
         The CSV file contains columns for bin centers, corrected centers,
         and counts, making it suitable for plotting and further analysis
         with external tools like Excel, MATLAB, or Python plotting libraries.
@@ -537,7 +535,7 @@ PYBIND11_MODULE(_core, m) {
             If False (default), only non-empty bins are exported to reduce
             file size. If True, all bins including empty ones are exported.
             Setting to True can result in very large files.
-            
+
         Example
         -------
         >>> pdf.toCSV("pdf_data.csv")
@@ -547,7 +545,7 @@ PYBIND11_MODULE(_core, m) {
         readCSV(filename: str) -> None
 
         Read PDF data from a CSV file.
-        
+
         This method loads PDF data from a CSV file with the expected format
         (bin centers, corrected centers, counts). The CSV should match the
         format produced by toCSV().
@@ -556,7 +554,7 @@ PYBIND11_MODULE(_core, m) {
         ----------
         filename : str
             Path to the input CSV file containing PDF data
-            
+
         Note:
             The CSV file must have the correct format with appropriate columns
             for bin centers, corrected centers, and counts.
@@ -577,16 +575,16 @@ PYBIND11_MODULE(_core, m) {
 
   py::class_<DebyeCalculator>(m, "DebyeCalculator", py::module_local(), R"pbdoc(
         DebyeCalculator - Main computational engine for Debye scattering calculations
-        
+
         The DebyeCalculator class is the primary interface for performing pair distribution
         function (PDF) and scattering intensity calculations using the AES-Debye algorithm.
         It provides high-performance computation with support for parallel processing via
         OpenMP and MPI, as well as GPU acceleration through CUDA.
-        
+
         The calculator handles the complete workflow from atomic positions to scattering
         profiles, including spatial partitioning via cell lists, histogram generation,
         and intensity calculations with atomic scattering factors.
-        
+
         Key Features:
         - Efficient PDF calculations using optimized algorithms
         - Cell list spatial partitioning for O(N) scaling
@@ -594,7 +592,7 @@ PYBIND11_MODULE(_core, m) {
         - MPI support for distributed computing
         - GPU acceleration (CUDA) when available
         - Flexible bin resolution and histogram management
-        
+
         Example:
             >>> calc = aesdebye.DebyeCalculator(nThreads=8, useGPU=True)
             >>> pdf = calc.calculatePDF(positions)
@@ -638,23 +636,23 @@ PYBIND11_MODULE(_core, m) {
             Fill GPU memory completely for maximum performance. Default is False.
         verbose : bool, optional
             Enable verbose output for debugging and monitoring. Default is True.
-            
+
         Raises
         ------
         RuntimeError
             If GPU support is requested but not available in the build.
         ValueError
             If binsResolution is not in the valid range (0, 1].
-            
+
         Example
         -------
         >>> # Basic calculator for small systems
         >>> calc = aesdebye.DebyeCalculator()
-        >>> 
+        >>>
         >>> # High-performance setup for large systems
         >>> calc = aesdebye.DebyeCalculator(
-        ...     nThreads=16, 
-        ...     nCells=20, 
+        ...     nThreads=16,
+        ...     nCells=20,
         ...     useGPU=True,
         ...     verbose=False
         ... )
@@ -666,7 +664,7 @@ PYBIND11_MODULE(_core, m) {
         calculatePDF(positionsI: Positions, positionsJ: Positions) -> PDF
 
         Calculate the pair distribution function between two sets of atomic positions.
-        
+
         This method computes the cross-correlation PDF between two different position
         sets, which is useful for analyzing correlations between different atom types
         or different regions of a system.
@@ -686,7 +684,7 @@ PYBIND11_MODULE(_core, m) {
             Calculated pair distribution function containing histogram data with
             bin centers, counts, and corrected centers accounting for finite
             bin size effects.
-            
+
         Example
         -------
         >>> calc = aesdebye.DebyeCalculator()
@@ -701,7 +699,7 @@ PYBIND11_MODULE(_core, m) {
         calculatePDF(positionsI: Positions) -> PDF
 
         Calculate the pair distribution function for a single set of atomic positions.
-        
+
         This method computes the self-correlation PDF within a single position set,
         which represents the standard radial distribution function showing how
         atomic density varies as a function of distance from any given atom.
@@ -718,7 +716,7 @@ PYBIND11_MODULE(_core, m) {
             Calculated pair distribution function containing histogram data with
             bin centers, counts, and corrected centers. The samePositions flag
             will be set to True for proper normalization.
-            
+
         Example
         -------
         >>> calc = aesdebye.DebyeCalculator()
@@ -737,7 +735,7 @@ PYBIND11_MODULE(_core, m) {
         calculateIntensity(centers: List[float], counts: List[float], qVector: List[float], elementI: str = "", elementJ: str = "") -> List[float]
 
         Calculate scattering intensity from PDF data at specified q-values.
-        
+
         This method computes the scattering intensity using the Debye scattering equation
         from pre-calculated PDF histogram data. It applies atomic scattering factors
         and performs the Fourier transform to convert from real space (PDF) to
@@ -766,7 +764,7 @@ PYBIND11_MODULE(_core, m) {
         List[float]
             Calculated scattering intensity values corresponding to each q-value.
             Units are arbitrary but proportional to scattered intensity.
-            
+
         Example
         -------
         >>> calc = aesdebye.DebyeCalculator()
@@ -774,7 +772,6 @@ PYBIND11_MODULE(_core, m) {
         >>> q_values = [i * 0.1 for i in range(1, 101)]  # 0.1 to 10.0 Å⁻¹
         >>> intensity = calc.calculateIntensity(pdf.centers, pdf.counts, q_values, "Pt")
         )pbdoc")
-
 
       .def("calculateIntensity",
            py::overload_cast<PDF &, double, double, int, bool, double>(
@@ -830,24 +827,56 @@ PYBIND11_MODULE(_core, m) {
         >>> positions = aesdebye.readXYZ("structure.xyz")
         >>> results = calc.calculateProfile(positions, start=0, end=10, steps=1000, wavelength=0.4)
         >>> pdf, profile = results["Pt-Pt"]  # Accessing the PDF and Profile for Pt-Pt correlations
-        >>> pdf_full, profile_full = results["Full"]  # Accessing the total PDF and Profile
+        >>> pdf_total, profile_total = results["total"]  # Accessing the total PDF and Profile
      )pbdoc")
 
       .def_static("calculateASFProfile", &DebyeCalculator::calculateASFProfile,
-                  py::arg("qVector"), py::arg("element"))
+                  py::arg("qVector"), py::arg("element"), R"pbdoc(
+        calculateASFProfile(qVector: List[float], element: str) -> List[float]
+
+        Calculate the atomic scattering factor (ASF) profile for a given element
+        at specified q-values [values have to be Å⁻¹].
+
+        This method evaluates the atomic scattering factor as a function of
+        momentum transfer q using tabulated scattering factor coefficients.
+
+        Parameters
+        ----------
+        qVector : List[float]
+            Momentum transfer values (q) in Å⁻¹ at which to evaluate the ASF.
+        element : str
+            Chemical symbol of the element (e.g., "Pt", "Au").
+
+        Returns
+        -------
+        List[float]
+            Atomic scattering factor values corresponding to each q-value.
+
+        Example
+        -------
+        >>> q_values = [i * 0.1 for i in range(1, 101)]  # 0.1 to 10.0 Å⁻¹
+        >>> asf_profile_values = DebyeCalculator.calculateASFProfile(q_values, "Pt")
+    )pbdoc")
       .def_readonly("parallelHelper", &DebyeCalculator::parallelHelper,
-                    "ParallelHelper object created by the DebyeCalculator")
-      .def_readonly("cellList", &DebyeCalculator::cellList,
-                    "CellList object created by the DebyeCalculator");
+                    "ParallelHelper object created by the DebyeCalculator",
+                    R"pbdoc(
+        parallelHelper: ParallelHelper
+        ParallelHelper object created by the DebyeCalculator for managing
+        parallel execution settings and MPI communication.
+        )pbdoc")
+      .def_readonly("cellList", &DebyeCalculator::cellList, R"pbdoc(
+        cellList: CellList
+        CellList object used for spatial partitioning of atomic positions.
+        )pbdoc");
 
   m.def("generateData", &generateTestData, py::arg("lattice"),
         py::arg("nRepeats"), py::arg("noise") = 0.0, py::arg("seed") = 1,
         py::arg("element") = "Pt",
         R"pbdoc(
         generateData(lattice: float, nRepeats: int, noise: float = 0.0, seed: int = 1, element: str = "Pt") -> Positions
-        
+
         Generate synthetic FCC (face-centered cubic) crystal structures for testing and benchmarking.
-        
+
         This utility function creates perfect FCC lattice structures with optional Gaussian
         noise for realistic atomic positions. It's useful for testing algorithms, benchmarking
         performance, and creating reference structures for validation.
@@ -871,12 +900,12 @@ PYBIND11_MODULE(_core, m) {
         -------
         Positions
             Generated atomic positions with FCC structure and specified parameters.
-            
+
         Example
         -------
         >>> # Perfect platinum crystal
         >>> positions = aesdebye.generateData(lattice=3.92, nRepeats=10)
-        >>> 
+        >>>
         >>> # Realistic structure with thermal motion
         >>> positions = aesdebye.generateData(lattice=3.92, nRepeats=5, noise=0.05, element="Au")
         >>> print(f"Generated {positions.size()} atoms")
@@ -885,9 +914,9 @@ PYBIND11_MODULE(_core, m) {
   m.def("readXYZ", &readXYZ, py::arg("filename"), py::arg("delimiter") = " ",
         py::arg("skipLines") = 2, py::arg("typeMapping") = "0:None", R"pbdoc(
         readXYZ(filename: str, delimiter: str = " ", skipLines: int = 2, typeMapping: str = "0:None") -> Positions
-        
+
         Read atomic positions from an XYZ format file.
-        
+
         This function parses standard XYZ files containing atomic coordinates and element
         information. It supports various XYZ formats including those with additional
         columns for atom types or selection IDs.
@@ -912,20 +941,20 @@ PYBIND11_MODULE(_core, m) {
         Positions
             Positions object containing the atomic coordinates, element symbols,
             and metadata from the XYZ file.
-            
+
         Raises
         ------
         FileNotFoundError
             If the specified file does not exist.
         ValueError
             If the file format is invalid or cannot be parsed.
-            
+
         Example
         -------
         >>> # Read standard XYZ file
         >>> positions = aesdebye.readXYZ("structure.xyz")
         >>> print(f"Loaded {positions.size()} atoms")
-        >>> 
+        >>>
         >>> # Read CSV-formatted coordinate file
         >>> positions = aesdebye.readXYZ("coords.csv", delimiter=",", skipLines=1)
         )pbdoc");
