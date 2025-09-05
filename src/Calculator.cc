@@ -119,7 +119,7 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
         start = (int64)std::floor(std::sqrt((double)(parallelHelper.worldRank) /
                                             (parallelHelper.worldSize)) *
                                   (double) positionsI.size());
-        std::cout << "thread: " << parallelHelper.worldRank << " PositionsI start: " << start << " , stop: " << stop << "\n";
+        parallelHelper << "thread: " << parallelHelper.worldRank << " PositionsI start: " << start << " , stop: " << stop << "\n";
     }
     else
     {

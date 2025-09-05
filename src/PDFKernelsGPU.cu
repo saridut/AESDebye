@@ -186,10 +186,10 @@ __global__ void calculateHistogramKernel(int64 start, int64 N1, int64 N2, int64 
 
 
 
-void printLaunchConfig(dim3 blockSize, dim3 gridSize)
+void printLaunchConfig(dim3 blockSize, dim3 gridSize, ParallelHelper& ParallelHelper)
 {
-    std::cout << "Block size: " << blockSize.x << ", " << blockSize.y << ", " << blockSize.z << std::endl;
-    std::cout << "Grid size: " << gridSize.x << ", " << gridSize.y << ", " << gridSize.z << std::endl;
+    ParallelHelper << "Block size: " << blockSize.x << ", " << blockSize.y << ", " << blockSize.z << "\n";
+    ParallelHelper << "Grid size: " << gridSize.x << ", " << gridSize.y << ", " << gridSize.z << "\n";
 }
 
 dim3 maxGrid(dim3 blockSize, int64 sizeI, int64 sizeJ)

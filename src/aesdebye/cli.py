@@ -1,14 +1,12 @@
 import argparse
 import sys
+import glob
 
 import ase
 import ase.io
 import matplotlib.pyplot as plt
 
 import aesdebye
-
-import argparse
-
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -18,11 +16,11 @@ def parse_args():
     # --- INPUT CONFIGURATION ---
     input_group = parser.add_argument_group("Input configuration")
     input_group.add_argument(
-        "-f",
-        "--inputFilename",
+        "-i",
+        "--inputFiles",
         type=str,
         default="",
-        help="Input filename, any format supported by the ase.io.read function",
+        help="Input filename/inputs filenames separted with comma/glob pattern, any format supported by the ase.io.read function",
     )
 
     # --- OUTPUT OPTIONS ---
@@ -108,7 +106,7 @@ def parse_args():
         "-st", "--start", type=float, default=0.0, help="Start of the q/theta range"
     )
     physics_group.add_argument(
-        "-e", "--end", type=float, default=20.0, help="End of the q/theta range"
+        "-e", "--end", type=float, default=10.0, help="End of the q/theta range"
     )
     physics_group.add_argument(
         "-stps",
@@ -155,9 +153,9 @@ def parse_args():
 def main():
     args, parser = parse_args()
 
-    # Ensure nRepeats > 0 or inputFilename is provided
-    if args.nRepeats < 0 and not args.inputFilename:
-        print("Either nRepeats or inputFilename must be provided", file=sys.stderr)
+    # Ensure nRepeats > 0 or inputFiles is provided
+    if args.nRepeats < 0 and not args.inputFiles:
+        print("Either nRepeats or inputFiles must be provided", file=sys.stderr)
         parser.print_help()
         sys.exit(1)
 
@@ -175,34 +173,87 @@ def main():
         verbose=not args.nonVerbose,
     )
 
-    # Load positions
+    results = {}
+
+    # --- Benchmark mode (synthetic data) ---
     if args.nRepeats > 0:
-        positions = aesdebye.generateData(3.89070, args.nRepeats, args.stdDev, 10)
-    else:
-        atoms = ase.io.read(args.inputFilename)
-        positions = aesdebye.Positions(
-            chemicalSymbols=atoms.get_chemical_symbols(),
-            coordinates=atoms.get_positions(),
+        prefix = f"{args.nRepeats}_repeats_{args.stdDev}_stdDev_"
+        positions = aesdebye.generateData(
+            lattice=3.89070,
+            nRepeats=args.nRepeats,
+            noise=args.stdDev,
+            seed=10,
+            element="None"
+        )
+        bench_results = calc.calculateProfile(
+            positions,
+            args.start,
+            args.end,
+            args.steps,
+            args.twoThetaSpace,
+            args.wavelength,
+            "",
         )
 
-    results = calc.calculateProfile(
-        positions,
-        args.start,
-        args.end,
-        args.steps,
-        args.twoThetaSpace,
-        args.wavelength,
-        "",
-    )
+        if not args.nonVerbose and calc.parallelHelper.world_rank == 0:
+            print(bench_results["total"][1])  # print the total profile
 
-    if not args.nonVerbose and calc.parallelHelper.world_rank == 0:
-        last_pdf, last_profile = list(results.values())[-1]
-        print(last_profile)
+        if args.outputDir and calc.parallelHelper.world_rank == 0:
+            for name, (pdf, profile) in bench_results.items():
+                output_prefix = f"{args.outputDir}/{prefix}_{name}_"
+                pdf.toCSV(output_prefix + "pdf.csv")
+                profile.toCSV(output_prefix + "profile.csv")
+        results[f"Bench_{prefix}"] = bench_results
 
+    # --- Computation for files ---
+    else:
+        # Parse inputFiles: comma-separated or glob
+        input_files = []
+        for token in args.inputFiles.split(","):
+            input_files.extend(glob.glob(token.strip()))
+
+        input_files = list(set(input_files))  # Remove duplicates
+
+        if not input_files:
+            print(f"No files matched inputFiles: {args.inputFiles}", file=sys.stderr)
+            sys.exit(1)
+
+        for filename in input_files:
+            atoms = ase.io.read(filename)
+            positions = aesdebye.Positions(
+                chemicalSymbols=atoms.get_chemical_symbols(),
+                coordinates=atoms.get_positions(),
+            )
+
+            file_results = calc.calculateProfile(
+                positions,
+                args.start,
+                args.end,
+                args.steps,
+                args.twoThetaSpace,
+                args.wavelength,
+                "",
+            )
+
+            if not args.nonVerbose and calc.parallelHelper.world_rank == 0:
+                print(f"Results for {filename}: {file_results['total'][1]}")
+
+            if args.outputDir and calc.parallelHelper.world_rank == 0:
+                prefix = filename.rsplit(".", 1)[0]
+                for name, (pdf, profile) in file_results.items():
+                    output_prefix = f"{args.outputDir}/{prefix}_{name}_"
+                    pdf.toCSV(output_prefix + "pdf.csv")
+                    profile.toCSV(output_prefix + "profile.csv")
+
+            results[filename] = file_results
+
+    # --- Plotting ---
     if args.plot and calc.parallelHelper.world_rank == 0:
         fig, ax = plt.subplots(figsize=(8, 6))
-        for name, (_, profile) in results.items():
-            ax.semilogy(profile.q, profile.intensity, label=name)
+        for source, res in results.items():
+            for name, (_, profile) in res.items():
+                label = f"{source}-{name}" if isinstance(source, str) else name
+                ax.semilogy(profile.q, profile.intensity, label=label)
 
         ax.set_xlabel(
             r"$q$ [$\AA^{-1}$]" if not args.twoThetaSpace else r"$2\theta$ [deg]"
@@ -211,16 +262,6 @@ def main():
         ax.legend()
         plt.show()
 
-    if args.outputDir and calc.parallelHelper.world_rank == 0:
-        prefix = (
-            args.inputFilename.rsplit(".", 1)[0]
-            if args.inputFilename
-            else f"{args.nRepeats}_repeats_{args.stdDev}_stdDev_"
-        )
-        for name, (pdf, profile) in results.items():
-            output_prefix = f"{args.outputDir}/{prefix}_{name}_"
-            pdf.toCSV(output_prefix + "_pdf.csv")
-            profile.toCSV(output_prefix + "_profile.csv")
 
 
 if __name__ == "__main__":

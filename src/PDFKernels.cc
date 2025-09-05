@@ -455,7 +455,7 @@ void calculatePDFCPU(Positions const &positionsI, Positions const &positionsJ, s
     if (config.useCellList) {
         start = 0;
         stop = sortedCellPairs.size(); // still need to deal with cellPairsList for multiple GPUs
-        std::cout << ">> Thread(" << parallelHelper.worldRank << ") CellPairsList size: " << stop - start << "\n";
+        // std::cout << ">> Thread(" << parallelHelper.worldRank << ") CellPairsList size: " << stop - start << "\n";
         // calculate the PDF - notice how we only pass the vector datastructure
         if (config.useLocalHistogram) {
             calculatePDFKernel<true>(positionsI, positionsJ,
