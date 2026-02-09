@@ -242,7 +242,7 @@ void calculatePDFGPU(Positions const &positionsI, Positions const &positionsJ, s
             parallelHelper << "Using GPU cell list" << "\n";
             blockSize = dim3(2, 512);
             gridSize = config.fillGPU ? maxGridCells(blockSize, sortedCellPairs.size()) : dim3(1, (int) 108 * 32);
-            printLaunchConfig(blockSize, gridSize);
+            printLaunchConfig(blockSize, gridSize, parallelHelper);
             calculateHistogramKernel<true><<<gridSize, blockSize>>>(sortedCellPairs.size(),
                                                                     sortedPairsList_dev.sortedPairsList,
                                                                     positions1_dev.X, positions1_dev.Y, positions1_dev.Z,
@@ -274,7 +274,7 @@ void calculatePDFGPU(Positions const &positionsI, Positions const &positionsJ, s
             parallelHelper << "Using GPU cell list" << "\n";
             blockSize = dim3(1, 1024);
             gridSize = config.fillGPU ? maxGridCells(blockSize, sortedCellPairs.size()) : dim3(1, (int) 108 * 32);
-            printLaunchConfig(blockSize, gridSize);
+            printLaunchConfig(blockSize, gridSize, parallelHelper);
             calculateHistogramKernel<false><<<gridSize, blockSize>>>(sortedCellPairs.size(),
                                                                     sortedPairsList_dev.sortedPairsList,
                                                                     positions1_dev.X, positions1_dev.Y, positions1_dev.Z,
