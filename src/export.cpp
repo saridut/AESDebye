@@ -571,7 +571,12 @@ PYBIND11_MODULE(_core, m) {
       .def_property_readonly(
           "counts", &PDF::getCounts,
           "List of histogram counts for each bin. These represent the number "
-          "of atom pairs found at each distance.");
+          "of atom pairs found at each distance.")
+      .def_readonly("calculationTime", &PDF::calculationTime,
+                    "Time taken for the PDF calculation in seconds.")
+      .def_readonly("testPassed", &PDF::testPassed,
+                    "Boolean flag indicating whether internal "
+                    "validation tests passed during PDF calculation.");
 
   py::class_<DebyeCalculator>(m, "DebyeCalculator", py::module_local(), R"pbdoc(
         DebyeCalculator - Main computational engine for Debye scattering calculations
@@ -829,6 +834,29 @@ PYBIND11_MODULE(_core, m) {
         >>> pdf, profile = results["Pt-Pt"]  # Accessing the PDF and Profile for Pt-Pt correlations
         >>> pdf_total, profile_total = results["total"]  # Accessing the total PDF and Profile
      )pbdoc")
+      .def(
+          "calculateProfile",
+          [](DebyeCalculator &self,
+             const std::vector<std::array<double, 3>> &coords,
+             std::optional<std::vector<std::string>> elements, double start,
+             double end, int steps, bool twoTheta, double wavelength,
+             std::string filter) {
+            std::vector<std::string> el_list;
+            if (!elements || elements->empty()) {
+              el_list.assign(coords.size(), "None");
+            } else {
+              el_list = *elements;
+            }
+
+            // Initialize Positions and call existing method
+            Positions pos(el_list, coords);
+            return self.calculateProfile(pos, start, end, steps, twoTheta,
+                                         wavelength, filter);
+          },
+          py::arg("positions"), py::arg("elements") = py::none(),
+          py::arg("start") = 0, py::arg("end") = 10, py::arg("steps") = 1000,
+          py::arg("twoTheta") = false, py::arg("wavelength") = 0.4,
+          py::arg("filter") = "")
 
       .def_static("calculateASFProfile", &DebyeCalculator::calculateASFProfile,
                   py::arg("qVector"), py::arg("element"), R"pbdoc(

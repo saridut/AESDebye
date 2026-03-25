@@ -7,6 +7,7 @@ import ase.io
 import matplotlib.pyplot as plt
 
 import aesdebye
+from pathlib import Path
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -239,7 +240,7 @@ def main():
                 print(f"Results for {filename}: {file_results['total'][1]}")
 
             if args.outputDir and calc.parallelHelper.world_rank == 0:
-                prefix = filename.rsplit(".", 1)[0]
+                prefix = Path(filename).stem
                 for name, (pdf, profile) in file_results.items():
                     output_prefix = f"{args.outputDir}/{prefix}_{name}_"
                     pdf.toCSV(output_prefix + "pdf.csv")
