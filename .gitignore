@@ -7,3 +7,4 @@ lammps_plugin/output
 .kiro
 docs
 *.xyz
+extern/pybind11
