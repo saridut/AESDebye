@@ -31,7 +31,7 @@ endif()
 
 message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
-option(AUTOCONFIG "Enable automatic configuration" ON)
+option(AUTOCONFIG "Enable automatic configuration" OFF)
 option(BUILD_LAMMPS_PLUGIN "Build LAMMPS plugin" OFF)
 
 find_package(OpenMP REQUIRED)
