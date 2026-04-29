@@ -1,6 +1,6 @@
 #include <Profile.hpp>
-// #include <asciichart/include/ascii/ascii.h>
-#include "../extern/asciichart/include/ascii/ascii.h"
+#include <asciichart/include/ascii/ascii.h>
+// #include "../extern/asciichart/include/ascii/ascii.h"
 
 
 Profile Profile::operator+(const Profile &rhs) const
