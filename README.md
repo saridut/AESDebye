@@ -11,8 +11,8 @@ AES-DEBYE is a high-performance software package designed for calculating Debye 
 Current installation approach requires you to clone this repository and install it using `pip`. We recommend using a dedicated conda/mamba environment for this purpose.
 
 ```bash
-git clone
-cd aesdebye
+git clone --recursive git@gitlab.cs.fau.de:iq23adyz/debye.git
+cd debye
 pip install . -v
 ```
 
