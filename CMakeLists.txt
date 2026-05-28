@@ -14,7 +14,7 @@ project(
     LANGUAGES CXX
 )
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT CMAKE_CXX_COMPILER)
@@ -31,7 +31,7 @@ endif()
 
 message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
-option(AUTOCONFIG "Enable automatic configuration" OFF)
+option(AUTOCONFIG "Enable automatic configuration" ON)
 option(BUILD_LAMMPS_PLUGIN "Build LAMMPS plugin" OFF)
 
 find_package(OpenMP REQUIRED)
@@ -66,9 +66,7 @@ add_library(common_settings INTERFACE)
 target_compile_options(common_settings INTERFACE 
     -O3 -march=native -w -g -ffast-math
 )
-target_compile_definitions(common_settings INTERFACE 
-    _GLIBCXX_USE_CXX11_ABI=0
-)
+
 target_link_libraries(common_settings INTERFACE 
     stdc++
 )
@@ -135,6 +133,8 @@ target_compile_definitions(_core PRIVATE
 add_executable(debye_cpp src/cli.cpp)
 target_link_libraries(debye_cpp PRIVATE debyeLib)
 
+# add flags for CLI
+target_compile_options(debye_cpp PRIVATE -O3 -march=native -w -g -ffast-math)
 # --- Installation ---
 macro(install_symlink filepath sympath)
     install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${filepath} ${sympath})")

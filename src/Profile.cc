@@ -43,10 +43,12 @@ bool Profile::test()
         if (i < 0)     // check if intensity is negative
         {
             testPassed = false;
+            std::cerr << "Test failed: Negative intensity value found: " << i << std::endl;
             return testPassed;
         }
         sum += i;
     }
+    std::cout << "test passed: Total intensity = " << sum << std::endl;
     testPassed = sum > 0; // check if the total intensity > 0;
     return testPassed;
 }

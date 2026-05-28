@@ -28,6 +28,17 @@ constexpr size_t N_STRIP_MINED = 512;
 constexpr int64 MAX_BIN_ERROR = 1'732'109'250'000; // see below for calculation - overestimation for normal case by a bit
 constexpr int MAX_DELTA_UPDATE_COUNT = 5'324'935; // 964 ordinaryly, but underestimated a bit
 
+/* python code to get the bin error and delta count
+scaling_factor = 1_000_000
+rh = 1732100
+limit = rh * rh + rh + 1
+limit *= scaling_factor
+limit -= 750000
+center = rh * rh * scaling_factor
+int64_max = 9223372036854775807
+print(f"max bin error {limit - center}")
+*/
+
 /**
  * @brief Calculation Configuration
  * 
@@ -56,8 +67,6 @@ struct CalculationConfig
     }
 
 };
-
-
 
 namespace helpers{
 
@@ -121,25 +130,3 @@ inline std::vector<double> linspace(double start, double end, int nSteps) {
     return result;
 }
 }
-
-
-
-/* python code to get the bin error and delta count
-scaling
-scaling_factor = 1_000_000_0 # remove last zero
-rh = 173210 # add one zero
-limit = rh * rh + rh + 1
-limit *= scaling_factor
-limit -= 750000
-center = rh * rh * scaling_factor
-int64_max = 9223372036854775807
-print(f"max bin error {limit - center}")
-
-// Explanation from Rose-X
-@@@ (A+B)^2 = A^2 + B^2 + 2AB taken B = 0.50 it will be A^2 + 0.25 + A finally by ceiling the value it is A^2 + A + 1 - 0.75
-Bin limits and values for histogram -
-limits - lower limit of center^2 - but calculated using center of the bin
-limits = ciel((center+0.50)^2) = center^2 - center + 1 - still in 1e12 = * 1000000 to get 1e18
-shift the limit by 0.75 to get the lower limit of the bin ??
-value = center^2 - direct scaling to 1e18
-*/

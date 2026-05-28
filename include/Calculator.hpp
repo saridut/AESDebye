@@ -74,7 +74,6 @@ public:
 
         if (binsResolution > 1.0 || binsResolution <= 0)
         {
-            std::cout << "bins resolution: "<< binsResolution << std::endl;
             throw std::invalid_argument("Bins resolution should be between 0 and 1.0");
         }
 
@@ -93,7 +92,6 @@ public:
         parallelHelper << ">> AES-Debye, Navid Panchi et.al DOI: .... \n";
 
         parallelHelper << " ------------------------------------------------\n";
-        parallelHelper << ">> bins resolution: " << binsResolution << "\n";
         parallelHelper << config;
 
         // if cell list is enabled, initialize it
@@ -171,11 +169,6 @@ public:
     calculateProfileBruteForce(Positions &positions, double start, double end, int nSteps,
                                bool twoThetaSpace = false, double lambda = 0.4, std::string filter = "");
 
-//    std::vector<double>
-//    addASFContribution(const std::vector<double> &qVector,
-//        const std::vector<double> &intensity,
-//        std::string elementI="", std::string elementJ="");
-
     static std::vector<double>
     calculateASFProfile(const std::vector<double> &qVector,
                         std::string elementI);
@@ -185,12 +178,5 @@ public:
         this->verbose = verbose;
         parallelHelper.verbose = verbose;
     }
-
-    // PDF reducePDF(const PDF &pdf, Profile &profile);
-    // std::vector<double> reducePDF(const std::vector<double> &centers, const std::vector<double> &counts,
-    //                               const std::vector<double> &qVector, const std::vector<double> &intensity,
-    //                               uint64 size);
-
-
 
 };

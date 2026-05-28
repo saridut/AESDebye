@@ -8,3 +8,4 @@ lammps_plugin/output
 docs
 *.xyz
 extern/pybind11
+debug

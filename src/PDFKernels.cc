@@ -88,12 +88,12 @@ inline void updateDeltaOverflow(HistBin &globalBin, int64 delta) {
         uint64 diff = LLONG_MAX - globalBin.delta;
         diff /= MAX_BIN_ERROR; // max bin error - if you subtract the center of the last bin from the edge.
         diff = (diff > (int64) INT_MAX) ? INT_MAX : diff;
-        globalBin.tillOverFlowReset = (int) diff - 1; // -1 isnt tested yet
+        globalBin.tillOverFlowReset = diff; // -1 isnt tested yet
     } else if (globalBin.delta < 0) {
         uint64 diff = (LLONG_MAX) + globalBin.delta;
         diff /= MAX_BIN_ERROR; // max bin error
         diff = (diff > (int64) INT_MAX) ? INT_MAX : diff;
-        globalBin.tillOverFlowReset = (int) diff - 1; // -1 isnt tested yet
+        globalBin.tillOverFlowReset = diff; // -1 isnt tested yet
     }
 
     // now update the overflow values, only if both the current and incoming values have same sign
@@ -182,7 +182,7 @@ inline void updateBin(std::vector<LocalBin> &localHist, std::vector<HistBin> &gl
         LocalBin &currentHistBin = localHist[binId];
 
         // check if we need to offload the local bin to the global bin
-        if (currentHistBin.tillOverFlowReset < 0) { // sign change here from == to <
+        if (currentHistBin.tillOverFlowReset == 0) {
             // get the global bin
             HistBin &globalBin = globalHist[binId];
 
@@ -202,7 +202,7 @@ inline void updateBin(std::vector<LocalBin> &localHist, std::vector<HistBin> &gl
         HistBin &globalBin = globalHist[binId];
 
         // check if we need to update the overflow value
-        if (globalBin.tillOverFlowReset < 0) { // sign change here from <= to <
+        if (globalBin.tillOverFlowReset <= 0) {
             // update the overflow value
             updateDeltaOverflow(globalBin, delta);
         }
@@ -299,7 +299,7 @@ inline void histOverJ(Positions const &positionsI, Positions const &positionsJ,
             findBinIndex(positionsI, positionsJ, i, j_strip, binId, delta, scaleDown, scaleUP);
 
             // store the values in the strip mined arrays
-            idxStripMined[j_strip - j] = (int) binId;
+            idxStripMined[j_strip - j] = binId;
             deltaStripMined[j_strip - j] = delta;
         }
 
@@ -477,41 +477,6 @@ void calculatePDFCPU(Positions const &positionsI, Positions const &positionsJ, s
     }
 }
 
-
-// not to be included 
-// template <bool USE_LOCAL_HIST>
-// void calculatePDFKernelSubSampled(std::vector<std::pair<Positions, Positions>> const &positionsPairs, 
-//                                         std::vector<HistBin> &histogram,
-//                                         int64 start, int64 stop, int64 step)
-// {
-
-//     LIKWID_MARKER_REGISTER("SUBSAMPLED");
-
-// #pragma omp parallel reduction(+ : histogram)
-//     {
-//         LIKWID_MARKER_START("SUBSAMPLED");
-
-//         std::array<int, N_STRIP_MINED> idxStripMined;
-//         std::array<int64, N_STRIP_MINED> deltaStripMined;
-//         std::vector<LocalBin> localPDFVector(N_BINS);
-
-// #pragma omp for schedule(dynamic)
-//         for (uint positionPairIndex=0; positionPairIndex < positionsPairs.size(); positionPairIndex++)
-//         {
-//             Positions const &positions1 = positionsPairs[positionPairIndex].first;
-//             Positions const &positions2 = positionsPairs[positionPairIndex].second;
-
-//             uint i, j_step = N_STRIP_MINED, j_stop = positions2.X.size();
-//             bool bothEqual = &positions1 == &positions2;
-
-//             for (i = start; i < stop; i += step)
-//             {
-//                 histOverJ<USE_LOCAL_HIST>(positions1, positions2, i, 0, j_stop, j_step, bothEqual, 
-//                                                     idxStripMined, deltaStripMined, localPDFVector, histogram);
-//             }
-//         }
-//     }
-// }
 
 
 #pragma endregion kernels

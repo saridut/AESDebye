@@ -4,8 +4,9 @@
 #include <Positions.hpp>
 #include <iomanip>
 #include <random>
-#include <string>
 #include <map>
+
+
 
 /**
  * @brief Generates a random seed for the random number generator.
@@ -25,9 +26,8 @@ unsigned generateRandomSeed();
  * @return The atomic positions.
  * @see Positions
  */
-Positions readXYZ(const std::string &filename, std::string delimiter = " ",
-                  uint skipLines = 2,
-                  const std::string &typeMapping = "0:None");
+Positions readXYZ(const std::string& filename, std::string delimiter=" ",
+                  uint skipLines=2, const std::string& typeMapping="0:None");
 /**
  * @brief Generates a random set of atomic positions.
  *
@@ -35,13 +35,18 @@ Positions readXYZ(const std::string &filename, std::string delimiter = " ",
  *
  * @param lattice The lattice constant.
  * @param nRepeats The number of repeats in each direction.
- * @param noise The std of the noise to add to the positions. This is in the
- * same units as the lattice constant.
+ * @param noise The std of the noise to add to the positions. This is in the same units as the lattice constant.
  * @param seed The seed for the random number generator.
- * @param element The element to use.
  * @return The atomic positions.
  * @see Positions
  */
+// Positions generateTestData(double lattice, int nRepeats, double noise, int seed);
+
+
+// Positions makePeriodic(const Positions &positions, int nx, int ny, int nz,
+//                       double offset_x, double offset_y, double offset_z);
+
+
 Positions generateTestData(double lattice, int nRepeats, double noise, int seed,
                            std::string element = "Pt");
 
