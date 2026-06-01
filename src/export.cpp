@@ -28,17 +28,17 @@ PYBIND11_MODULE(_core, m) {
   m.doc() = R"pbdoc(
         AESDebye - High-Performance Debye Scattering Calculations
 
-        aesdebye is a high-performance library for calculating accurate pair distribution
-        functions (PDFs) from atomic structures using the Debye scattering equation. This
-        implementation is based on the AES-Debye algorithm for efficient and scalable
-        computation of scattering profiles.
+        aesdebye is an accuracy-preserving, high-performance library for calculating
+        Debye scattering patterns and pair distribution functions (PDFs) from atomic structures.
+        This implementation is based on the AES-Debye framework, which prevents discretization
+        and summation errors through corrected bin centers and numerically robust accumulation.
 
         Key Features:
-        - Fast PDF calculations using optimized algorithms
-        - GPU acceleration support (CUDA)
-        - MPI parallelization for multi-node computing
-        - Support for XYZ and LAMMPS trajectory files
-        - Efficient memory management and data structures
+        - Accuracy Preserving: corrected bin centers suppress discretization artifacts
+        - Numerically Robust: robust accumulation suppresses floating-point summation errors
+        - Data Locality Aware: domain decomposition design avoids random-access cache degradation
+        - Hybrid Parallelization: hybrid OpenMP/MPI/CUDA support for massive CPU/GPU configurations
+        - Support for all file formats supported by the ASE (Atomic Simulation Environment) package
         - Python bindings for easy integration
 
         The library provides classes for atomic positions (Positions), pair distribution

@@ -38,8 +38,8 @@ Here is a simple example of how to use AES-DEBYE to calculate the Debye scatteri
    # called "total" (or "Pt-Pt" in this multi-element example)
    results = calculator.calculateProfile(positions,
                                          start=0.0,
-                                         stop=10.0,
-                                         nsteps=1000)
+                                         end=10.0,
+                                         steps=1000)
    pdf, profile = results["Pt-Pt"]
 
    # Save the results
