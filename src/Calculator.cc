@@ -187,7 +187,6 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
     uint64 nPd = samePositions ? positionsI.size() * (positionsI.size() - 1) / 2 : positionsI.size() * positionsJ.size();
     auto pdPerSecond = (uint64) ((double) nPd / pdf.calculationTime / 1e6);
     uint64 pdPerSecondPerThread = pdPerSecond / parallelHelper.totalThreads;
-    parallelHelper << ">> PDF test: " << helpers::bool_to_string(pdf.testPassed) << "\n";
     std::string output = "Complete! time: " + std::to_string(pdf.calculationTime) + " s" +
                          " ," + std::to_string(pdPerSecondPerThread) +"/" + std::to_string(pdPerSecond) + " MPd/s";
     parallelHelper.printSection(output);
@@ -334,17 +333,4 @@ DebyeCalculator::calculateASFProfile(const std::vector<double> &qVector,
     return intensity;
 }
 
-//PDF DebyeCalculator::reducePDF(const PDF &pdf, Profile &profile,
-//    return PDF();
-//}
-//
-//std::vector<double> DebyeCalculator::reducePDF(const std::vector<double> &centers, const std::vector<double> &counts,
-//                                               const std::vector<double> &qVector, const std::vector<double> &intensity,
-//                                               uint64 size) {
-//
-//
-//
-//
-//
-//}
 

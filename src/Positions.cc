@@ -256,21 +256,6 @@ void Positions::sliceCellList(int start, int stop)
     // update the last cell head to stop by updating the atom count of the last cell
     atomCounts[endCell] = stop - cellHeads[endCell];
 
-//    if (startingCell == endCell) // single cell, also the last cell!, so we can always access startingCell+1 later
-//    {
-//        newPositions.atomCounts[startingCell] = (int) newPositions.size();
-//        return newPositions; // no need to worry about copying the rest of the cell heads and counts
-//    }
-//
-//    // copy the rest of the cell heads and atom counts
-//    for (size_t i = startingCell+1; i <= endCell; i++)
-//    {
-//        newPositions.cellHeads[i] = cellHeads[i] - start;
-//        newPositions.atomCounts[i] = atomCounts[i];
-//    }
-//
-//    newPositions.atomCounts[startingCell] = newPositions.cellHeads[startingCell + 1]; // first cell contains atoms from 0 to the first cell head
-//    newPositions.atomCounts[endCell] = stop - cellHeads[endCell]; // how far is the last atom from the original cell head
 }
 
 size_t Positions::getCellIndex(size_t particleIdx) const {
@@ -285,42 +270,3 @@ size_t Positions::getCellIndex(size_t particleIdx) const {
     // the cell before the one found is the cell that contains the particle
     return std::distance(cellHeads.begin(), it) - 1;
 }
-
-// Tests for the sliceCellList function
-//// make sure that the total number of atoms is correct
-//size_t totalCount = 0;
-//for (int atomCount : newPositions.atomCounts)
-//{
-//totalCount += atomCount;
-//}
-//
-//if (totalCount != newPositions.size())
-//{
-//throw std::runtime_error("Total number of atoms in the sliceCellList does not match the expected number.");
-//}
-//
-//// also make sure the cellHead + atomCount == cellHead of the next cell
-//for (size_t i = startingCell; i < endCell; i++)
-//{
-//if (newPositions.cellHeads[i] + newPositions.atomCounts[i] != newPositions.cellHeads[i+1])
-//{
-//throw std::runtime_error("Cell head + atom count does not match the next cell head.");
-//}
-//}
-//
-//if (start == 0 and stop == size())
-//{
-//// test if the cell list is correct, check cellHeads and atomCounts.
-//// should be exactly the same as the original cell list
-//for (int i = 0; i < cellHeads.size(); i++)
-//{
-//if (cellHeads[i] != newPositions.cellHeads[i])
-//{
-//throw std::runtime_error("Cell head does not match the original cell head.");
-//}
-//if (atomCounts[i] != newPositions.atomCounts[i])
-//{
-//throw std::runtime_error("Atom count does not match the original atom count.");
-//}
-//}
-//}

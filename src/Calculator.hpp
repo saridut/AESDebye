@@ -34,7 +34,18 @@ private:
     bool verbose = false;        //< Flag indicating whether to enable verbose output.
     double binsResolution = 1.0; //< The resolution of the bins in the histogram. goes from (0, 1.0]
 
+    /**
+     * @brief Updates the box size of the positions based on binsResolution.
+     *
+     * Scales the box size of positionsI (and positionsJ if different) to adjust the binning resolution.
+     *
+     * @param positionsI The first positions of the particles.
+     * @param positionsJ The second positions of the particles.
+     * @param samePositions Flag indicating if positionsI and positionsJ refer to the same object.
+     * @param scaleUp Flag indicating whether to scale the box size (true) or restore it to its original size (false).
+     */
     void updateBoxSize(Positions &positionsI, Positions &positionsJ, bool samePositions, bool scaleUp);
+
 
 public:
     ParallelHelper parallelHelper; //< needs to be public for export to python @see ParallelHelper
@@ -161,18 +172,45 @@ public:
     calculateIntensity(PDF &pdf, double start, double end, int nSteps, 
     bool twoThetaSpace = false, double lambda = 0.4);
 
+    /**
+     * @brief Calculates both the PDF and intensity profile for different atom-pair combinations.
+     *
+     * If filter is empty, it automatically computes profiles for all unique element pairs.
+     * Otherwise, it processes only the pairs specified in the filter string (comma-separated, e.g., "Fe-Fe,Fe-O").
+     * Returns a map containing the calculated PDF and Profile pairs, including a "total" combined profile.
+     *
+     * @param positions The positions of the particles.
+     * @param start The starting value of the range (q or 2theta).
+     * @param end The ending value of the range (q or 2theta).
+     * @param nSteps The number of steps between start and end.
+     * @param twoThetaSpace Flag indicating if the range is in 2theta space (true) or q space (false). Default is false.
+     * @param lambda The X-ray wavelength to use for 2theta conversions. Default is 0.4.
+     * @param filter Filter string to specify element pairs to calculate. Default is "".
+     * @return A map with pair names (e.g., "Fe-Fe", "total") as keys and their corresponding PDF and Profile as values.
+     */
     std::map<std::string, std::pair<PDF, Profile>>
     calculateProfile(Positions &positions, double start, double end, int nSteps,
                      bool twoThetaSpace = false, double lambda = 0.4, std::string filter = "");
 
-    std::map<std::string, std::pair<PDF, Profile>>
-    calculateProfileBruteForce(Positions &positions, double start, double end, int nSteps,
-                               bool twoThetaSpace = false, double lambda = 0.4, std::string filter = "");
-
+    /**
+     * @brief Calculates the Atomic Scattering Factor (ASF) profile for a given element.
+     *
+     * Computes the ASF for each q value in the provided qVector using the coefficients
+     * corresponding to elementI.
+     *
+     * @param qVector A vector of q values.
+     * @param elementI The chemical symbol of the element.
+     * @return A vector containing the calculated ASF values.
+     */
     static std::vector<double>
     calculateASFProfile(const std::vector<double> &qVector,
                         std::string elementI);
 
+    /**
+     * @brief Sets the verbosity flag for the calculator and parallelHelper.
+     *
+     * @param verbose Flag indicating whether to enable verbose output.
+     */
     void setVerbosity(bool verbose)
     {
         this->verbose = verbose;

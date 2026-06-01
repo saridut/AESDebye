@@ -48,7 +48,6 @@ bool Profile::test()
         }
         sum += i;
     }
-    std::cout << "test passed: Total intensity = " << sum << std::endl;
     testPassed = sum > 0; // check if the total intensity > 0;
     return testPassed;
 }
