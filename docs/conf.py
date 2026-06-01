@@ -42,8 +42,8 @@ html_theme_options = {
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
 
-# Autodoc settings to show __init__ signature and docstring
-autoclass_content = "both"
+# Autodoc settings to show class docstrings
+autoclass_content = "class"
 autodoc_default_options = {
     "members": True,
     "special-members": "__init__",

@@ -1,5 +1,7 @@
 # AES-DEBYE: Accurate Efficient and Scalable Debye Scattering Calculation
 
+Documentation is hosted online at: [GitHub Pages](https://navidpanchi.github.io/AESDebye/)
+
 AES-DEBYE is a high-performance software package designed for calculating Debye scattering equation and Pair distrubtion function (PDF) from atomic configurations. It is optimized for accuracy, speed and scalability, making it suitable for large-scale simulations in materials science, chemistry, and physics. If you end up using this code please cite the following paper:
 
 ```bibtex
@@ -13,12 +15,12 @@ AES-DEBYE is a high-performance software package designed for calculating Debye 
 
 ### Installation
 
-Current installation approach requires you to clone this repository and install it using `pip`. We recommend using a dedicated conda/mamba environment for this purpose. For more information on creating environments using conda/mamba see [here](https://docs.conda.io/en/latest/miniconda.html).
+We recommend using a dedicated conda/mamba environment for this purpose. For more information on creating environments using conda/mamba see [here](https://docs.conda.io/en/latest/miniconda.html).
+
+You can install AES-DEBYE directly via `pip`:
 
 ```bash
-# git clone --recursive git@gitlab.cs.fau.de:iq23adyz/debye.git
-# cd debye
-# pip install . -v
+pip install git+https://github.com/navidpanchi/AESDebye.git -v
 ```
 
 CMake will detect the availibility of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible. 
