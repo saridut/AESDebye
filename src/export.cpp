@@ -3,7 +3,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "../include/Calculator.hpp"
+#include "Calculator.hpp"
 
 namespace py = pybind11;
 
@@ -26,7 +26,7 @@ PYBIND11_MODULE(_core, m) {
 
   // options to make the docstring more informative
   m.doc() = R"pbdoc(
-        aesdebye - High-Performance Debye Scattering Calculations
+        AESDebye - High-Performance Debye Scattering Calculations
 
         aesdebye is a high-performance library for calculating accurate pair distribution
         functions (PDFs) from atomic structures using the Debye scattering equation. This
@@ -67,13 +67,6 @@ PYBIND11_MODULE(_core, m) {
         Note:
             Profile objects cannot be directly instantiated in Python. They are created
             as results of calculations performed by DebyeCalculator methods.
-
-        Attributes:
-            q (List[float]): Momentum transfer values (Å⁻¹)
-            twoTheta (List[float]): Scattering angles in degrees
-            intensity (List[float]): Calculated intensity values
-            calculationTime (float): Time taken for the calculation in seconds
-            testPassed (bool): Flag indicating if internal validation tests passed
         )pbdoc")
       .def("toCSV", &Profile::toCSV, py::arg("filename"), R"pbdoc(
         toCSV(filename: str) -> None
@@ -240,56 +233,56 @@ PYBIND11_MODULE(_core, m) {
                   py::arg("positions"), py::arg("indexList"))
       .def("filterBySelectionId", &Positions::filterBySelectionId,
            py::arg("atomId"), R"pbdoc(
-                filterBySelectionId(atomId: int) -> Positions
+                 filterBySelectionId(atomId: str) -> Positions
 
-                Filter the positions by atom id.
+                 Filter the positions by atom id.
 
-                Parameters
-                ----------
-                atomId : int
-                    The atom id to filter by.
+                 Parameters
+                 ----------
+                 atomId : str
+                     The atom id to filter by.
 
-                Returns
-                -------
-                Positions
-                    The filtered positions object.
-                )pbdoc")
+                 Returns
+                 -------
+                 Positions
+                     The filtered positions object.
+                 )pbdoc")
       .def("filterByElement", &Positions::filterByElement,
            py::arg("elementName"), R"pbdoc(
-                filterByElement(atomType: int) -> Positions
+                 filterByElement(elementName: str) -> Positions
 
-                Filter the positions by atom type.
+                 Filter the positions by element name.
 
-                Parameters
-                ----------
-                atomType : int
-                    The atom type to filter by.
+                 Parameters
+                 ----------
+                 elementName : str
+                     The element name to filter by.
 
-                Returns
-                -------
-                Positions
-                    The filtered positions object.
-                )pbdoc")
+                 Returns
+                 -------
+                 Positions
+                     The filtered positions object.
+                 )pbdoc")
       .def("getUniqueSelectionIds", &Positions::getUniqueSelectionIds, R"pbdoc(
-                getUniqueSelectionIds() -> List[int]
+                 getUniqueSelectionIds() -> List[str]
 
-                Get the unique atom ids in the positions object.
+                 Get the unique selection ids in the positions object.
 
-                Returns
-                -------
-                List[int]
-                    List of unique atom ids.
-                )pbdoc")
+                 Returns
+                 -------
+                 List[str]
+                     List of unique selection ids.
+                 )pbdoc")
       .def("getUniqueElements", &Positions::getUniqueElements, R"pbdoc(
-                getUniqueElements() -> List[int]
+                 getUniqueElements() -> List[str]
 
-                Get the unique atom types in the positions object.
+                 Get the unique chemical elements in the positions object.
 
-                Returns
-                -------
-                List[int]
-                    List of unique atom types.
-                )pbdoc")
+                 Returns
+                 -------
+                 List[str]
+                     List of unique chemical elements.
+                 )pbdoc")
       .def("size", &Positions::size, R"pbdoc(
                 size() -> int
 
@@ -340,22 +333,17 @@ PYBIND11_MODULE(_core, m) {
                 )pbdoc")
       .def("sliceCellList", &Positions::sliceCellList, py::arg("start"),
            py::arg("end"), R"pbdoc(
-                slice(start: int, end: int) -> Positions
+                 sliceCellList(start: int, end: int) -> None
 
-                Slice the positions object.
+                 Slice the cell list of the positions object in-place.
 
-                Parameters
-                ----------
-                start : int
-                    The start index of the slice.
-                end : int
-                    The end index of the sliceCellList.
-
-                Returns
-                -------
-                Positions
-                    The sliced positions object.
-                )pbdoc")
+                 Parameters
+                 ----------
+                 start : int
+                     The start index of the slice.
+                 end : int
+                     The end index of the slice.
+                 )pbdoc")
       .def("toList", &Positions::toStdVector, R"pbdoc(
                 toList() -> List[Tuple[float, float, float]]
 
@@ -417,11 +405,6 @@ PYBIND11_MODULE(_core, m) {
         centers account for the finite bin size effects in the histogram. The class
         supports arithmetic operations for combining multiple PDFs and provides
         efficient storage using internal histogram structures.
-
-        Attributes:
-            centers (List[float]): Corrected bin centers accounting for finite bin effects
-            uncorrectedCenters (List[float]): Original bin centers without corrections
-            counts (List[float]): Histogram counts for each bin
 
         Note:
             PDF objects are typically created as results of DebyeCalculator.calculatePDF()
@@ -790,16 +773,6 @@ PYBIND11_MODULE(_core, m) {
            py::arg("positions"), py::arg("start") = 0, py::arg("end") = 10,
            py::arg("steps") = 1000, py::arg("twoTheta") = false,
            py::arg("wavelength") = 0.4, py::arg("filter") = "", R"pbdoc(
-        calculateProfile(
-            positions: Positions,
-            start: float = 0,
-            end: float = 10,
-            steps: int = 1000,
-            twoTheta: bool = False,
-            wavelength: float = 0.4,
-            filter: str = ""
-        ) -> Tuple[PDF, Profile]
-
         Calculate the scattering intensity profile for a given set of positions.
 
         Parameters

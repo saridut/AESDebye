@@ -1,14 +1,19 @@
 # AES-DEBYE: Accurate Efficient and Scalable Debye Scattering Calculation
 
-AES-DEBYE is a high-performance software package designed for calculating Debye scattering patterns from atomic configurations. It is optimized for accuracy, speed and scalability, making it suitable for large-scale simulations in materials science, chemistry, and physics. If you end up using this code please cite the following paper:
+AES-DEBYE is a high-performance software package designed for calculating Debye scattering equation and Pair distrubtion function (PDF) from atomic configurations. It is optimized for accuracy, speed and scalability, making it suitable for large-scale simulations in materials science, chemistry, and physics. If you end up using this code please cite the following paper:
 
 ```bibtex
-
+@article{Panchi2026AES-Debye,
+    author    = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
+    title     = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},
+    journal   = {Submitted to Journal of Applied Crystallography (IUCrJ)}
+    year      = {2026},
+}
 ```
 
 ### Installation
 
-Current installation approach requires you to clone this repository and install it using `pip`. We recommend using a dedicated conda/mamba environment for this purpose.
+Current installation approach requires you to clone this repository and install it using `pip`. We recommend using a dedicated conda/mamba environment for this purpose. For more information on creating environments using conda/mamba see [here](https://docs.conda.io/en/latest/miniconda.html).
 
 ```bash
 git clone --recursive git@gitlab.cs.fau.de:iq23adyz/debye.git
@@ -16,7 +21,13 @@ cd debye
 pip install . -v
 ```
 
-CMake will detect the availibility of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible.
+CMake will detect the availibility of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible. 
+
+For example, on a HPC system, you can load the cuda and mpi modules using the following command (or similar, based on your HPC provider):
+
+```bash
+module load mpi cuda
+```
 
 ### Getting Started
 
@@ -67,6 +78,8 @@ plt.xlabel("q (1/A)")
 plt.ylabel("I(q)")
 plt.show()
 ```
+
+You can provide `None` for the chemical symbols to avoid multiplication with the atomic scattering factors.
 
 #### CLI interface
 
@@ -173,4 +186,16 @@ Let's say you save the above code in a file called `calculate.py`. You can then 
 mpirun -n 2 python calculate.py
 ```
 This will run the calculation using 2 MPI processes, each utilizing a GPU.
+
+### Building Documentation
+
+To build the HTML documentation, install the documentation requirements and run Sphinx:
+
+```bash
+pip install -r docs/requirements.txt
+sphinx-build -b html docs docs/_build/html
+```
+
+The generated HTML files will be available in `docs/_build/html/`.
+
 

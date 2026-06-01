@@ -9,8 +9,8 @@
 #include "lammpsplugin.h"
 #include "version.h"
 
-#include <Calculator.hpp> // Your DebyeCalculator
-#include <utils.hpp>      // For type map and string utilities
+#include <Calculator.hpp> 
+#include <utils.hpp>      
 #include <algorithm>
 #include <array>
 #include <cstring>

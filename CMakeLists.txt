@@ -58,7 +58,7 @@ if(AUTOCONFIG)
     endif()
 endif()
 
-include_directories(include extern)
+include_directories(src extern)
 
 # --- Centralized Settings (Flags, Defs, Libs) ---
 add_library(common_settings INTERFACE)
@@ -144,7 +144,7 @@ endmacro()
 install(TARGETS _core DESTINATION aesdebye)
 install(TARGETS debyeLib DESTINATION aesdebye)
 install(TARGETS debye_cpp DESTINATION aesdebye)
-install(DIRECTORY include/ DESTINATION aesdebye/include)
+install(DIRECTORY src/ DESTINATION aesdebye/include FILES_MATCHING PATTERN "*.hpp")
 
 install_symlink(${FINAL_INSTALL_DIR}/debye_cpp ${BINARY_DIR}/debye_cpp)
 
