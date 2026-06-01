@@ -16,9 +16,9 @@ AES-DEBYE is a high-performance software package designed for calculating Debye 
 Current installation approach requires you to clone this repository and install it using `pip`. We recommend using a dedicated conda/mamba environment for this purpose. For more information on creating environments using conda/mamba see [here](https://docs.conda.io/en/latest/miniconda.html).
 
 ```bash
-git clone --recursive git@gitlab.cs.fau.de:iq23adyz/debye.git
-cd debye
-pip install . -v
+# git clone --recursive git@gitlab.cs.fau.de:iq23adyz/debye.git
+# cd debye
+# pip install . -v
 ```
 
 CMake will detect the availibility of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible. 
@@ -94,60 +94,6 @@ For help use:
 
 ```bash
 aesdebye -h
-
-usage: aesdebye [-h] [-f INPUTFILENAME] [-tm TYPEMAPPING] [-nr NREPEATS] [-s STDDEV] [-sp] [-b BINSRESOLUTION] [-sb] [-nc NCELLS] [-nt NTHREADS] [-mpi] [-gpu] [-nlh] [-pc] [-fg] [-gcl] [-st START]
-                [-e END] [-stps STEPS] [-wl WAVELENGTH] [-tt] [-o OUTPUTDIR] [-p] [-nv]
-
-Debye implementation CLI
-
-options:
-  -h, --help            show this help message and exit
-
-Input configuration:
-  -f INPUTFILENAME, --inputFilename INPUTFILENAME
-                        Input filename, any format supported by the ase.io.read function
-
-Benchmark configuration:
-  -nr NREPEATS, --nRepeats NREPEATS
-                        Number of repeats in the lattice
-  -s STDDEV, --stdDev STDDEV
-                        Std dev of noise in the lattice
-  -sp, --shufflePositions
-                        Shuffle the positions
-
-Computation parameters:
-  -b BINSRESOLUTION, --binsResolution BINSRESOLUTION
-                        Resolution of the bins
-  -sb, --smallBins      Use small bins for the PDF
-  -nc NCELLS, --nCells NCELLS
-                        Number of cells in the lattice
-  -nt NTHREADS, --nThreads NTHREADS
-                        Number of threads to use
-  -mpi, --useMPI        Use MPI for parallelization
-  -gpu, --useGPU        Use GPU for parallelization
-  -nlh, --dontUseLocalHistogram
-                        Dont use local histogram for noisy calcs
-  -pc, --pseudoCoal     Use pseudo coal
-  -fg, --fillGPU        Fill the GPU with threads
-  -gcl, --useGPUCellList
-                        Use GPU cell list
-
-Range and physics settings:
-  -st START, --start START
-                        Start of the q/theta range
-  -e END, --end END     End of the q/theta range
-  -stps STEPS, --steps STEPS
-                        Number of steps in the q/theta range
-  -wl WAVELENGTH, --wavelength WAVELENGTH
-                        Wavelength of the X-ray
-  -tt, --twoThetaSpace  Use two theta instead of q
-
-Output options:
-  -o OUTPUTDIR, --outputDir OUTPUTDIR
-                        Output directory to save the data
-  -p, --plot            Plot the results
-  -nv, --nonVerbose     Disable verbose output
-
 ```
 
 ### MPI usage
@@ -197,5 +143,29 @@ sphinx-build -b html docs docs/_build/html
 ```
 
 The generated HTML files will be available in `docs/_build/html/`.
+
+### Building as a C++ Library (Without Pip)
+
+If you wish to use AES-DEBYE as a C++ library in another project rather than installing the Python bindings, you can build and install it directly via CMake:
+
+```bash
+cmake -B build -S . -DBUILD_PYTHON_BINDINGS=OFF -DCMAKE_INSTALL_PREFIX=/path/to/install
+cmake --build build -j
+cmake --install build
+```
+
+When `BUILD_PYTHON_BINDINGS` is disabled, CMake skips compiling the Python bindings (`_core` target) and instead installs the shared C++ libraries (`libaesdebye.so` and `libaesdebyeGPU.so`), the headers, and the C++ executable (`aesdebye_cpp`) to standard folders under the specified installation path.
+
+#### Example: LAMMPS Plugin Integration
+
+The [lammps_plugin](file:./lammps_plugin) directory contains an example of how to integrate the C++ library with other projects (specifically as a LAMMPS command extension plugin).
+
+To build a plugin or command linking to the library, you link your target against the compiled `aesdebye` library target:
+
+```cmake
+add_library(lammps_debye_plugin SHARED compute_debye.cpp)
+target_link_libraries(lammps_debye_plugin PRIVATE LAMMPS::lammps)
+target_link_libraries(lammps_debye_plugin PRIVATE aesdebye)
+```
 
 

@@ -1,16 +1,32 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 
-if(NOT DEFINED PROJECT_NAME)
-    set(PROJECT_NAME "aesdebye")
-endif()
+if(SKBUILD)
+    set(PROJECT_NAME ${SKBUILD_PROJECT_NAME})
+    set(PROJECT_VERSION ${SKBUILD_PROJECT_VERSION})
+else()
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pyproject.toml")
+        file(READ "${CMAKE_CURRENT_SOURCE_DIR}/pyproject.toml" PYPROJECT_CONTENT)
+        if(NOT DEFINED PROJECT_NAME)
+            string(REGEX MATCH "name[ \t]*=[ \t]*\"([^\"]+)\"" _ "${PYPROJECT_CONTENT}")
+            set(PROJECT_NAME ${CMAKE_MATCH_1})
+        endif()
+        if(NOT DEFINED PROJECT_VERSION)
+            string(REGEX MATCH "version[ \t]*=[ \t]*\"([^\"]+)\"" _ "${PYPROJECT_CONTENT}")
+            set(PROJECT_VERSION ${CMAKE_MATCH_1})
+        endif()
+    endif()
 
-if(NOT DEFINED PROJECT_VERSION)
-    set(PROJECT_VERSION "0.0.1")
+    if(NOT DEFINED PROJECT_NAME)
+        set(PROJECT_NAME "aesdebye")
+    endif()
+    if(NOT DEFINED PROJECT_VERSION)
+        set(PROJECT_VERSION "1.0.0")
+    endif()
 endif()
 
 project(
-    ${SKBUILD_PROJECT_NAME}
-    VERSION ${SKBUILD_PROJECT_VERSION}
+    ${PROJECT_NAME}
+    VERSION ${PROJECT_VERSION}
     LANGUAGES CXX
 )
 
@@ -45,16 +61,11 @@ if(AUTOCONFIG)
         message(STATUS "MPI detected and enabled")
     endif()
 
-    find_package(CUDA QUIET)
-    if(CUDA_FOUND)
+    include(CheckLanguage)
+    check_language(CUDA)
+    if(CMAKE_CUDA_COMPILER)
         set(ENABLE_GPU ON)
         message(STATUS "CUDA/GPU detected and enabled")
-
-        include(FindCUDA/select_compute_arch)
-        CUDA_DETECT_INSTALLED_GPUS(INSTALLED_GPU_CCS)
-        string(REPLACE " " ";" INSTALLED_GPU_CCS "${INSTALLED_GPU_CCS}")
-        string(REPLACE "." "" CUDA_ARCH_LIST "${INSTALLED_GPU_CCS}")
-        message(STATUS "CUDA architecture: ${CUDA_ARCH_LIST}")
     endif()
 endif()
 
@@ -88,68 +99,100 @@ if(ENABLE_MPI)
 endif()
 
 # --- Core Library ---
-add_library(debyeLib SHARED src/Calculator.cc src/CellList.cc
+add_library(aesdebye SHARED src/Calculator.cc src/CellList.cc
     src/IntensityKernels.cc src/ParallelHelper.cc
     src/PDF.cc src/PDFKernels.cc
     src/Positions.cc src/Profile.cc
     src/utils.cc)
 
-target_link_libraries(debyeLib PUBLIC common_settings OpenMP::OpenMP_CXX)
+target_link_libraries(aesdebye PUBLIC common_settings OpenMP::OpenMP_CXX)
 
 # --- GPU Setup ---
 if(ENABLE_GPU)
     enable_language(CUDA)
     set(CMAKE_CUDA_STANDARD 17)
     set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+
+    if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
+        if(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL "12.0")
+            set(CMAKE_CUDA_ARCHITECTURES 90)
+        elseif(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL "11.0")
+            set(CMAKE_CUDA_ARCHITECTURES 86)
+        elseif(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL "10.0")
+            set(CMAKE_CUDA_ARCHITECTURES 75)
+        else()
+            set(CMAKE_CUDA_ARCHITECTURES 60)
+        endif()
+        message(STATUS "CMAKE_CUDA_ARCHITECTURES set to latest supported: ${CMAKE_CUDA_ARCHITECTURES}")
+    endif()
     
-    add_library(debyeLibGPU SHARED src/IntensityKernelsGPU.cu src/PDFKernelsGPU.cu)
-    target_link_libraries(debyeLibGPU PUBLIC common_settings ${CUDA_LIBRARIES})
+    add_library(aesdebyeGPU SHARED src/IntensityKernelsGPU.cu src/PDFKernelsGPU.cu)
+    target_link_libraries(aesdebyeGPU PUBLIC common_settings)
     
     target_compile_definitions(common_settings INTERFACE USE_GPU)
-    target_link_libraries(debyeLib PUBLIC debyeLibGPU)
+    target_link_libraries(aesdebye PUBLIC aesdebyeGPU)
     message(STATUS "GPU support enabled")
 endif()
 
 # --- Python Setup ---
-find_package(Python REQUIRED COMPONENTS Interpreter Development.Module)
+if(SKBUILD)
+    option(BUILD_PYTHON_BINDINGS "Build Python bindings" ON)
+else()
+    option(BUILD_PYTHON_BINDINGS "Build Python bindings" OFF)
+endif()
 
-execute_process(COMMAND ${Python_EXECUTABLE} -c "import sys; print(sys.prefix)" OUTPUT_VARIABLE Python_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
-set(BINARY_DIR ${Python_PREFIX}/bin)
+if(BUILD_PYTHON_BINDINGS)
+    find_package(Python REQUIRED COMPONENTS Interpreter Development.Module)
 
-execute_process(COMMAND ${Python_EXECUTABLE} -c "import site; print(site.getsitepackages()[0])" OUTPUT_VARIABLE Python_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
-set(FINAL_INSTALL_DIR ${Python_SITE_PACKAGES}/aesdebye)
+    execute_process(COMMAND ${Python_EXECUTABLE} -c "import sys; print(sys.prefix)" OUTPUT_VARIABLE Python_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(BINARY_DIR ${Python_PREFIX}/bin)
 
-find_package(pybind11 CONFIG REQUIRED)
-pybind11_add_module(_core src/export.cpp)
-target_link_libraries(_core PUBLIC debyeLib)
+    execute_process(COMMAND ${Python_EXECUTABLE} -c "import site; print(site.getsitepackages()[0])" OUTPUT_VARIABLE Python_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(FINAL_INSTALL_DIR ${Python_SITE_PACKAGES}/aesdebye)
 
-# Python-specific definitions
-target_compile_definitions(_core PRIVATE 
-    VERSION_INFO="${PROJECT_VERSION}"
-    CXX_COMPILER="${CMAKE_CXX_COMPILER}"
-)
+    find_package(pybind11 CONFIG REQUIRED)
+    pybind11_add_module(_core src/export.cpp)
+    target_link_libraries(_core PUBLIC aesdebye)
+
+    # Python-specific definitions
+    target_compile_definitions(_core PRIVATE 
+        VERSION_INFO="${PROJECT_VERSION}"
+        CXX_COMPILER="${CMAKE_CXX_COMPILER}"
+    )
+endif()
 
 # --- CLI Setup ---
-add_executable(debye_cpp src/cli.cpp)
-target_link_libraries(debye_cpp PRIVATE debyeLib)
+add_executable(aesdebye_cpp src/cli.cpp)
+target_link_libraries(aesdebye_cpp PRIVATE aesdebye)
 
 # add flags for CLI
-target_compile_options(debye_cpp PRIVATE -O3 -march=native -w -g -ffast-math)
+target_compile_options(aesdebye_cpp PRIVATE -O3 -march=native -w -g -ffast-math)
 # --- Installation ---
 macro(install_symlink filepath sympath)
     install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${filepath} ${sympath})")
     install(CODE "message(\"-- Created symlink: ${sympath} -> ${filepath}\")")
 endmacro()
 
-install(TARGETS _core DESTINATION aesdebye)
-install(TARGETS debyeLib DESTINATION aesdebye)
-install(TARGETS debye_cpp DESTINATION aesdebye)
-install(DIRECTORY src/ DESTINATION aesdebye/include FILES_MATCHING PATTERN "*.hpp")
+if(BUILD_PYTHON_BINDINGS)
+    install(TARGETS _core DESTINATION aesdebye)
+    install(TARGETS aesdebye DESTINATION aesdebye)
+    install(TARGETS aesdebye_cpp DESTINATION aesdebye)
+    install(DIRECTORY src/ DESTINATION aesdebye/include FILES_MATCHING PATTERN "*.hpp")
 
-install_symlink(${FINAL_INSTALL_DIR}/debye_cpp ${BINARY_DIR}/debye_cpp)
+    install_symlink(${FINAL_INSTALL_DIR}/aesdebye_cpp ${BINARY_DIR}/aesdebye_cpp)
 
-if(ENABLE_GPU)
-    install(TARGETS debyeLibGPU DESTINATION aesdebye)
+    if(ENABLE_GPU)
+        install(TARGETS aesdebyeGPU DESTINATION aesdebye)
+    endif()
+else()
+    include(GNUInstallDirs)
+    install(TARGETS aesdebye DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    install(TARGETS aesdebye_cpp DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/aesdebye FILES_MATCHING PATTERN "*.hpp")
+
+    if(ENABLE_GPU)
+        install(TARGETS aesdebyeGPU DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    endif()
 endif()
 
 if(APPLE)
@@ -158,12 +201,14 @@ else()
     set(RPATH "$ORIGIN")
 endif()
 
-set_target_properties(_core PROPERTIES INSTALL_RPATH ${RPATH})
-set_target_properties(debyeLib PROPERTIES INSTALL_RPATH ${RPATH})
-set_target_properties(debye_cpp PROPERTIES INSTALL_RPATH ${RPATH})
+if(BUILD_PYTHON_BINDINGS)
+    set_target_properties(_core PROPERTIES INSTALL_RPATH ${RPATH})
+endif()
+set_target_properties(aesdebye PROPERTIES INSTALL_RPATH ${RPATH})
+set_target_properties(aesdebye_cpp PROPERTIES INSTALL_RPATH ${RPATH})
 
 if(ENABLE_GPU)
-    set_target_properties(debyeLibGPU PROPERTIES INSTALL_RPATH ${RPATH})
+    set_target_properties(aesdebyeGPU PROPERTIES INSTALL_RPATH ${RPATH})
 endif()
 
 if (BUILD_LAMMPS_PLUGIN)

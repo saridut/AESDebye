@@ -5,7 +5,6 @@ build
 lammps_plugin/log.lammps
 lammps_plugin/output
 .kiro
-docs
 *.xyz
-extern/pybind11
 debug
+*build*

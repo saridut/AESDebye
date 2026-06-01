@@ -5,10 +5,14 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "aesdebye"
-version = "0.0.1"
+version = "1.0.0"
 description="Debye implementation"
 authors = [
-    { name = "Navid Panchi", email = "navid.panchi@fau.de"},
+    { name = "Navid Panchi", email = "navid.panchi@fau.de" },
+    { name = "Sebastian Kuckuk" },
+    { name = "Markus Wittmann" },
+    { name = "Michael Engel" },
+    { name = "Alberto Leonardi" },
 ]
 dependencies = [
     "ase>=3.24",

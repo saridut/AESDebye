@@ -9,7 +9,7 @@ endif()
 
 add_library(lammps_debye_plugin SHARED compute_debye.cpp)
 target_link_libraries(lammps_debye_plugin PRIVATE LAMMPS::lammps)
-target_link_libraries(lammps_debye_plugin PRIVATE debyeLib)
+target_link_libraries(lammps_debye_plugin PRIVATE aesdebye)
 target_include_directories(lammps_debye_plugin PRIVATE ${LAMMPS_SRC_DIR})
 
 # installation dir, need to use full path to load. or just use the build dir to load!
