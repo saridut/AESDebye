@@ -1,0 +1,1527 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference &#8212; aesdebye 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=f9c1cefe"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">aesdebye 1.0.0 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Welcome to AES-DEBYE’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/navidpanchi/AESDebye" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/navidpanchi/AESDebye/edit/main/docs/api.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/navidpanchi/AESDebye/issues/new?title=Issue%20on%20page%20%2Fapi.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/api.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>API Reference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-classes">Core Classes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debyecalculator">DebyeCalculator</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.__init__"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateASFProfile"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateASFProfile()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateIntensity"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateIntensity()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculatePDF"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculatePDF()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateProfile"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateProfile()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.cellList"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.cellList</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.parallelHelper"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.parallelHelper</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#positions">Positions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions"><code class="docutils literal notranslate"><span class="pre">Positions</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.__init__"><code class="docutils literal notranslate"><span class="pre">Positions.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.chemicalSymbols"><code class="docutils literal notranslate"><span class="pre">Positions.chemicalSymbols</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.element"><code class="docutils literal notranslate"><span class="pre">Positions.element</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.filterByElement"><code class="docutils literal notranslate"><span class="pre">Positions.filterByElement()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.filterBySelectionId"><code class="docutils literal notranslate"><span class="pre">Positions.filterBySelectionId()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.fromIndexList"><code class="docutils literal notranslate"><span class="pre">Positions.fromIndexList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getBoxSize"><code class="docutils literal notranslate"><span class="pre">Positions.getBoxSize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getUniqueElements"><code class="docutils literal notranslate"><span class="pre">Positions.getUniqueElements()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getUniqueSelectionIds"><code class="docutils literal notranslate"><span class="pre">Positions.getUniqueSelectionIds()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.selectionIds"><code class="docutils literal notranslate"><span class="pre">Positions.selectionIds</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.setBoxSize"><code class="docutils literal notranslate"><span class="pre">Positions.setBoxSize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.size"><code class="docutils literal notranslate"><span class="pre">Positions.size()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.sliceCellList"><code class="docutils literal notranslate"><span class="pre">Positions.sliceCellList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.subsample"><code class="docutils literal notranslate"><span class="pre">Positions.subsample()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.toList"><code class="docutils literal notranslate"><span class="pre">Positions.toList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.toXYZ"><code class="docutils literal notranslate"><span class="pre">Positions.toXYZ()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf">PDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF"><code class="docutils literal notranslate"><span class="pre">PDF</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.__init__"><code class="docutils literal notranslate"><span class="pre">PDF.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.calculationTime"><code class="docutils literal notranslate"><span class="pre">PDF.calculationTime</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.centers"><code class="docutils literal notranslate"><span class="pre">PDF.centers</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.counts"><code class="docutils literal notranslate"><span class="pre">PDF.counts</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.load"><code class="docutils literal notranslate"><span class="pre">PDF.load()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.readCSV"><code class="docutils literal notranslate"><span class="pre">PDF.readCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.save"><code class="docutils literal notranslate"><span class="pre">PDF.save()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.testPassed"><code class="docutils literal notranslate"><span class="pre">PDF.testPassed</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.toCSV"><code class="docutils literal notranslate"><span class="pre">PDF.toCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.uncorrectedCenters"><code class="docutils literal notranslate"><span class="pre">PDF.uncorrectedCenters</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profile">Profile</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.__init__"><code class="docutils literal notranslate"><span class="pre">Profile.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.calculationTime"><code class="docutils literal notranslate"><span class="pre">Profile.calculationTime</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.intensity"><code class="docutils literal notranslate"><span class="pre">Profile.intensity</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.q"><code class="docutils literal notranslate"><span class="pre">Profile.q</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.testPassed"><code class="docutils literal notranslate"><span class="pre">Profile.testPassed</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.toCSV"><code class="docutils literal notranslate"><span class="pre">Profile.toCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.twoTheta"><code class="docutils literal notranslate"><span class="pre">Profile.twoTheta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelhelper">ParallelHelper</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper"><code class="docutils literal notranslate"><span class="pre">ParallelHelper</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.__init__"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.ompThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.ompThreads</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.setNumThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.setNumThreads()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.totalThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.totalThreads</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.wait"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.wait()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.world_rank"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.world_rank</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.world_size"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.world_size</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-aesdebye.cli">CLI Module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.cli.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-aesdebye">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-aesdebye" title="Link to this heading">#</a></h1>
+<section id="core-classes">
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Link to this heading">#</a></h2>
+<section id="debyecalculator">
+<h3>DebyeCalculator<a class="headerlink" href="#debyecalculator" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aesdebye.</span></span><span class="sig-name descname"><span class="pre">DebyeCalculator</span></span><a class="headerlink" href="#aesdebye.DebyeCalculator" title="Link to this definition">#</a></dt>
+<dd><p>DebyeCalculator - Main computational engine for Debye scattering calculations</p>
+<p>The DebyeCalculator class is the primary interface for performing pair distribution
+function (PDF) and scattering intensity calculations using the AES-Debye algorithm.
+It provides high-performance computation with support for parallel processing via
+OpenMP and MPI, as well as GPU acceleration through CUDA.</p>
+<p>The calculator handles the complete workflow from atomic positions to scattering
+profiles, including spatial partitioning via cell lists, histogram generation,
+and intensity calculations with atomic scattering factors.</p>
+<p>Key Features:
+- Efficient PDF calculations using optimized algorithms
+- Cell list spatial partitioning for O(N) scaling
+- OpenMP parallelization for multi-core systems
+- MPI support for distributed computing
+- GPU acceleration (CUDA) when available
+- Flexible bin resolution and histogram management</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">(</span><span class="n">nThreads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">useGPU</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculatePDF</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculateIntensity</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Construct a new DebyeCalculator with specified computational parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nThreads</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of OpenMP threads to use. Default is -1 (use all available cores).
+Set to 1 for single-threaded execution.</p></li>
+<li><p><strong>nCells</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of cells per dimension for spatial partitioning. Default is 15.
+Higher values improve performance for large systems but use more memory.
+Set to 1 to disable cell lists (only for very small systems).</p></li>
+<li><p><strong>binsResolution</strong> (<em>float</em><em>, </em><em>optional</em>) – Histogram bin resolution factor in range (0, 1]. Default is 1.0.
+Lower values increase bin resolution but require more memory.</p></li>
+<li><p><strong>useMPI</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable MPI parallelization. Default is False. When True, the program
+must be launched with an MPI runner (e.g., mpirun).</p></li>
+<li><p><strong>useGPU</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable GPU acceleration via CUDA. Default is False. Requires GPU-enabled
+build and compatible hardware.</p></li>
+<li><p><strong>useLocalHist</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use local histograms for thread-level parallelization. Default is True.
+Set to False for crystalline structures with high symmetry.</p></li>
+<li><p><strong>smallBin</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use smaller bin sizes for higher resolution. Default is False.</p></li>
+<li><p><strong>pseudoCoal</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable pseudo-coalescence optimization. Default is True.</p></li>
+<li><p><strong>fillGPU</strong> (<em>bool</em><em>, </em><em>optional</em>) – Fill GPU memory completely for maximum performance. Default is False.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable verbose output for debugging and monitoring. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – If GPU support is requested but not available in the build.</p></li>
+<li><p><strong>ValueError</strong> – If binsResolution is not in the valid range (0, 1].</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic calculator for small systems</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># High-performance setup for large systems</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">nThreads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">nCells</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">useGPU</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.DebyeCalculator.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Construct a new DebyeCalculator with specified computational parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nThreads</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of OpenMP threads to use. Default is -1 (use all available cores).
+Set to 1 for single-threaded execution.</p></li>
+<li><p><strong>nCells</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of cells per dimension for spatial partitioning. Default is 15.
+Higher values improve performance for large systems but use more memory.
+Set to 1 to disable cell lists (only for very small systems).</p></li>
+<li><p><strong>binsResolution</strong> (<em>float</em><em>, </em><em>optional</em>) – Histogram bin resolution factor in range (0, 1]. Default is 1.0.
+Lower values increase bin resolution but require more memory.</p></li>
+<li><p><strong>useMPI</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable MPI parallelization. Default is False. When True, the program
+must be launched with an MPI runner (e.g., mpirun).</p></li>
+<li><p><strong>useGPU</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable GPU acceleration via CUDA. Default is False. Requires GPU-enabled
+build and compatible hardware.</p></li>
+<li><p><strong>useLocalHist</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use local histograms for thread-level parallelization. Default is True.
+Set to False for crystalline structures with high symmetry.</p></li>
+<li><p><strong>smallBin</strong> (<em>bool</em><em>, </em><em>optional</em>) – Use smaller bin sizes for higher resolution. Default is False.</p></li>
+<li><p><strong>pseudoCoal</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable pseudo-coalescence optimization. Default is True.</p></li>
+<li><p><strong>fillGPU</strong> (<em>bool</em><em>, </em><em>optional</em>) – Fill GPU memory completely for maximum performance. Default is False.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable verbose output for debugging and monitoring. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – If GPU support is requested but not available in the build.</p></li>
+<li><p><strong>ValueError</strong> – If binsResolution is not in the valid range (0, 1].</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic calculator for small systems</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># High-performance setup for large systems</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">nThreads</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">nCells</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">useGPU</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.calculateASFProfile">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">calculateASFProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qVector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#aesdebye.DebyeCalculator.calculateASFProfile" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the atomic scattering factor (ASF) profile for a given element
+at specified q-values [values have to be Å⁻¹].</p>
+<p>This method evaluates the atomic scattering factor as a function of
+momentum transfer q using tabulated scattering factor coefficients.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qVector</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – Momentum transfer values (q) in Å⁻¹ at which to evaluate the ASF.</p></li>
+<li><p><strong>element</strong> (<em>str</em>) – Chemical symbol of the element (e.g., “Pt”, “Au”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Atomic scattering factor values corresponding to each q-value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]</span>  <span class="c1"># 0.1 to 10.0 Å⁻¹</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asf_profile_values</span> <span class="o">=</span> <span class="n">DebyeCalculator</span><span class="o">.</span><span class="n">calculateASFProfile</span><span class="p">(</span><span class="n">q_values</span><span class="p">,</span> <span class="s2">&quot;Pt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.calculateIntensity">
+<span class="sig-name descname"><span class="pre">calculateIntensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qVector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elementI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elementJ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#aesdebye.DebyeCalculator.calculateIntensity" title="Link to this definition">#</a></dt>
+<dd><p>Calculate scattering intensity from PDF data at specified q-values.</p>
+<p>This method computes the scattering intensity using the Debye scattering equation
+from pre-calculated PDF histogram data. It applies atomic scattering factors
+and performs the Fourier transform to convert from real space (PDF) to
+reciprocal space (intensity).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centers</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – Corrected bin centers from PDF calculation in Angstroms. Use PDF.centers
+for best accuracy as these account for finite bin size effects.</p></li>
+<li><p><strong>counts</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – Histogram counts from PDF calculation. Use PDF.counts to get the
+pair correlation data.</p></li>
+<li><p><strong>qVector</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – Momentum transfer values (q) in Å⁻¹ at which to calculate intensity.
+Typical range is 0.5 to 25 Å⁻¹ for X-ray scattering.</p></li>
+<li><p><strong>elementI</strong> (<em>str</em><em>, </em><em>optional</em>) – Chemical symbol for first element type (e.g., “Pt”, “Au”). If empty,
+uses generic scattering factors. Default is “”.</p></li>
+<li><p><strong>elementJ</strong> (<em>str</em><em>, </em><em>optional</em>) – Chemical symbol for second element type. For self-correlation PDFs,
+this should match elementI. Default is “”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated scattering intensity values corresponding to each q-value.
+Units are arbitrary but proportional to scattered intensity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculatePDF</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]</span>  <span class="c1"># 0.1 to 10.0 Å⁻¹</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intensity</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculateIntensity</span><span class="p">(</span><span class="n">pdf</span><span class="o">.</span><span class="n">centers</span><span class="p">,</span> <span class="n">pdf</span><span class="o">.</span><span class="n">counts</span><span class="p">,</span> <span class="n">q_values</span><span class="p">,</span> <span class="s2">&quot;Pt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.calculatePDF">
+<span class="sig-name descname"><span class="pre">calculatePDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positionsI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><span class="pre">Positions</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">positionsJ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><span class="pre">Positions</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#aesdebye.PDF" title="aesdebye.PDF"><span class="pre">PDF</span></a></span></span><a class="headerlink" href="#aesdebye.DebyeCalculator.calculatePDF" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the pair distribution function between two sets of atomic positions.</p>
+<p>This method computes the cross-correlation PDF between two different position
+sets, which is useful for analyzing correlations between different atom types
+or different regions of a system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positionsI</strong> (<a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><em>Positions</em></a>) – First set of atomic positions. This defines the reference atoms for
+the pair correlation calculation.</p></li>
+<li><p><strong>positionsJ</strong> (<a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><em>Positions</em></a>) – Second set of atomic positions. This defines the target atoms for
+the pair correlation calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated pair distribution function containing histogram data with
+bin centers, counts, and corrected centers accounting for finite
+bin size effects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.PDF" title="aesdebye.PDF">PDF</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pt_atoms</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">filterByElement</span><span class="p">(</span><span class="s2">&quot;Pt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">au_atoms</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">filterByElement</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculatePDF</span><span class="p">(</span><span class="n">pt_atoms</span><span class="p">,</span> <span class="n">au_atoms</span><span class="p">)</span>  <span class="c1"># Pt-Au correlations</span>
+</pre></div>
+</div>
+<p>calculatePDF(positionsI: Positions) -&gt; PDF</p>
+<p>Calculate the pair distribution function for a single set of atomic positions.</p>
+<p>This method computes the self-correlation PDF within a single position set,
+which represents the standard radial distribution function showing how
+atomic density varies as a function of distance from any given atom.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>positionsI</strong> (<a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><em>Positions</em></a>) – Atomic positions for which to calculate the PDF. The method will
+compute all pairwise distances within this set.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated pair distribution function containing histogram data with
+bin centers, counts, and corrected centers. The samePositions flag
+will be set to True for proper normalization.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.PDF" title="aesdebye.PDF">PDF</a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">readXYZ</span><span class="p">(</span><span class="s2">&quot;structure.xyz&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculatePDF</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="o">.</span><span class="n">toCSV</span><span class="p">(</span><span class="s2">&quot;output_pdf.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.calculateProfile">
+<span class="sig-name descname"><span class="pre">calculateProfile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.DebyeCalculator.calculateProfile" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the scattering intensity profile for a given set of positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><em>Positions</em></a>) – The positions object containing atomic coordinates.</p></li>
+<li><p><strong>start</strong> (<em>float</em><em>, </em><em>optional</em>) – The starting q (or angle) value. Default is 0.</p></li>
+<li><p><strong>end</strong> (<em>float</em><em>, </em><em>optional</em>) – The ending q (or angle) value. Default is 10.</p></li>
+<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of q steps. Default is 1000.</p></li>
+<li><p><strong>twoTheta</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, interpret the range as 2θ values instead of q. Default is False.</p></li>
+<li><p><strong>wavelength</strong> (<em>float</em><em>, </em><em>optional</em>) – Wavelength of the incident beam in Å. Default is 0.4.</p></li>
+<li><p><strong>filter</strong> (<em>str</em><em>, </em><em>optional</em>) – Optional filter for scattering contributions (e.g., element selection). Default is “”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing:
+- PDF object with pair distribution data,
+- Profile object with the scattering intensity profile.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#aesdebye.PDF" title="aesdebye.PDF">PDF</a>, <a class="reference internal" href="#aesdebye.Profile" title="aesdebye.Profile">Profile</a>]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">readXYZ</span><span class="p">(</span><span class="s2">&quot;structure.xyz&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculateProfile</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">wavelength</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="p">,</span> <span class="n">profile</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;Pt-Pt&quot;</span><span class="p">]</span>  <span class="c1"># Accessing the PDF and Profile for Pt-Pt correlations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf_total</span><span class="p">,</span> <span class="n">profile_total</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span>  <span class="c1"># Accessing the total PDF and Profile</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.cellList">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cellList</span></span><a class="headerlink" href="#aesdebye.DebyeCalculator.cellList" title="Link to this definition">#</a></dt>
+<dd><p>CellList
+CellList object used for spatial partitioning of atomic positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.DebyeCalculator.cellList" title="aesdebye.DebyeCalculator.cellList">cellList</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.DebyeCalculator.parallelHelper">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">parallelHelper</span></span><a class="headerlink" href="#aesdebye.DebyeCalculator.parallelHelper" title="Link to this definition">#</a></dt>
+<dd><p>ParallelHelper
+ParallelHelper object created by the DebyeCalculator for managing
+parallel execution settings and MPI communication.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.DebyeCalculator.parallelHelper" title="aesdebye.DebyeCalculator.parallelHelper">parallelHelper</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="positions">
+<h3>Positions<a class="headerlink" href="#positions" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="aesdebye.Positions">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aesdebye.</span></span><span class="sig-name descname"><span class="pre">Positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxMin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boxMax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.Positions" title="Link to this definition">#</a></dt>
+<dd><p>Construct a new Positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – List of positions</p></li>
+<li><p><strong>boxMin</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Minimum box size</p></li>
+<li><p><strong>boxMax</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – Maximum box size</p></li>
+</ul>
+</dd>
+</dl>
+<p>Construct a new Positions object from atomic data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chemicalSymbols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Chemical element symbols for each atom (e.g., [‘C’, ‘O’, ‘H’])</p></li>
+<li><p><strong>coordinates</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – Cartesian coordinates for each atom in Angstroms</p></li>
+<li><p><strong>selectionIds</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Unique identifiers for each atom. If empty, indices will be used.</p></li>
+<li><p><strong>boxMin</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum coordinate value for automatic box size detection</p></li>
+<li><p><strong>boxMax</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum coordinate value for automatic box size detection</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">Positions</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.Positions.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Construct a new Positions object from atomic data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chemicalSymbols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Chemical element symbols for each atom (e.g., [‘C’, ‘O’, ‘H’])</p></li>
+<li><p><strong>coordinates</strong> (<em>List</em><em>[</em><em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – Cartesian coordinates for each atom in Angstroms</p></li>
+<li><p><strong>selectionIds</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Unique identifiers for each atom. If empty, indices will be used.</p></li>
+<li><p><strong>boxMin</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum coordinate value for automatic box size detection</p></li>
+<li><p><strong>boxMax</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum coordinate value for automatic box size detection</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">Positions</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Positions.chemicalSymbols">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">chemicalSymbols</span></span><a class="headerlink" href="#aesdebye.Positions.chemicalSymbols" title="Link to this definition">#</a></dt>
+<dd><p>List of chemical element symbols corresponding to each atom</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Positions.element">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">element</span></span><a class="headerlink" href="#aesdebye.Positions.element" title="Link to this definition">#</a></dt>
+<dd><p>Default element type for atoms when not specified individually</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.filterByElement">
+<span class="sig-name descname"><span class="pre">filterByElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elementName</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><span class="pre">Positions</span></a></span></span><a class="headerlink" href="#aesdebye.Positions.filterByElement" title="Link to this definition">#</a></dt>
+<dd><p>Filter the positions by element name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elementName</strong> (<em>str</em>) – The element name to filter by.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered positions object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions">Positions</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.filterBySelectionId">
+<span class="sig-name descname"><span class="pre">filterBySelectionId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomId</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><span class="pre">Positions</span></a></span></span><a class="headerlink" href="#aesdebye.Positions.filterBySelectionId" title="Link to this definition">#</a></dt>
+<dd><p>Filter the positions by atom id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>atomId</strong> (<em>str</em>) – The atom id to filter by.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered positions object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions">Positions</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.fromIndexList">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">fromIndexList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.Positions.fromIndexList" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.getBoxSize">
+<span class="sig-name descname"><span class="pre">getBoxSize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#aesdebye.Positions.getBoxSize" title="Link to this definition">#</a></dt>
+<dd><p>Get the box size of the positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The box size of the positions object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.getUniqueElements">
+<span class="sig-name descname"><span class="pre">getUniqueElements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#aesdebye.Positions.getUniqueElements" title="Link to this definition">#</a></dt>
+<dd><p>Get the unique chemical elements in the positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of unique chemical elements.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.getUniqueSelectionIds">
+<span class="sig-name descname"><span class="pre">getUniqueSelectionIds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#aesdebye.Positions.getUniqueSelectionIds" title="Link to this definition">#</a></dt>
+<dd><p>Get the unique selection ids in the positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of unique selection ids.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Positions.selectionIds">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">selectionIds</span></span><a class="headerlink" href="#aesdebye.Positions.selectionIds" title="Link to this definition">#</a></dt>
+<dd><p>List of unique atom identifiers for selection and filtering</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.setBoxSize">
+<span class="sig-name descname"><span class="pre">setBoxSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxSize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.Positions.setBoxSize" title="Link to this definition">#</a></dt>
+<dd><p>Set the box size of the positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>boxSize</strong> (<em>float</em>) – The box size to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#aesdebye.Positions.size" title="Link to this definition">#</a></dt>
+<dd><p>Get the number of atoms in the positions object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of atoms in the positions object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.sliceCellList">
+<span class="sig-name descname"><span class="pre">sliceCellList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.Positions.sliceCellList" title="Link to this definition">#</a></dt>
+<dd><p>Slice the cell list of the positions object in-place.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em>) – The start index of the slice.</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – The end index of the slice.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.subsample">
+<span class="sig-name descname"><span class="pre">subsample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subSampleRatio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions"><span class="pre">Positions</span></a></span></span><a class="headerlink" href="#aesdebye.Positions.subsample" title="Link to this definition">#</a></dt>
+<dd><p>Subsample the positions object to a given number of atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subSampleRatio</strong> (<em>float</em>) – The ratio of atoms to keep.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – The seed for the random number generator. The default is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The subsampled positions object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#aesdebye.Positions" title="aesdebye.Positions">Positions</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.toList">
+<span class="sig-name descname"><span class="pre">toList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#aesdebye.Positions.toList" title="Link to this definition">#</a></dt>
+<dd><p>Create a list of atomic positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of positions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[Tuple[float, float, float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Positions.toXYZ">
+<span class="sig-name descname"><span class="pre">toXYZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.Positions.toXYZ" title="Link to this definition">#</a></dt>
+<dd><p>Write the positions to an XYZ file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The path to the output file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pdf">
+<h3>PDF<a class="headerlink" href="#pdf" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="aesdebye.PDF">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aesdebye.</span></span><span class="sig-name descname"><span class="pre">PDF</span></span><a class="headerlink" href="#aesdebye.PDF" title="Link to this definition">#</a></dt>
+<dd><p>PDF - Pair Distribution Function data structure</p>
+<p>The PDF class represents a calculated pair distribution function containing
+histogram data with bin centers, counts, and corrected centers. This class
+stores the results of PDF calculations and provides methods for data export,
+visualization, and further analysis.</p>
+<p>The PDF contains both corrected and uncorrected bin centers, where corrected
+centers account for the finite bin size effects in the histogram. The class
+supports arithmetic operations for combining multiple PDFs and provides
+efficient storage using internal histogram structures.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PDF objects are typically created as results of DebyeCalculator.calculatePDF()
+methods rather than being instantiated directly.</p>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calc</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">DebyeCalculator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculatePDF</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="o">.</span><span class="n">toCSV</span><span class="p">(</span><span class="s2">&quot;output.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pdf</span><span class="o">.</span><span class="n">centers</span><span class="p">)</span><span class="si">}</span><span class="s2"> bins&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Construct a new PDF object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boxSize</strong> (<em>float</em><em>, </em><em>optional</em>) – Size of the simulation box in Angstroms. Used for proper normalization
+and bin center calculations. Default is 1.0.</p></li>
+<li><p><strong>samePositions</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag indicating whether this PDF represents correlations within the same
+set of positions (self-correlation) or between different position sets
+(cross-correlation). Default is True.</p></li>
+<li><p><strong>Note</strong> – Direct instantiation is rarely needed. PDFs are typically created by
+DebyeCalculator methods.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.PDF.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.PDF.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Construct a new PDF object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>boxSize</strong> (<em>float</em><em>, </em><em>optional</em>) – Size of the simulation box in Angstroms. Used for proper normalization
+and bin center calculations. Default is 1.0.</p></li>
+<li><p><strong>samePositions</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag indicating whether this PDF represents correlations within the same
+set of positions (self-correlation) or between different position sets
+(cross-correlation). Default is True.</p></li>
+<li><p><strong>Note</strong> – Direct instantiation is rarely needed. PDFs are typically created by
+DebyeCalculator methods.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.PDF.calculationTime">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">calculationTime</span></span><a class="headerlink" href="#aesdebye.PDF.calculationTime" title="Link to this definition">#</a></dt>
+<dd><p>Time taken for the PDF calculation in seconds.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.PDF.centers">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">centers</span></span><a class="headerlink" href="#aesdebye.PDF.centers" title="Link to this definition">#</a></dt>
+<dd><p>List of corrected bin centers in Angstroms. These account for finite bin size effects and should be used for accurate analysis.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.PDF.counts">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">counts</span></span><a class="headerlink" href="#aesdebye.PDF.counts" title="Link to this definition">#</a></dt>
+<dd><p>List of histogram counts for each bin. These represent the number of atom pairs found at each distance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.PDF.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#aesdebye.PDF.load" title="Link to this definition">#</a></dt>
+<dd><p>Load the PDF from a binary file created with save().</p>
+<p>This method reconstructs the complete PDF object from the binary
+file, including all internal histogram data and metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to the input binary file created with save()</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The box size of the loaded PDF</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">aesdebye</span><span class="o">.</span><span class="n">PDF</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">box_size</span> <span class="o">=</span> <span class="n">pdf</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;my_pdf.bin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.PDF.readCSV">
+<span class="sig-name descname"><span class="pre">readCSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.PDF.readCSV" title="Link to this definition">#</a></dt>
+<dd><p>Read PDF data from a CSV file.</p>
+<p>This method loads PDF data from a CSV file with the expected format
+(bin centers, corrected centers, counts). The CSV should match the
+format produced by toCSV().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Path to the input CSV file containing PDF data</p></li>
+<li><p><strong>Note</strong> – The CSV file must have the correct format with appropriate columns
+for bin centers, corrected centers, and counts.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.PDF.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.PDF.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the PDF to a binary file for efficient storage and loading.</p>
+<p>The binary format preserves all internal data structures and metadata,
+allowing for exact reconstruction of the PDF object. This is the
+recommended format for intermediate storage during calculations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to the output binary file. The file will be created or
+overwritten if it already exists.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#aesdebye.PDF.load" title="aesdebye.PDF.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a></dt><dd><p>Load a PDF from a binary file</p>
+</dd>
+<dt><a class="reference internal" href="#aesdebye.PDF.toCSV" title="aesdebye.PDF.toCSV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toCSV</span></code></a></dt><dd><p>Export to human-readable CSV format</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;my_pdf.bin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.PDF.testPassed">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">testPassed</span></span><a class="headerlink" href="#aesdebye.PDF.testPassed" title="Link to this definition">#</a></dt>
+<dd><p>Boolean flag indicating whether internal validation tests passed during PDF calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.PDF.toCSV">
+<span class="sig-name descname"><span class="pre">toCSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.PDF.toCSV" title="Link to this definition">#</a></dt>
+<dd><p>Export the PDF to a CSV file for analysis and visualization.</p>
+<p>The CSV file contains columns for bin centers, corrected centers,
+and counts, making it suitable for plotting and further analysis
+with external tools like Excel, MATLAB, or Python plotting libraries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – Path to the output CSV file. The file will be created or
+overwritten if it already exists.</p></li>
+<li><p><strong>complete</strong> (<em>bool</em><em>, </em><em>optional</em>) – If False (default), only non-empty bins are exported to reduce
+file size. If True, all bins including empty ones are exported.
+Setting to True can result in very large files.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="o">.</span><span class="n">toCSV</span><span class="p">(</span><span class="s2">&quot;pdf_data.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span><span class="o">.</span><span class="n">toCSV</span><span class="p">(</span><span class="s2">&quot;complete_pdf.csv&quot;</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.PDF.uncorrectedCenters">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">uncorrectedCenters</span></span><a class="headerlink" href="#aesdebye.PDF.uncorrectedCenters" title="Link to this definition">#</a></dt>
+<dd><p>List of uncorrected bin centers in Angstroms. These are the nominal bin positions without finite-size corrections.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="profile">
+<h3>Profile<a class="headerlink" href="#profile" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="aesdebye.Profile">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aesdebye.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><a class="headerlink" href="#aesdebye.Profile" title="Link to this definition">#</a></dt>
+<dd><p>Profile - Scattering intensity profile data structure</p>
+<p>The Profile class represents a calculated scattering intensity profile containing
+q-values, two-theta angles, and corresponding intensity values. This class is
+typically returned by intensity calculation methods and provides utilities for
+data export and visualization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Profile objects cannot be directly instantiated in Python. They are created
+as results of calculations performed by DebyeCalculator methods.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Profile.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.Profile.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Profile.calculationTime">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">calculationTime</span></span><a class="headerlink" href="#aesdebye.Profile.calculationTime" title="Link to this definition">#</a></dt>
+<dd><p>Computation time in seconds required to calculate this profile.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Profile.intensity">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">intensity</span></span><a class="headerlink" href="#aesdebye.Profile.intensity" title="Link to this definition">#</a></dt>
+<dd><p>Calculated scattering intensity values corresponding to each q-value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Profile.q">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">q</span></span><a class="headerlink" href="#aesdebye.Profile.q" title="Link to this definition">#</a></dt>
+<dd><p>Momentum transfer values in Å⁻¹. These are the q-values at which the intensity was calculated.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Profile.testPassed">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">testPassed</span></span><a class="headerlink" href="#aesdebye.Profile.testPassed" title="Link to this definition">#</a></dt>
+<dd><p>Boolean flag indicating whether internal validation tests passed during calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.Profile.toCSV">
+<span class="sig-name descname"><span class="pre">toCSV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.Profile.toCSV" title="Link to this definition">#</a></dt>
+<dd><p>Export the scattering profile to a CSV file.</p>
+<p>The CSV file will contain columns for q-values, two-theta angles, and
+intensity values, making it suitable for further analysis or plotting
+with external tools.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to the output CSV file. The file will be created or overwritten
+if it already exists.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculateIntensity</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">profile</span><span class="o">.</span><span class="n">toCSV</span><span class="p">(</span><span class="s2">&quot;scattering_profile.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.Profile.twoTheta">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">twoTheta</span></span><a class="headerlink" href="#aesdebye.Profile.twoTheta" title="Link to this definition">#</a></dt>
+<dd><p>Scattering angles in degrees (2θ). Converted from q-values using the specified wavelength.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="parallelhelper">
+<h3>ParallelHelper<a class="headerlink" href="#parallelhelper" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">aesdebye.</span></span><span class="sig-name descname"><span class="pre">ParallelHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nThreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useMPI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.ParallelHelper" title="Link to this definition">#</a></dt>
+<dd><p>Construct a new ParallelHelper object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nThreads</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of threads to use. The default is -1.</p></li>
+<li><p><strong>useMPI</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to indicate if MPI should be used. The default is False.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag to indicate if verbose output should be enabled. The default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aesdebye.ParallelHelper.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.ompThreads">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ompThreads</span></span><a class="headerlink" href="#aesdebye.ParallelHelper.ompThreads" title="Link to this definition">#</a></dt>
+<dd><p>Number of OpenMP threads</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.setNumThreads">
+<span class="sig-name descname"><span class="pre">setNumThreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nThreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.ParallelHelper.setNumThreads" title="Link to this definition">#</a></dt>
+<dd><p>Set the number of OpenMP threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nThreads</strong> (<em>int</em>) – The number of OpenMP threads to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.totalThreads">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">totalThreads</span></span><a class="headerlink" href="#aesdebye.ParallelHelper.totalThreads" title="Link to this definition">#</a></dt>
+<dd><p>Total number of threads</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aesdebye.ParallelHelper.wait" title="Link to this definition">#</a></dt>
+<dd><p>Wait for all MPI ranks to synchronize.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.world_rank">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">world_rank</span></span><a class="headerlink" href="#aesdebye.ParallelHelper.world_rank" title="Link to this definition">#</a></dt>
+<dd><p>Rank of the current process in the MPI world</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aesdebye.ParallelHelper.world_size">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">world_size</span></span><a class="headerlink" href="#aesdebye.ParallelHelper.world_size" title="Link to this definition">#</a></dt>
+<dd><p>Total size of the MPI world</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-aesdebye.cli">
+<span id="cli-module"></span><h2>CLI Module<a class="headerlink" href="#module-aesdebye.cli" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="aesdebye.cli.main">
+<span class="sig-prename descclassname"><span class="pre">aesdebye.cli.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aesdebye/cli.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aesdebye.cli.main" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="aesdebye.cli.parse_args">
+<span class="sig-prename descclassname"><span class="pre">aesdebye.cli.</span></span><span class="sig-name descname"><span class="pre">parse_args</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aesdebye/cli.html#parse_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aesdebye.cli.parse_args" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="getting_started.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-classes">Core Classes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#debyecalculator">DebyeCalculator</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.__init__"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateASFProfile"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateASFProfile()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateIntensity"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateIntensity()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculatePDF"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculatePDF()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.calculateProfile"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.calculateProfile()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.cellList"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.cellList</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.DebyeCalculator.parallelHelper"><code class="docutils literal notranslate"><span class="pre">DebyeCalculator.parallelHelper</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#positions">Positions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions"><code class="docutils literal notranslate"><span class="pre">Positions</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.__init__"><code class="docutils literal notranslate"><span class="pre">Positions.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.chemicalSymbols"><code class="docutils literal notranslate"><span class="pre">Positions.chemicalSymbols</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.element"><code class="docutils literal notranslate"><span class="pre">Positions.element</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.filterByElement"><code class="docutils literal notranslate"><span class="pre">Positions.filterByElement()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.filterBySelectionId"><code class="docutils literal notranslate"><span class="pre">Positions.filterBySelectionId()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.fromIndexList"><code class="docutils literal notranslate"><span class="pre">Positions.fromIndexList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getBoxSize"><code class="docutils literal notranslate"><span class="pre">Positions.getBoxSize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getUniqueElements"><code class="docutils literal notranslate"><span class="pre">Positions.getUniqueElements()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.getUniqueSelectionIds"><code class="docutils literal notranslate"><span class="pre">Positions.getUniqueSelectionIds()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.selectionIds"><code class="docutils literal notranslate"><span class="pre">Positions.selectionIds</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.setBoxSize"><code class="docutils literal notranslate"><span class="pre">Positions.setBoxSize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.size"><code class="docutils literal notranslate"><span class="pre">Positions.size()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.sliceCellList"><code class="docutils literal notranslate"><span class="pre">Positions.sliceCellList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.subsample"><code class="docutils literal notranslate"><span class="pre">Positions.subsample()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.toList"><code class="docutils literal notranslate"><span class="pre">Positions.toList()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Positions.toXYZ"><code class="docutils literal notranslate"><span class="pre">Positions.toXYZ()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pdf">PDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF"><code class="docutils literal notranslate"><span class="pre">PDF</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.__init__"><code class="docutils literal notranslate"><span class="pre">PDF.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.calculationTime"><code class="docutils literal notranslate"><span class="pre">PDF.calculationTime</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.centers"><code class="docutils literal notranslate"><span class="pre">PDF.centers</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.counts"><code class="docutils literal notranslate"><span class="pre">PDF.counts</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.load"><code class="docutils literal notranslate"><span class="pre">PDF.load()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.readCSV"><code class="docutils literal notranslate"><span class="pre">PDF.readCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.save"><code class="docutils literal notranslate"><span class="pre">PDF.save()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.testPassed"><code class="docutils literal notranslate"><span class="pre">PDF.testPassed</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.toCSV"><code class="docutils literal notranslate"><span class="pre">PDF.toCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.PDF.uncorrectedCenters"><code class="docutils literal notranslate"><span class="pre">PDF.uncorrectedCenters</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profile">Profile</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.__init__"><code class="docutils literal notranslate"><span class="pre">Profile.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.calculationTime"><code class="docutils literal notranslate"><span class="pre">Profile.calculationTime</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.intensity"><code class="docutils literal notranslate"><span class="pre">Profile.intensity</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.q"><code class="docutils literal notranslate"><span class="pre">Profile.q</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.testPassed"><code class="docutils literal notranslate"><span class="pre">Profile.testPassed</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.toCSV"><code class="docutils literal notranslate"><span class="pre">Profile.toCSV()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.Profile.twoTheta"><code class="docutils literal notranslate"><span class="pre">Profile.twoTheta</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parallelhelper">ParallelHelper</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper"><code class="docutils literal notranslate"><span class="pre">ParallelHelper</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.__init__"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.__init__()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.ompThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.ompThreads</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.setNumThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.setNumThreads()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.totalThreads"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.totalThreads</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.wait"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.wait()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.world_rank"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.world_rank</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.ParallelHelper.world_size"><code class="docutils literal notranslate"><span class="pre">ParallelHelper.world_size</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-aesdebye.cli">CLI Module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aesdebye.cli.parse_args"><code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Navid Panchi
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Navid Panchi.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
