@@ -123,8 +123,6 @@ public:
         wait();
         if (useMPI && mpiInitialized) {
             *this << "Finalizing MPI\n";
-            if (waitTime > 0.0)
-                std::cout << "Rank: " << worldRank << " wait time:  " << waitTime << " seconds\n";
             MPI_Finalize();
         }
     }

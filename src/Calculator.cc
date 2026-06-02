@@ -1,5 +1,6 @@
 #include <utility>
 #include <string>
+#include <iostream>
 
 #include <Calculator.hpp>
 #include <ASF.hpp>
@@ -99,13 +100,51 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
     parallelHelper << ">> I(element:" << positionsI.element << ", Atoms:" << positionsI.size() <<
                         ") x " << (samePositions ?"I":"J") <<"(element:" << positionsJ.element
                         << ", Atoms:" << positionsJ.size() << ")\n";
+    parallelHelper.wait();
     // make sure the box size is the same for the positions
     if (positionsI.getBoxSize() != positionsJ.getBoxSize())
     {
-        throw std::invalid_argument("Box size of the positions should be the same!, "
-                                    "Rescale the positions to the larger box size with `setBoxSize` method");
+        parallelHelper << "Unit length mismatch! " << positionsI.getBoxSize() << " != "
+                       << positionsJ.getBoxSize() << "\n";
+        parallelHelper << "Setting the unit length to the larger of the two\n";
+
+        // use the bigger box size
+        double boxSize = std::max(positionsI.getBoxSize(), positionsJ.getBoxSize());
+
+        // update the box size for both positions
+        positionsI.setBoxSize(boxSize);
+        positionsJ.setBoxSize(boxSize);
     }
 
+    if (config.useCellList)
+    {
+        // setup cellList for the positions - this is required to be done **before** the binsResolution is set
+        // otherwise the number of cells won't be appropriate!
+        cellList.createCellList(positionsI);
+
+        if (!samePositions)
+            cellList.createCellList(positionsJ);
+    }
+
+    double originalBoxSize = positionsI.getBoxSize();
+
+    // update the box size of both the positions if binsResolution is set
+    if (binsResolution != 1.0)
+    {
+        parallelHelper << "Updating the box size for the bins resolution\n";
+        parallelHelper << "Old box size: " << originalBoxSize << " , ";
+        double boxSize = originalBoxSize * (1 / binsResolution);
+        parallelHelper << "New box size: " << boxSize << "\n";
+        positionsI.setBoxSize(boxSize);
+        if (!samePositions)
+            positionsJ.setBoxSize(boxSize);
+    }
+
+    // create the PDF object. Needs to know the boxSize and if both positions will be the same
+    uint nBins = !config.smallBins ? N_BINS : N_SMALL_BINS;
+    PDF pdf(positionsI.getBoxSize(), samePositions, nBins,
+            positionsI.element, positionsJ.element);
+    parallelHelper << "PDF has " << pdf.pdf_vector.size() << " bins\n";
 
     // Setup for dividing the work among the ranks
     // we use the triangle area to divide the work for same positions
@@ -123,46 +162,71 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
     }
     else
     {
-        int64 chunkSize = positionsI.size() / parallelHelper.worldSize;
+        int64 chunkSize = positionsJ.size() / parallelHelper.worldSize;
         start = parallelHelper.worldRank * chunkSize;
         stop = (parallelHelper.worldRank + 1) * chunkSize;
     }
-    stop = parallelHelper.worldRank == parallelHelper.worldSize - 1 ? positionsI.size() : stop; // make sure the last
-
-    PairsList cellPairsList;
-    if (config.useCellList)
-    {
-        // setup cellList for the positions - this is required to be done **before** the binsResolution is set
-        // otherwise the number of cells won't be appropriate!
-        cellList.createCellList(positionsI); // generate for full positions
-        if (!samePositions)
-            cellList.createCellList(positionsJ);
-
-        // update the cell list of positions I, so that it only contains cell heads for the current rank!
-        positionsI.sliceCellList(start, stop);
-        // get the cell pairs list for the current rank
-        cellPairsList = cellList.getCellPairsList(positionsI, positionsJ, samePositions);
-    }
-
-    // update the box size of both the positions if binsResolution is set
-    updateBoxSize(positionsI, positionsJ, samePositions, false);
-
-    // create the PDF object with appropriate number of bins
-    PDF pdf(positionsI.getBoxSize(), samePositions, !config.smallBins? N_BINS : N_SMALL_BINS,
-            positionsI.element, positionsJ.element);
+    stop = parallelHelper.worldRank == parallelHelper.worldSize - 1 ? positionsI.size() : stop;
 
     double calculation_start = helpers::get_wall_time();
     if (config.useGPU)
     {
-        calculatePDFGPU(positionsI, positionsJ, pdf.pdf_vector, cellPairsList,
+        calculatePDFGPU(positionsI, positionsJ, pdf.pdf_vector, cellList.getCellPairsList(positionsI, positionsJ, samePositions),
                         start, stop, samePositions, parallelHelper,
                         config);
     }
     else
     {
-        calculatePDFCPU(positionsI, positionsJ, pdf.pdf_vector, cellPairsList,
-                        start, stop, samePositions, parallelHelper,
-                        config);
+        if (config.useCellList)
+        {
+            // the pairs of cells that need to be calculated
+            auto const cellPairsList = cellList.getCellPairsList(positionsI, positionsJ, samePositions);
+
+            // setup the rank based divisions with efficient load balancing
+            auto [rankStarts, rankEnds] = cellList.setupRankBasedDivisions(positionsI, positionsJ,
+                                                                           cellPairsList, parallelHelper.worldSize,
+                                                                           true);
+
+            // get the start and stop for the current rank
+            start = rankStarts[parallelHelper.worldRank];
+            stop = rankEnds[parallelHelper.worldRank];
+            if (verbose && parallelHelper.worldSize > 1)
+            {
+                std::cout << ">> world rank: " << parallelHelper.worldRank << " , ";
+                std::cout << "start: " << start << " , stop: " << stop << " , ";
+                std::cout << "cellPairs: " << cellPairsList.size() << " , ";
+                std::cout << "cells: " << 100.0 * double(stop - start) / (double)cellPairsList.size() << "% \n";
+            }
+            calculation_start = helpers::get_wall_time();
+
+            // calculate the PDF - notice how we only pass the vector datastructure
+            if (config.useLocalHistogram)
+            {
+                calculatePDFKernel<true>(positionsI, positionsJ,
+                                         cellPairsList, pdf.pdf_vector, start, stop, samePositions);
+            }
+            else
+            {
+                calculatePDFKernel<false>(positionsI, positionsJ,
+                                          cellPairsList, pdf.pdf_vector, start, stop, samePositions);
+            }
+        }
+        else
+        {
+            parallelHelper << "Non-cell list calculation\n";
+            calculation_start = helpers::get_wall_time();
+            // non cell list based PDF calculation
+            if (config.useLocalHistogram)
+            {
+                calculatePDFKernel<true>(positionsI, positionsJ,
+                                         pdf.pdf_vector, start, stop, samePositions);
+            }
+            else
+            {
+                calculatePDFKernel<false>(positionsI, positionsJ,
+                                          pdf.pdf_vector, start, stop, samePositions);
+            }
+        }
     }
     double calculation_end = helpers::get_wall_time();
     pdf.calculationTime = calculation_end - calculation_start;
