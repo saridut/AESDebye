@@ -27,12 +27,6 @@ If you use this code, please cite the following paper:
 
 We recommend using a dedicated conda/mamba environment for this purpose. For more information on creating environments using conda/mamba see [here](https://docs.conda.io/en/latest/miniconda.html).
 
-You can install AES-DEBYE directly via `pip`:
-
-```bash
-pip install git+https://gitlab.cs.fau.de/iq23adyz/debye -v
-```
-
 CMake will detect the availability of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible. 
 
 For example, on a HPC system, you can load the cuda and mpi modules using the following command (or similar, based on your HPC provider):
@@ -41,9 +35,18 @@ For example, on a HPC system, you can load the cuda and mpi modules using the fo
 module load mpi cuda
 ```
 
+Then you can install AES-DEBYE directly via `pip`:
+
+```bash
+pip install git+https://gitlab.cs.fau.de/iq23adyz/debye -v
+```
+We do not provide prebuilt wheels, pip will download and compile the code. For compiling as a C++ library, refer to [Building as a C++ Library (Without Pip)](#building-as-a-c-library-without-pip).
+
 ### Getting Started
 
 #### Python Interface
+
+We provide python interface using [pybind11](https://pybind11.readthedocs.io/).
 
 Here is a simple example of how to use AES-DEBYE to calculate the Debye scattering pattern from a set of atomic positions.
 
@@ -73,7 +76,7 @@ calculator = debye.DebyeCalculator(nThreads=10,
 
 # compute and select the Pt-Pt profile
 # This returns a dictionary with all the partials and a summed up one
-# called "total" - but only when we have more than one element
+# called "total"
 pdf, profile = calculator.calculateProfile(positions,
                                         start=0.0,
                                         end=10.0,
