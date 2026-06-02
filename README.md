@@ -30,7 +30,7 @@ We recommend using a dedicated conda/mamba environment for this purpose. For mor
 You can install AES-DEBYE directly via `pip`:
 
 ```bash
-pip install git+https://github.com/navidpanchi/AESDebye.git -v
+pip install git+https://gitlab.cs.fau.de/iq23adyz/debye -v
 ```
 
 CMake will detect the availability of MPI and CUDA automatically and enable those features. MPI is detected using `find_library` command from CMake, so please make sure your mpi library is accessible. 
