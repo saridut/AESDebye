@@ -158,7 +158,6 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
         start = (int64)std::floor(std::sqrt((double)(parallelHelper.worldRank) /
                                             (parallelHelper.worldSize)) *
                                   (double) positionsI.size());
-        parallelHelper << "thread: " << parallelHelper.worldRank << " PositionsI start: " << start << " , stop: " << stop << "\n";
     }
     else
     {
@@ -167,7 +166,10 @@ PDF DebyeCalculator::calculatePDF(Positions &positionsI, Positions &positionsJ)
         stop = (parallelHelper.worldRank + 1) * chunkSize;
     }
     stop = parallelHelper.worldRank == parallelHelper.worldSize - 1 ? positionsI.size() : stop;
-
+    if (parallelHelper.worldRank > 1)
+    {
+        parallelHelper << "MPI Thread: " << parallelHelper.worldRank << " PositionsI start: " << start << " , stop: " << stop << "\n";
+    }
     double calculation_start = helpers::get_wall_time();
     if (config.useGPU)
     {

@@ -99,8 +99,15 @@ public:
 
         parallelHelper.printSection("DebyeCalculator initialized");
 
-        parallelHelper << ">> Please cite: \n";
-        parallelHelper << ">> AES-Debye, Navid Panchi et.al DOI: .... \n";
+        parallelHelper << ">> Please cite:\n\n";
+        parallelHelper << ">> AES-Debye, Navid Panchi et al. DOI: ....\n\n";
+        parallelHelper << ">> Bibtex:\n\n";
+        parallelHelper << "@article{Panchi2026AES-Debye,\n"
+               << "  author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},\n"
+               << "  title   = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},\n"
+               << "  journal = {Submitted to Journal of Applied Crystallography (IUCrJ), under review},\n"
+               << "  year    = {2026},\n"
+               << "}\n";
 
         parallelHelper << " ------------------------------------------------\n";
         parallelHelper << config;
