@@ -321,7 +321,6 @@ DebyeCalculator::calculateIntensity(PDF &pdf, double start, double end, int nSte
     profile.intensity = calculateIntensity(pdf.centers, pdf.counts, profile.q, pdf.elementI, pdf.elementJ);
     double calculation_end = helpers::get_wall_time();
     profile.calculationTime = calculation_end - calculation_start;
-    profile.test();
     return profile;
 }
 
