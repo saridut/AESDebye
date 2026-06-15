@@ -58,8 +58,7 @@ public:
 
   std::string toString() const {
     std::stringstream ss;
-    ss << "Test: " << helpers::bool_to_string(testPassed)
-       << " time taken: " << calculationTime << "s" << "\n";
+    ss << "Time taken: " << calculationTime << "s" << "\n";
     ss << termPlot();
     return ss.str();
   }
