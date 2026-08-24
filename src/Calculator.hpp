@@ -105,10 +105,11 @@ public:
         parallelHelper << "@article{Panchi2026AES-Debye,\n"
                << "  author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},\n"
                << "  title   = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},\n"
-               << "  journal = {Submitted to Journal of Applied Crystallography (IUCrJ), under review},\n"
+               << "  journal = {Journal of Applied Crystallography},\n"
+               << "  volume  = {59},\n"
                << "  year    = {2026},\n"
+               << "  doi     = {10.1107/S1600576726007429}\n"
                << "}\n";
-
         parallelHelper << " ------------------------------------------------\n";
         parallelHelper << config;
 

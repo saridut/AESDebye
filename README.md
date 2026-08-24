@@ -15,11 +15,13 @@ AES-Debye presents an accuracy-preserving DSE framework with the following highl
 If you use this code, please cite the following paper:
 
 ```bibtex
-@article{Panchi2026AES-Debye,
-    author    = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
-    title     = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},
-    journal   = {Submitted to Journal of Applied Crystallography (IUCrJ), Under review}
-    year      = {2026},
+@article{panchi2026,
+  author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
+  title   = {AES-Debye: an accurate, efficient and scalable engine for Debye scattering calculations},
+  journal = {Journal of Applied Crystallography},
+  volume  = {59},
+  year    = {2026},
+  doi     = {10.1107/S1600576726007429}
 }
 ```
 
