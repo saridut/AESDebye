@@ -1,3 +1,7 @@
+This is a fork of the original **AES-Debye** code by Panchi et al from their
+[GitLab repository](https://gitlab.cs.fau.de/iq23adyz/debye).
+
+
 # AES-DEBYE: Accurate Efficient and Scalable Debye Scattering Calculation
 
 Documentation is hosted online at: [GitHub Pages](https://navidpanchi.github.io/AESDebye/)
