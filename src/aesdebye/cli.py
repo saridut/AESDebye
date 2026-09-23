@@ -254,7 +254,7 @@ def main():
         for source, res in results.items():
             for name, (_, profile) in res.items():
                 label = f"{source}-{name}" if isinstance(source, str) else name
-                ax.semilogy(profile.q, profile.intensity, label=label)
+                ax.loglog(profile.q, profile.intensity, label=label)
 
         ax.set_xlabel(
             r"$q$ [$\AA^{-1}$]" if not args.twoThetaSpace else r"$2\theta$ [deg]"
