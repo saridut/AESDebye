@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
+#cmake_policy(SET CMP0068 NEW)
 
 if(SKBUILD)
     set(PROJECT_NAME ${SKBUILD_PROJECT_NAME})
@@ -217,15 +218,15 @@ else()
     set(RPATH "$ORIGIN")
 endif()
 
-if(BUILD_PYTHON_BINDINGS)
-    set_target_properties(_core PROPERTIES INSTALL_RPATH ${RPATH})
-endif()
-set_target_properties(aesdebye PROPERTIES INSTALL_RPATH ${RPATH})
-set_target_properties(aesdebye_cpp PROPERTIES INSTALL_RPATH ${RPATH})
-
-if(ENABLE_GPU)
-    set_target_properties(aesdebyeGPU PROPERTIES INSTALL_RPATH ${RPATH})
-endif()
+#if(BUILD_PYTHON_BINDINGS)
+#    set_target_properties(_core PROPERTIES INSTALL_RPATH ${RPATH})
+#endif()
+#set_target_properties(aesdebye PROPERTIES INSTALL_RPATH ${RPATH})
+#set_target_properties(aesdebye_cpp PROPERTIES INSTALL_RPATH ${RPATH})
+#
+#if(ENABLE_GPU)
+#    set_target_properties(aesdebyeGPU PROPERTIES INSTALL_RPATH ${RPATH})
+#endif()
 
 if (BUILD_LAMMPS_PLUGIN)
     add_subdirectory(lammps_plugin)
