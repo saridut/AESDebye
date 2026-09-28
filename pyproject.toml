@@ -46,6 +46,7 @@ build-dir = "build"
 make-fallback = true
 
 [tool.scikit-build.cmake.define]
+CMAKE_CXX_COMPILER = 'g++'
 BUILD_LAMMPS_PLUGIN = "OFF"
 LAMMPS_SRC_DIR = "~/temp/lammps/src"
 
