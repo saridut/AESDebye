@@ -8,3 +8,5 @@ lammps_plugin/output
 *.xyz
 debug
 *build*
+.DS_Store
+*.swp
