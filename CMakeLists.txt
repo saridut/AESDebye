@@ -50,8 +50,16 @@ message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
 option(AUTOCONFIG "Enable automatic configuration" ON)
 option(BUILD_LAMMPS_PLUGIN "Build LAMMPS plugin" OFF)
+#option(WITH_OPENMP "Activate OpenMP" ON)
 
-find_package(OpenMP REQUIRED)
+#if(WITH_OPENMP)
+#    find_package(OpenMP)
+#    if(OpenMP_FOUND)
+#        target_link_libraries(common_settings PRIVATE OpenMP::OpenMP_CXX)
+#    endif()
+#endif()
+
+#find_package(OpenMP REQUIRED)
 
 if(AUTOCONFIG)
     message(STATUS "Autoconfig is ON - Detecting MPI, GPU and Python support")
@@ -122,7 +130,8 @@ add_library(aesdebye SHARED src/Calculator.cc src/CellList.cc
     src/Positions.cc src/Profile.cc
     src/utils.cc)
 
-target_link_libraries(aesdebye PUBLIC common_settings OpenMP::OpenMP_CXX)
+#target_link_libraries(aesdebye PUBLIC common_settings OpenMP::OpenMP_CXX)
+target_link_libraries(aesdebye PUBLIC common_settings)
 
 # --- GPU Setup ---
 if(ENABLE_GPU)

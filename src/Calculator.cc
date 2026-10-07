@@ -371,7 +371,7 @@ DebyeCalculator::calculateProfile(Positions &positions, double start, double end
 
     auto fullPDF = results[positionPairs[0]].first;
     auto fullProfile = results[positionPairs[0]].second;
-    for (size_t i = 1; i < positionPairs.size(); i++)
+    for (size_t i = 0; i < positionPairs.size(); i++)
     {
         fullProfile = fullProfile + results[positionPairs[i]].second;
         fullPDF = fullPDF + results[positionPairs[i]].first;
