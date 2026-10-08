@@ -130,6 +130,21 @@ def parse_args():
         default=False,
         help="Use two theta instead of q",
     )
+    physics_group.add_argument(
+        "-asf",
+        "--asfFile",
+        type=str,
+        default="",
+        help="Path to custom ASF data file (TSV/CSV/text)",
+    )
+    physics_group.add_argument(
+        "-asfform",
+        "--asfFormulation",
+        type=str,
+        default="WaasmaierKirfel5",
+        choices=["WaasmaierKirfel5", "CromerMann4"],
+        help="ASF formulation standard to use: WaasmaierKirfel5 (default) or CromerMann4",
+    )
 
     # --- BENCHMARK CONFIGURATION ---
     benchmark_group = parser.add_argument_group("Benchmark configuration")
@@ -160,6 +175,17 @@ def main():
         parser.print_help()
         sys.exit(1)
 
+    # Resolve ASF file path: if empty, resolve bundled package data path
+    asf_file_path = args.asfFile
+    if not asf_file_path:
+        try:
+            from importlib.resources import files
+            bundled_asf = files("aesdebye").joinpath("data", "asf.tsv")
+            if bundled_asf.is_file():
+                asf_file_path = str(bundled_asf)
+        except Exception:
+            pass
+
     # Initialize DebyeCalculator
     calc = aesdebye.DebyeCalculator(
         nThreads=args.nThreads,
@@ -172,6 +198,8 @@ def main():
         pseudoCoal=args.pseudoCoal,
         fillGPU=args.fillGPU,
         verbose=not args.nonVerbose,
+        asfFilePath=asf_file_path,
+        asfFormulation=args.asfFormulation,
     )
 
     results = {}
@@ -254,7 +282,7 @@ def main():
         for source, res in results.items():
             for name, (_, profile) in res.items():
                 label = f"{source}-{name}" if isinstance(source, str) else name
-                ax.loglog(profile.q, profile.intensity, label=label)
+                ax.semilogy(profile.q, profile.intensity, label=label)
 
         ax.set_xlabel(
             r"$q$ [$\AA^{-1}$]" if not args.twoThetaSpace else r"$2\theta$ [deg]"

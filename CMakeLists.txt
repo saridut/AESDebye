@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.15)
-#cmake_policy(SET CMP0068 NEW)
 
 if(SKBUILD)
     set(PROJECT_NAME ${SKBUILD_PROJECT_NAME})
@@ -50,41 +49,52 @@ message(STATUS "Using C++ compiler: ${CMAKE_CXX_COMPILER}")
 
 option(AUTOCONFIG "Enable automatic configuration" ON)
 option(BUILD_LAMMPS_PLUGIN "Build LAMMPS plugin" OFF)
-#option(WITH_OPENMP "Activate OpenMP" ON)
-
-#if(WITH_OPENMP)
-#    find_package(OpenMP)
-#    if(OpenMP_FOUND)
-#        target_link_libraries(common_settings PRIVATE OpenMP::OpenMP_CXX)
-#    endif()
-#endif()
+option(USE_OPENMP "Build with OpenMP support" ON)
+option(USE_MPI "Build with MPI support" OFF)
+option(USE_CUDA "Build with CUDA support" OFF)
 
 #find_package(OpenMP REQUIRED)
 
 if(AUTOCONFIG)
     message(STATUS "Autoconfig is ON - Detecting MPI, GPU and Python support")
-
-    # Set MPI_HOME hint from Intel MPI or general MPI environment variables if available
-    if(NOT DEFINED MPI_HOME)
-        if(DEFINED ENV{I_MPI_ROOT})
-            set(MPI_HOME "$ENV{I_MPI_ROOT}")
-        elseif(DEFINED ENV{MPI_HOME})
-            set(MPI_HOME "$ENV{MPI_HOME}")
+    
+    if(USE_OPENMP)
+        find_package(OpenMP)
+        if(OpenMP_FOUND)
+            message(STATUS "OpenMP found.")
+            set(ENABLE_OPENMP ON)
+        else()
+            message(STATUS "OpenMP not found.")
+            set(ENABLE_OPENMP OFF)
         endif()
     endif()
 
-    find_package(MPI QUIET)
-    if(MPI_FOUND)
-        set(ENABLE_MPI ON)
-        message(STATUS "MPI detected and enabled")
+    # Set MPI_HOME hint from Intel MPI or general MPI environment variables if available
+    if(USE_MPI)
+        if(NOT DEFINED MPI_HOME)
+            if(DEFINED ENV{I_MPI_ROOT})
+                set(MPI_HOME "$ENV{I_MPI_ROOT}")
+            elseif(DEFINED ENV{MPI_HOME})
+                set(MPI_HOME "$ENV{MPI_HOME}")
+            endif()
+        endif()
+
+        find_package(MPI QUIET)
+        if(MPI_FOUND)
+            set(ENABLE_MPI ON)
+            message(STATUS "MPI detected and enabled")
+        endif()
     endif()
 
-    include(CheckLanguage)
-    check_language(CUDA)
-    if(CMAKE_CUDA_COMPILER)
-        set(ENABLE_GPU ON)
-        message(STATUS "CUDA/GPU detected and enabled")
+    if(USE_CUDA)
+        include(CheckLanguage)
+        check_language(CUDA)
+        if(CMAKE_CUDA_COMPILER)
+            set(ENABLE_GPU ON)
+            message(STATUS "CUDA/GPU detected and enabled")
+        endif()
     endif()
+
 endif()
 
 include_directories(src extern)
@@ -130,8 +140,9 @@ add_library(aesdebye SHARED src/Calculator.cc src/CellList.cc
     src/Positions.cc src/Profile.cc
     src/utils.cc)
 
-#target_link_libraries(aesdebye PUBLIC common_settings OpenMP::OpenMP_CXX)
-target_link_libraries(aesdebye PUBLIC common_settings)
+if(ENABLE_OPENMP)
+    target_link_libraries(aesdebye PUBLIC common_settings OpenMP::OpenMP_CXX)
+endif()
 
 # --- GPU Setup ---
 if(ENABLE_GPU)
@@ -204,6 +215,7 @@ if(BUILD_PYTHON_BINDINGS)
     install(TARGETS aesdebye DESTINATION aesdebye)
     install(TARGETS aesdebye_cpp DESTINATION aesdebye)
     install(DIRECTORY src/ DESTINATION aesdebye/include FILES_MATCHING PATTERN "*.hpp")
+    install(FILES src/aesdebye/data/asf.tsv DESTINATION aesdebye/data)
 
     install_symlink(${FINAL_INSTALL_DIR}/aesdebye_cpp ${BINARY_DIR}/aesdebye_cpp)
 
@@ -215,6 +227,7 @@ else()
     install(TARGETS aesdebye DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(TARGETS aesdebye_cpp DESTINATION ${CMAKE_INSTALL_BINDIR})
     install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/aesdebye FILES_MATCHING PATTERN "*.hpp")
+    install(FILES src/aesdebye/data/asf.tsv DESTINATION ${CMAKE_INSTALL_DATADIR}/aesdebye)
 
     if(ENABLE_GPU)
         install(TARGETS aesdebyeGPU DESTINATION ${CMAKE_INSTALL_LIBDIR})

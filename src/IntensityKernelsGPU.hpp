@@ -9,10 +9,10 @@ calculateIntensityGPU(std::vector<double> const& qVector,
 // #endif
 #else
 
-std::vector<double>
+inline std::vector<double>
 calculateIntensityGPU(std::vector<double> const& qVector,
                       std::vector<double> const& centers,
-                      std::vector<double> const& counts)
+                      const std::vector<double> &counts)
 {
     std::cerr << "GPU not enabled\n";
     exit(1);

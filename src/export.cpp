@@ -586,13 +586,39 @@ PYBIND11_MODULE(_core, m) {
             >>> pdf = calc.calculatePDF(positions)
             >>> profile = calc.calculateIntensity(pdf, 0, 10, 1000)
         )pbdoc")
-      .def(py::init<int, int, double, bool, bool, bool, bool, bool, bool,
-                    bool>(),
-           py::arg("nThreads") = -1, py::arg("nCells") = 15,
-           py::arg("binsResolution") = 1.0, py::arg("useMPI") = false,
-           py::arg("useGPU") = false, py::arg("useLocalHist") = true,
-           py::arg("smallBin") = false, py::arg("pseudoCoal") = true,
-           py::arg("fillGPU") = false, py::arg("verbose") = true, R"pbdoc(
+      .def(
+          py::init([](int nThreads, int nCells, double binsResolution,
+                      bool useMPI, bool useGPU, bool useLocalHist,
+                      bool smallBin, bool pseudoCoal, bool fillGPU,
+                      bool verbose, const std::string &asfFilePath,
+                      const std::string &asfFormulation) {
+            std::string resolvedPath = asfFilePath;
+            if (resolvedPath.empty()) {
+              try {
+                py::object importlib_resources =
+                    py::module_::import("importlib.resources");
+                py::object files_fn = importlib_resources.attr("files");
+                py::object bundled = files_fn("aesdebye").attr("joinpath")(
+                    "data", "asf.tsv");
+                if (bundled.attr("is_file")().cast<bool>()) {
+                  resolvedPath = py::str(bundled).cast<std::string>();
+                }
+              } catch (const std::exception &) {
+                // If not in python package context, keep empty (C++ default)
+              }
+            }
+            return std::make_unique<DebyeCalculator>(
+                nThreads, nCells, binsResolution, useMPI, useGPU, useLocalHist,
+                smallBin, pseudoCoal, fillGPU, verbose, resolvedPath,
+                asfFormulation);
+          }),
+          py::arg("nThreads") = -1, py::arg("nCells") = 15,
+          py::arg("binsResolution") = 1.0, py::arg("useMPI") = false,
+          py::arg("useGPU") = false, py::arg("useLocalHist") = true,
+          py::arg("smallBin") = false, py::arg("pseudoCoal") = true,
+          py::arg("fillGPU") = false, py::arg("verbose") = true,
+          py::arg("asfFilePath") = "",
+          py::arg("asfFormulation") = "WaasmaierKirfel5", R"pbdoc(
         Construct a new DebyeCalculator with specified computational parameters.
 
         Parameters
@@ -624,6 +650,12 @@ PYBIND11_MODULE(_core, m) {
             Fill GPU memory completely for maximum performance. Default is False.
         verbose : bool, optional
             Enable verbose output for debugging and monitoring. Default is True.
+        asfFilePath : str, optional
+            Path to custom ASF data file (TSV/CSV/text format). If empty, the default
+            data/asf.tsv is loaded.
+        asfFormulation : str, optional
+            Formulation standard to use: "WaasmaierKirfel5" (default, 5 Gaussians) or
+            "CromerMann4" (4 Gaussians).
 
         Raises
         ------
@@ -831,15 +863,13 @@ PYBIND11_MODULE(_core, m) {
           py::arg("twoTheta") = false, py::arg("wavelength") = 0.4,
           py::arg("filter") = "")
 
-      .def_static("calculateASFProfile", &DebyeCalculator::calculateASFProfile,
+      .def("calculateASFProfile", &DebyeCalculator::calculateASFProfile,
                   py::arg("qVector"), py::arg("element"), R"pbdoc(
         calculateASFProfile(qVector: List[float], element: str) -> List[float]
 
         Calculate the atomic scattering factor (ASF) profile for a given element
-        at specified q-values [values have to be Å⁻¹].
-
-        This method evaluates the atomic scattering factor as a function of
-        momentum transfer q using tabulated scattering factor coefficients.
+        at specified q-values [values have to be Å⁻¹] using the calculator's
+        configured ASF table.
 
         Parameters
         ----------
@@ -856,8 +886,22 @@ PYBIND11_MODULE(_core, m) {
         Example
         -------
         >>> q_values = [i * 0.1 for i in range(1, 101)]  # 0.1 to 10.0 Å⁻¹
-        >>> asf_profile_values = DebyeCalculator.calculateASFProfile(q_values, "Pt")
+        >>> asf_profile_values = calc.calculateASFProfile(q_values, "Pt")
     )pbdoc")
+      .def("validateElement", &DebyeCalculator::validateElement,
+           py::arg("element"), R"pbdoc(
+        validateElement(element: str) -> None
+
+        Validate that the specified chemical element exists in the calculator's ASF table.
+        Raises ValueError if the element is not found. 'None' or empty string are valid no-ops.
+        )pbdoc")
+      .def("validateElements", &DebyeCalculator::validateElements,
+           py::arg("positions"), R"pbdoc(
+        validateElements(positions: Positions) -> None
+
+        Validate that all elements present in the positions object exist in the ASF table.
+        Raises ValueError if any element is not found.
+        )pbdoc")
       .def_readonly("parallelHelper", &DebyeCalculator::parallelHelper,
                     "ParallelHelper object created by the DebyeCalculator",
                     R"pbdoc(

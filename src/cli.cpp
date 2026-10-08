@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     fillGPU, useGPUCellList, twoTheta;
     bool shufflePositions;
     std::string inputFilename = "", outputDir = "", typeMapping = "0:None";
+    std::string asfFile = "", asfFormulation = "WaasmaierKirfel5";
     argparse::ArgumentParser program("AESDebye");
     program.add_argument("-nr", "--nRepeats")
         .scan<'d', int>() // 'd' is the type of the argument, int in this case
@@ -127,6 +128,14 @@ int main(int argc, char *argv[])
         .default_value(false)
         .implicit_value(true).store_into(benchmark);
 
+    program.add_argument("-asf", "--asfFile")
+        .help("Path to custom ASF data file (TSV/CSV/text)")
+        .default_value("").store_into(asfFile);
+
+    program.add_argument("-asfform", "--asfFormulation")
+        .help("ASF formulation standard to use: WaasmaierKirfel5 (default) or CromerMann4")
+        .default_value("WaasmaierKirfel5").store_into(asfFormulation);
+
     try {
         program.parse_args(argc, argv);
     } catch (const std::runtime_error &err) {
@@ -146,7 +155,7 @@ int main(int argc, char *argv[])
 //    std::cout << "Shuffling positions: " << shufflePositions << std::endl;
 
     DebyeCalculator debye(nThreads, nCells, binsResolution, useMPI, useGPU, !dontUseLocalHistogram, 
-    smallBins, pseudoCoal, fillGPU, !nonVerbose);
+    smallBins, pseudoCoal, fillGPU, !nonVerbose, asfFile, asfFormulation);
     debye.parallelHelper << "Shuffling positions: " << shufflePositions << "\n";
     debye.config.useGPUCellList = useGPUCellList;
 

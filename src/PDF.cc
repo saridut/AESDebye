@@ -34,15 +34,15 @@ HistBin HistBin::operator+(const HistBin &rhsBin) const {
 
 
 void PDF::addSelfPairs(uint64 nPairs) {
-    // return if the positions are not the same
-    if (!samePositions)
-        return;
-
-    // double the count of each bin
+    // double the count of each bin (accounts for (i, j) and (j, i) symmetry)
 #pragma omp parallel for schedule(static) default(none) shared(pdf_vector)
     for (uint binId = 0; binId < nBins; binId++) {
         pdf_vector[binId].count *= 2;
     }
+
+    // return if the positions are not the same (no self-pairs at distance 0 across different position sets)
+    if (!samePositions)
+        return;
 
     // add the self pairs to the zeroth bin
     pdf_vector[0].count += nPairs;
@@ -70,7 +70,8 @@ bool PDF::test(uint64 positionsISize, uint64 positionsJSize) {
     // function to be called after the PDF has been finalized
     // self pairs are also added and double counted
 
-    uint64 nPd = positionsISize * positionsJSize; // expected
+    uint64 nPd = samePositions ? (positionsISize * positionsJSize)
+                               : (2 * positionsISize * positionsJSize); // expected
     uint64 sum = 0; // total
     for (size_t binId = 0; binId < nBins; binId++) {
         uint64 count = pdf_vector[binId].count;
@@ -84,7 +85,6 @@ bool PDF::test(uint64 positionsISize, uint64 positionsJSize) {
 double PDF::calculateDelta(HistBin const &bin) const {
     double delta = (boxSize * boxSize * (0.0000000000000000010 *
                                          ((double) bin.deltaOverflowCount * (double) LLONG_MAX + (double) bin.delta)));
-    if (!samePositions) delta = delta / 2.0;
     return delta;
 }
 
@@ -113,6 +113,7 @@ PDF &PDF::operator+=(const PDF &other) {
     for (uint binId = 0; binId < nBins; binId++) {
         pdf_vector[binId] = pdf_vector[binId] + other.pdf_vector[binId];
     }
+    createPDFVectors();
     return *this;
 }
 

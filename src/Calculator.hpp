@@ -20,6 +20,7 @@
 #include <Positions.hpp>
 #include <Profile.hpp>
 #include <utils.hpp>
+#include <ASF.hpp>
 
 /**
  * @class DebyeCalculator
@@ -51,6 +52,7 @@ public:
     ParallelHelper parallelHelper; //< needs to be public for export to python @see ParallelHelper
     CellList cellList; //< CellList object for cell list computation. @see CellList
     CalculationConfig config; //< Configuration for the histogram computation. @see CalculationConfig, just a boolean container
+    ASFTable asfTable; //< Atomic scattering factor table for element form factors
 
     /**
      * @brief Constructs a DebyeCalculator object.
@@ -59,10 +61,16 @@ public:
      *
      * @param nThreads The number of threads to use for parallel computation. Default is -1, which means to use the maximum available threads.
      * @param nCells The number of cells to use for cell list computation. Default is 15. If you don't want to use cell list (only recommended for very small MD systems), set this to 1.
+     * @param binsResolution The resolution of the bins in the histogram.
      * @param useMPI Flag indicating whether to use MPI for parallel computation. Default is false. When set to true, the runtime will need to use an mpi-runner to run the code. MPI library that was used for compilation should be loaded in the runtime environment.
      * @param useGPU Flag indicating whether to use GPU for parallel computation. Default is false.
      * @param useLocalHistogram Flag indicating whether to use local histogram for parallel computation. Default is true. Set to false for crystalline structures.
+     * @param smallBins Use smaller bins for PDF. Default is false.
+     * @param pseudoCoal Enable pseudo-coalescence optimization. Default is true.
+     * @param fillGPU Fill GPU memory completely. Default is false.
      * @param verbose Flag indicating whether to enable verbose output. Default is true.
+     * @param asfFilePath Path to custom ASF table file (TSV/CSV/text). If empty, standard data/asf.tsv is loaded.
+     * @param asfFormulation Formulation standard to use: "WaasmaierKirfel5" (default, 5 Gaussians) or "CromerMann4" (4 Gaussians).
      */
     explicit DebyeCalculator(int nThreads = -1, int nCells = 15,
                              double binsResolution = 1.0,
@@ -72,7 +80,9 @@ public:
                              bool smallBins = false,
                              bool pseudoCoal = true,
                              bool fillGPU = false,
-                             bool verbose = true) : binsResolution(binsResolution), verbose(verbose),
+                             bool verbose = true,
+                             const std::string& asfFilePath = "",
+                             const std::string& asfFormulation = "WaasmaierKirfel5") : binsResolution(binsResolution), verbose(verbose),
                                                     parallelHelper(nThreads, useMPI, verbose)
     {
 
@@ -97,21 +107,48 @@ public:
         config.fillGPU = fillGPU;
         config.useGPUCellList = false;
 
+        // Initialize ASF Table with the explicit formulation
+        ASFFormulation form = stringToASFFormulation(asfFormulation);
+        std::string targetASFFile = asfFilePath.empty() ? ASFTable::DEFAULT_ASF_FILE : asfFilePath;
+        try
+        {
+            asfTable.loadFromFile(targetASFFile, form);
+        }
+        catch (const std::exception& e)
+        {
+            parallelHelper << ">> [DebyeCalculator] Error loading ASF file (" << targetASFFile 
+                           << "): " << e.what() << "\n";
+            throw;
+        }
+
         parallelHelper.printSection("DebyeCalculator initialized");
 
         parallelHelper << ">> Please cite:\n\n";
-        parallelHelper << ">> AES-Debye, Navid Panchi et al. DOI: ....\n\n";
-        parallelHelper << ">> Bibtex:\n\n";
-        parallelHelper << "@article{Panchi2026AES-Debye,\n"
-               << "  author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},\n"
-               << "  title   = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},\n"
-               << "  journal = {Journal of Applied Crystallography},\n"
-               << "  volume  = {59},\n"
-               << "  year    = {2026},\n"
-               << "  doi     = {10.1107/S1600576726007429}\n"
-               << "}\n";
+        parallelHelper << ">> Panchi, N., Kuckuk, S., Wittmann, M., Engel, M., & Leonardi, A. (2026).\n"
+                       << ">> AES-Debye: An Accurate, Efficient and Scalable Engine for Debye Scattering Calculations.\n"
+                       << ">> Journal of Applied Crystallography, 59(5), 1478–1490. https://doi.org/10.1107/S1600576726007429\n\n";
+        parallelHelper << ">> BibTeX:\n\n";
+        parallelHelper << "@article{panchi_aes-debye_2026,\n"
+                       << "  title   = {{AES-Debye}: An Accurate, Efficient and Scalable Engine for {Debye} Scattering Calculations},\n"
+                       << "  author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},\n"
+                       << "  journal = {Journal of Applied Crystallography},\n"
+                       << "  volume  = {59},\n"
+                       << "  number  = {5},\n"
+                       << "  pages   = {1478--1490},\n"
+                       << "  year    = {2026},\n"
+                       << "  month   = {oct},\n"
+                       << "  issn    = {1600-5767},\n"
+                       << "  doi     = {10.1107/S1600576726007429}\n"
+                       << "}\n";
         parallelHelper << " ------------------------------------------------\n";
         parallelHelper << config;
+        parallelHelper << ">> ASF Formulation: " << asfFormulationToString(asfTable.getFormulation())
+                       << " (" << asfTable.size() << " elements loaded)\n";
+        if (!asfTable.getLoadedFilePath().empty())
+        {
+            parallelHelper << ">> ASF File: " << asfTable.getLoadedFilePath() << "\n";
+        }
+        parallelHelper << " ------------------------------------------------\n";
 
         // if cell list is enabled, initialize it
         if (config.useCellList)
@@ -203,16 +240,48 @@ public:
     /**
      * @brief Calculates the Atomic Scattering Factor (ASF) profile for a given element.
      *
-     * Computes the ASF for each q value in the provided qVector using the coefficients
-     * corresponding to elementI.
+     * Computes the ASF for each q value in the provided qVector using the calculator's
+     * configured ASF table.
      *
      * @param qVector A vector of q values.
      * @param elementI The chemical symbol of the element.
      * @return A vector containing the calculated ASF values.
      */
-    static std::vector<double>
+    std::vector<double>
     calculateASFProfile(const std::vector<double> &qVector,
-                        std::string elementI);
+                        std::string elementI) const;
+
+    /**
+     * @brief Validates that a given element exists in the ASF table, or is 'None' / empty.
+     * Throws std::invalid_argument if the element is not found.
+     *
+     * @param element Chemical symbol of the element.
+     */
+    void validateElement(const std::string& element) const
+    {
+        if (element.empty() || element == "None" || element == "none" || element == "NONE")
+        {
+            return;
+        }
+        if (!asfTable.contains(element))
+        {
+            throw std::invalid_argument("Element '" + element + "' not found in ASF table (file: " +
+                                        asfTable.getLoadedFilePath() + ")");
+        }
+    }
+
+    /**
+     * @brief Validates that all elements present in a Positions object exist in the ASF table.
+     *
+     * @param positions Positions object to check.
+     */
+    void validateElements(const Positions& positions) const
+    {
+        for (const auto& elem : positions.getUniqueElements())
+        {
+            validateElement(elem);
+        }
+    }
 
     /**
      * @brief Sets the verbosity flag for the calculator and parallelHelper.

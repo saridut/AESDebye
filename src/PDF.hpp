@@ -73,12 +73,13 @@ private:
     /**
   * @brief Double the count of the PDF and adds self pairs
   *
-  * This function checks if the positions are the same and then doubles the count of the PDF
+  * Doubles the count of the PDF to account for (i, j) and (j, i) pair symmetry,
+  * and adds self pairs to bin 0 if positions are the same.
   */
     void addSelfPairs(uint64 nPairs);
 
 public:
-   // samePositions flag, this is used to divide to update the delta values
+   // samePositions flag, indicates whether positionsI and positionsJ are the same
    bool samePositions{true};
    std::string elementI = "";
    std::string elementJ = "";

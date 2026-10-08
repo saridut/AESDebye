@@ -277,6 +277,10 @@ std::vector<double>
 DebyeCalculator::calculateIntensity(std::vector<double> const &centers, const std::vector<double> &counts,
                                     std::vector<double> const &qVector, std::string elementI, std::string elementJ)
 {
+    // Validate elements before doing any computation
+    validateElement(elementI);
+    validateElement(elementJ);
+
     // call the kernel to calculate the intensity
     std::vector<double> intensity;
     if (config.useGPU && (qVector.size() > 5000 || parallelHelper.ompThreads <= 4)) // either too large intensity, or too less cpus
@@ -290,14 +294,22 @@ DebyeCalculator::calculateIntensity(std::vector<double> const &centers, const st
         intensity = calculateIntensityCPU(qVector, centers, counts);
     }
 
-    // Add the ASF contribution if the elements are provided
-    if (elementI.empty() && elementJ.empty())
+    // Add the ASF contribution if the elements are provided (and not None)
+    auto isNone = [](const std::string& el) {
+        return el.empty() || el == "None" || el == "none" || el == "NONE";
+    };
+
+    if (isNone(elementI) && isNone(elementJ))
     {
         return intensity;
     }
-    else if (elementJ.empty())
+    else if (isNone(elementJ))
     {
         elementJ = elementI;
+    }
+    else if (isNone(elementI))
+    {
+        elementI = elementJ;
     }
 
     auto asfProfileI = calculateASFProfile(qVector, elementI);
@@ -315,6 +327,10 @@ DebyeCalculator::calculateIntensity(std::vector<double> const &centers, const st
 Profile
 DebyeCalculator::calculateIntensity(PDF &pdf, double start, double end, int nSteps, bool twoThetaSpace, double lambda)
 {
+    // Validate PDF elements before computation
+    validateElement(pdf.elementI);
+    validateElement(pdf.elementJ);
+
     parallelHelper.wait();
     Profile profile(start, end, nSteps, twoThetaSpace, lambda);
     double calculation_start = helpers::get_wall_time();
@@ -328,6 +344,9 @@ std::map<std::string, std::pair<PDF, Profile>>
 DebyeCalculator::calculateProfile(Positions &positions, double start, double end, int nSteps,
                                   bool twoThetaSpace, double lambda, std::string filter)
 {
+    // Early validation of all elements in positions before starting any PDF or cell list work
+    validateElements(positions);
+
     std::vector<std::string> positionPairs;
     std::map<std::string, std::pair<PDF, Profile>> results;
 
@@ -346,6 +365,16 @@ DebyeCalculator::calculateProfile(Positions &positions, double start, double end
     {
         parallelHelper << "Filtering with: " << filter << "\n";
         positionPairs = helpers::stringSplit(filter, ",");
+        // Also validate filter element pairs
+        for (const auto& pairName : positionPairs)
+        {
+            auto parts = helpers::stringSplit(pairName, "-");
+            if (parts.size() >= 2)
+            {
+                validateElement(parts[0]);
+                validateElement(parts[1]);
+            }
+        }
     }
 
     for (const auto& pairName : positionPairs)
@@ -371,7 +400,7 @@ DebyeCalculator::calculateProfile(Positions &positions, double start, double end
 
     auto fullPDF = results[positionPairs[0]].first;
     auto fullProfile = results[positionPairs[0]].second;
-    for (size_t i = 0; i < positionPairs.size(); i++)
+    for (size_t i = 1; i < positionPairs.size(); i++)
     {
         fullProfile = fullProfile + results[positionPairs[i]].second;
         fullPDF = fullPDF + results[positionPairs[i]].first;
@@ -385,9 +414,20 @@ DebyeCalculator::calculateProfile(Positions &positions, double start, double end
 
 std::vector<double>
 DebyeCalculator::calculateASFProfile(const std::vector<double> &qVector,
-                                     std::string elementI)
+                                     std::string elementI) const
 {
-    ASFCoeffs asf = ASFTable[elementI];
+    validateElement(elementI);
+
+    auto isNone = [](const std::string& el) {
+        return el.empty() || el == "None" || el == "none" || el == "NONE";
+    };
+
+    if (isNone(elementI))
+    {
+        return std::vector<double>(qVector.size(), 1.0);
+    }
+
+    ASFCoeffs asf = asfTable[elementI];
     std::vector<double> intensity(qVector.size(), 1.0);
 #pragma omp parallel for schedule(static) shared(qVector, intensity, asf) default(none)
     for (size_t qIdx = 0; qIdx < qVector.size(); qIdx++)

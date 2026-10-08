@@ -19,11 +19,17 @@ If you use this code, please cite the following paper:
 
 .. code-block:: bibtex
 
-   @article{Panchi2026AES-Debye,
-       author    = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
-       title     = {AES-Debye: an Accurate, Efficient, and Scalable solver for the Debye scattering equation},
-       journal   = {Submitted to Journal of Applied Crystallography (IUCrJ), Under review}
-       year      = {2026},
+   @article{panchi_aes-debye_2026,
+       title   = {{AES-Debye}: An Accurate, Efficient and Scalable Engine for {Debye} Scattering Calculations},
+       author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
+       journal = {Journal of Applied Crystallography},
+       volume  = {59},
+       number  = {5},
+       pages   = {1478--1490},
+       year    = {2026},
+       month   = {oct},
+       issn    = {1600-5767},
+       doi     = {10.1107/S1600576726007429}
    }
 
 .. toctree::

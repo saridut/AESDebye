@@ -1,5 +1,5 @@
 [build-system]
-requires = ["scikit-build-core>=0.10", "pybind11"]
+requires = ["scikit-build-core>=0.10", "pybind11", "pytest"]
 build-backend = "scikit_build_core.build"
 
 
@@ -17,6 +17,7 @@ authors = [
 dependencies = [
     "ase>=3.24",
     "matplotlib>=3.9",
+    "numpy>=1.19.5",
 ]
 requires-python = ">=3.10"
 classifiers = [
@@ -32,9 +33,10 @@ classifiers = [
 [project.scripts]
 aesdebye = "aesdebye.cli:main"
 
+
+
 [project.optional-dependencies]
 test = ["pytest"]
-all = ["aesdebye[test]"]
 
 [tool.scikit-build]
 wheel.expand-macos-universal-tags = true
@@ -42,18 +44,13 @@ minimum-version = "build-system.requires"
 cmake.build-type = "Release"
 build-dir = "build"
 
-[tool.scikit-build.ninja]
-make-fallback = true
-
 [tool.scikit-build.cmake.define]
-CMAKE_CXX_COMPILER = 'g++'
-#WITH_OPENMP="OFF"
 BUILD_LAMMPS_PLUGIN = "OFF"
 LAMMPS_SRC_DIR = "~/temp/lammps/src"
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config", "-p", "no:dash"]
 xfail_strict = true
 log_cli_level = "INFO"
 filterwarnings = [

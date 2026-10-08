@@ -1,7 +1,6 @@
 This is a fork of the original **AES-Debye** code by Panchi et al from their
 [GitLab repository](https://gitlab.cs.fau.de/iq23adyz/debye).
 
-
 # AES-DEBYE: Accurate Efficient and Scalable Debye Scattering Calculation
 
 Documentation is hosted online at: [GitHub Pages](https://navidpanchi.github.io/AESDebye/)
@@ -19,12 +18,16 @@ AES-Debye presents an accuracy-preserving DSE framework with the following highl
 If you use this code, please cite the following paper:
 
 ```bibtex
-@article{panchi2026,
+@article{panchi_aes-debye_2026,
+  title   = {{AES-Debye}: An Accurate, Efficient and Scalable Engine for {Debye} Scattering Calculations},
   author  = {Panchi, Navid and Kuckuk, Sebastian and Wittmann, Markus and Engel, Michael and Leonardi, Alberto},
-  title   = {AES-Debye: an accurate, efficient and scalable engine for Debye scattering calculations},
   journal = {Journal of Applied Crystallography},
   volume  = {59},
+  number  = {5},
+  pages   = {1478--1490},
   year    = {2026},
+  month   = {oct},
+  issn    = {1600-5767},
   doi     = {10.1107/S1600576726007429}
 }
 ```
@@ -47,6 +50,12 @@ Then you can install AES-DEBYE directly via `pip`:
 pip install git+https://gitlab.cs.fau.de/iq23adyz/debye -v
 ```
 We do not provide prebuilt wheels, pip will download and compile the code. For compiling as a C++ library, refer to [Building as a C++ Library (Without Pip)](#building-as-a-c-library-without-pip).
+
+Sometimes, the cuda compiler is not found automatically. In that case you can provide explicity path:
+
+```bash
+pip install git+https://gitlab.cs.fau.de/iq23adyz/debye -v -Ccmake.define.CMAKE_CUDA_COMPILER=/path/to/nvcc
+```
 
 ### Getting Started
 
@@ -101,6 +110,24 @@ plt.show()
 ```
 
 You can provide `None` for the chemical symbols to avoid multiplication with the atomic scattering factors.
+
+If you want to read and use xyz files, you can use the `ase` package to read the file and convert it to a `Positions` object:
+
+```python
+import ase.io
+import aesdebye as debye
+
+# Read XYZ file
+atoms = ase.io.read("path/to/your/file.xyz")
+
+# Set up positions
+positions = debye.Positions(
+    chemicalSymbols=atoms.get_chemical_symbols(),
+    coordinates=atoms.get_positions()
+)
+
+# Rest remains the same as above
+```
 
 #### CLI interface
 

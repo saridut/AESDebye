@@ -36,6 +36,23 @@ Positions::Positions(std::vector<std::string> chemicalSymbols,
     this->chemicalSymbols = std::move(chemicalSymbols);
     this->selectionIds = selectionIds;
     boxSize = boxMax - boxMin + 1e-6;
+
+    if (!this->chemicalSymbols.empty())
+    {
+        bool allSame = true;
+        for (size_t i = 1; i < this->chemicalSymbols.size(); ++i)
+        {
+            if (this->chemicalSymbols[i] != this->chemicalSymbols[0])
+            {
+                allSame = false;
+                break;
+            }
+        }
+        if (allSame)
+        {
+            this->element = this->chemicalSymbols[0];
+        }
+    }
     resize(positions.size());
     for (int i = 0; i < positions.size(); ++i)
     {
